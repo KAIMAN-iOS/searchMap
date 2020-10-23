@@ -11,7 +11,7 @@ import UIKit
 public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var standAloneMode: Bool = false
     let searchMapController = SearchMapController.create()
-    override init(router: RouterType?) {
+    public override init(router: RouterType?) {
         var moduleRouter = router
         if moduleRouter == nil {
             standAloneMode = true

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		C66D74372542FA9F00FFC8B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C66D74352542FA9F00FFC8B1 /* Main.storyboard */; };
 		C66D74392542FAA100FFC8B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C66D74382542FAA100FFC8B1 /* Assets.xcassets */; };
 		C66D743C2542FAA100FFC8B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C66D743A2542FAA100FFC8B1 /* LaunchScreen.storyboard */; };
+		C66D74462542FB5800FFC8B1 /* SearchMap in Frameworks */ = {isa = PBXBuildFile; productRef = C66D74452542FB5800FFC8B1 /* SearchMap */; };
+		C66D744C254300C200FFC8B1 /* ReverseGeocodingMap in Frameworks */ = {isa = PBXBuildFile; productRef = C66D744B254300C200FFC8B1 /* ReverseGeocodingMap */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,7 @@
 		C66D74382542FAA100FFC8B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C66D743B2542FAA100FFC8B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C66D743D2542FAA100FFC8B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C66D74482542FB5E00FFC8B1 /* SearchMap */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SearchMap; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +34,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C66D744C254300C200FFC8B1 /* ReverseGeocodingMap in Frameworks */,
+				C66D74462542FB5800FFC8B1 /* SearchMap in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +45,7 @@
 		C66D74232542FA9F00FFC8B1 = {
 			isa = PBXGroup;
 			children = (
+				C66D74482542FB5E00FFC8B1 /* SearchMap */,
 				C66D742E2542FA9F00FFC8B1 /* ios Example */,
 				C66D742D2542FA9F00FFC8B1 /* Products */,
 			);
@@ -83,6 +89,10 @@
 			dependencies = (
 			);
 			name = "ios Example";
+			packageProductDependencies = (
+				C66D74452542FB5800FFC8B1 /* SearchMap */,
+				C66D744B254300C200FFC8B1 /* ReverseGeocodingMap */,
+			);
 			productName = "ios Example";
 			productReference = C66D742C2542FA9F00FFC8B1 /* ios Example.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +120,10 @@
 				Base,
 			);
 			mainGroup = C66D74232542FA9F00FFC8B1;
+			packageReferences = (
+				C66D74442542FB5800FFC8B1 /* XCRemoteSwiftPackageReference "searchMap" */,
+				C66D744A254300C200FFC8B1 /* XCRemoteSwiftPackageReference "ReverseGeocodingMap" */,
+			);
 			productRefGroup = C66D742D2542FA9F00FFC8B1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -341,6 +355,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C66D74442542FB5800FFC8B1 /* XCRemoteSwiftPackageReference "searchMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jerometonnelier/searchMap";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		C66D744A254300C200FFC8B1 /* XCRemoteSwiftPackageReference "ReverseGeocodingMap" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jerometonnelier/ReverseGeocodingMap";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C66D74452542FB5800FFC8B1 /* SearchMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C66D74442542FB5800FFC8B1 /* XCRemoteSwiftPackageReference "searchMap" */;
+			productName = SearchMap;
+		};
+		C66D744B254300C200FFC8B1 /* ReverseGeocodingMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C66D744A254300C200FFC8B1 /* XCRemoteSwiftPackageReference "ReverseGeocodingMap" */;
+			productName = ReverseGeocodingMap;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C66D74242542FA9F00FFC8B1 /* Project object */;
 }

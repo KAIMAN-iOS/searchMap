@@ -1,42 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ib7-P8-GYj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="kwq-Yt-pdd">
+        <!--Search Map Controller-->
+        <scene sceneID="xb7-ar-BIw">
             <objects>
-                <viewController id="4ER-nb-d7k" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="soi-Hf-m3t">
+                <viewController storyboardIdentifier="ReverseGeocodingMap" id="ib7-P8-GYj" customClass="SearchMapController" customModule="SearchMap" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sdv-UU-n9S">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eL4-gI-xI8">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="V7z-5d-fgy">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="730"/>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i6M-hL-gD3">
+                                <rect key="frame" x="350" y="660" width="42" height="42"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="i6M-hL-gD3" secondAttribute="height" multiplier="1:1" id="UI7-vg-LTS"/>
+                                    <constraint firstAttribute="width" constant="42" id="tQh-Eb-uF1"/>
+                                </constraints>
+                                <color key="tintColor" name="Color"/>
+                                <state key="normal" image="location"/>
+                                <connections>
+                                    <action selector="changeUserLocationType" destination="ib7-P8-GYj" eventType="touchUpInside" id="b45-Ha-lfK"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="178" translatesAutoresizingMaskIntoConstraints="NO" id="cvT-GS-Ss6">
+                                <rect key="frame" x="0.0" y="718" width="414" height="178"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="370" placeholderIntrinsicHeight="102" translatesAutoresizingMaskIntoConstraints="NO" id="LBd-bu-cAm">
+                                        <rect key="frame" x="22" y="26" width="370" height="102"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="LBd-bu-cAm" firstAttribute="leading" secondItem="cvT-GS-Ss6" secondAttribute="leading" constant="22" id="2DJ-Ts-Eij"/>
+                                    <constraint firstAttribute="bottom" secondItem="LBd-bu-cAm" secondAttribute="bottom" constant="50" id="CXK-pb-d5N"/>
+                                    <constraint firstAttribute="trailing" secondItem="LBd-bu-cAm" secondAttribute="trailing" constant="22" id="Nno-VT-9r7"/>
+                                    <constraint firstItem="LBd-bu-cAm" firstAttribute="top" secondItem="cvT-GS-Ss6" secondAttribute="top" constant="26" id="OmP-NI-a4z"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwS-rR-flv">
+                                <rect key="frame" x="20" y="44" width="45" height="45"/>
+                                <color key="backgroundColor" name="placeholderColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="xwS-rR-flv" secondAttribute="height" multiplier="1:1" id="E65-Zh-Gti"/>
+                                    <constraint firstAttribute="width" constant="45" id="Xjr-nx-8tA"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="dkj-a5-DBX"/>
+                                </constraints>
+                                <color key="tintColor" name="Color"/>
+                            </button>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="2dH-yR-z8a"/>
+                        <viewLayoutGuide key="safeArea" id="u7v-U3-NnQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="eL4-gI-xI8" secondAttribute="bottom" id="77p-Nt-xsB"/>
-                            <constraint firstItem="eL4-gI-xI8" firstAttribute="trailing" secondItem="2dH-yR-z8a" secondAttribute="trailing" id="U2H-P6-gjw"/>
-                            <constraint firstItem="eL4-gI-xI8" firstAttribute="top" secondItem="soi-Hf-m3t" secondAttribute="top" id="q66-gE-saJ"/>
-                            <constraint firstItem="eL4-gI-xI8" firstAttribute="leading" secondItem="2dH-yR-z8a" secondAttribute="leading" id="zKa-xm-lIV"/>
+                            <constraint firstItem="V7z-5d-fgy" firstAttribute="top" secondItem="sdv-UU-n9S" secondAttribute="top" id="2CF-9R-Y77"/>
+                            <constraint firstItem="xwS-rR-flv" firstAttribute="top" secondItem="u7v-U3-NnQ" secondAttribute="top" id="8ow-yT-mqp"/>
+                            <constraint firstItem="cvT-GS-Ss6" firstAttribute="trailing" secondItem="u7v-U3-NnQ" secondAttribute="trailing" id="EoJ-fd-8pN"/>
+                            <constraint firstItem="V7z-5d-fgy" firstAttribute="trailing" secondItem="u7v-U3-NnQ" secondAttribute="trailing" id="LU3-cr-Gd1"/>
+                            <constraint firstItem="cvT-GS-Ss6" firstAttribute="leading" secondItem="sdv-UU-n9S" secondAttribute="leading" id="LfE-30-hTP"/>
+                            <constraint firstItem="V7z-5d-fgy" firstAttribute="leading" secondItem="u7v-U3-NnQ" secondAttribute="leading" id="Qm9-zU-Ndz"/>
+                            <constraint firstItem="xwS-rR-flv" firstAttribute="leading" secondItem="u7v-U3-NnQ" secondAttribute="leading" constant="20" id="SBq-nP-CV6"/>
+                            <constraint firstItem="u7v-U3-NnQ" firstAttribute="trailing" secondItem="i6M-hL-gD3" secondAttribute="trailing" constant="22" id="Tf3-c7-lx4"/>
+                            <constraint firstAttribute="bottom" secondItem="cvT-GS-Ss6" secondAttribute="bottom" id="iRm-AK-Ouf"/>
+                            <constraint firstItem="cvT-GS-Ss6" firstAttribute="top" secondItem="V7z-5d-fgy" secondAttribute="bottom" constant="-12" id="kuy-e9-4jY"/>
+                            <constraint firstItem="i6M-hL-gD3" firstAttribute="top" secondItem="V7z-5d-fgy" secondAttribute="bottom" constant="-70" id="syU-gj-HKO"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="card" destination="cvT-GS-Ss6" id="ETa-5M-TNj"/>
+                        <outlet property="cardContainer" destination="LBd-bu-cAm" id="DAF-wk-Gcl"/>
+                        <outlet property="locatioButton" destination="i6M-hL-gD3" id="h8t-hc-Imq"/>
+                        <outlet property="map" destination="V7z-5d-fgy" id="5j2-7t-EfL"/>
+                        <outlet property="userButton" destination="xwS-rR-flv" id="KdI-8V-9Bb"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yje-Fi-o3K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="an2-gQ-0af" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="247.82608695652175" y="200.89285714285714"/>
+            <point key="canvasLocation" x="-20.289855072463769" y="199.55357142857142"/>
         </scene>
     </scenes>
     <resources>
+        <image name="location" width="119" height="119"/>
+        <namedColor name="Color">
+            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="placeholderColor">
+            <color red="0.62400001287460327" green="0.65100002288818359" blue="0.70599997043609619" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
