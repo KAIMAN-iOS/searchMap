@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "historyItem.png",
+      "filename" : "dashedLine.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "historyItem@2x.png",
+      "filename" : "dashedLine@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "historyItem@3x.png",
+      "filename" : "dashedLine@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -21,6 +21,6 @@
     "version" : 1
   },
   "properties" : {
-    "template-rendering-intent" : "template"
+    "template-rendering-intent" : "original"
   }
 }

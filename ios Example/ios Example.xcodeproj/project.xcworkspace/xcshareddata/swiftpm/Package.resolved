@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "IQKeyboardManagerSwift",
+        "repositoryURL": "https://github.com/hackiftekhar/IQKeyboardManager.git",
+        "state": {
+          "branch": null,
+          "revision": "4dc6bc7d1c9747bd0c261c8c055903f9fdef91f7",
+          "version": "6.5.6"
+        }
+      },
+      {
         "package": "KCoordinatorKit",
         "repositoryURL": "https://github.com/jerometonnelier/K-CoordinatorKit",
         "state": {
@@ -69,8 +78,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
         "state": {
           "branch": null,
-          "revision": "d56c159834bfdb578f044b5dc2a1945555789b3c",
-          "version": "1.0.1"
+          "revision": "cd1a700ec2b2d28d1bc7aa1d6d9a54db38085687",
+          "version": "1.0.2"
         }
       },
       {

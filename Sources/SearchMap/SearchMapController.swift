@@ -17,6 +17,21 @@ class SearchMapController: UIViewController {
         return UIStoryboard(name: "Map", bundle: .module).instantiateInitialViewController() as! SearchMapController
     }
     
+    enum State {
+        case search
+        case bookingReady
+    }
+    var state: State = .search  {
+        didSet {
+            switch state {
+            case .search: loadSearchCard()
+            case .bookingReady: ()
+            }
+        }
+    }
+    var bookingWrapper = BookingWrapper()
+    weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
+    
     let geocoder = CLGeocoder()
     @IBOutlet weak var map: MKMapView!  {
         didSet {
@@ -37,19 +52,67 @@ class SearchMapController: UIViewController {
     }
     @IBOutlet weak var card: UIView!
     @IBOutlet weak var cardContainer: UIView!
+    @IBOutlet weak var bookingTopView: BookingTopView!
+    @IBOutlet weak var topViewTopContraint: NSLayoutConstraint!
+    
+    var originObserver: NSKeyValueObservation?
+    var destinationObserver: NSKeyValueObservation?
+    
+    deinit {
+        print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
+        originObserver?.invalidate()
+        destinationObserver?.invalidate()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
         loadSearchCard()
+        handleObservers()
         checkAuthorization()
         map.showsUserLocation = false
         map.tintColor = #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
     }
     
+    func handleObservers() {        
+        originObserver?.invalidate()
+        originObserver = bookingWrapper.observe(\.origin, changeHandler: { [weak self] (booking, change) in
+            self?.handleBookingCard()
+        })
+        destinationObserver?.invalidate()
+        destinationObserver = bookingWrapper.observe(\.destination, changeHandler: { [weak self] (booking, change) in
+            self?.handleBookingCard()
+        })
+    }
+    
+    func handleBookingCard() {
+        guard bookingWrapper.origin != nil, bookingWrapper.destination != nil else {
+            loadSearchCard()
+            return
+        }
+        loadBookingReadyCard()
+    }
+    
+    func loadBookingReadyCard() {
+        // no need to reload the view if it is already the right one
+        guard cardContainer.subviews.first as? BookingReadyView == nil else { return }
+        guard let view: BookingReadyView = Bundle.module.loadNibNamed("BookingReadyView", owner: nil)?.first as? BookingReadyView else { return }
+        view.delegate = self
+        addViewToCard(view)
+        topViewTopContraint.constant = 0
+        bookingTopView.configure(bookingWrapper)
+    }
+    
     func loadSearchCard() {
+        // no need to reload the view if it is already the right one
+        guard cardContainer.subviews.first as? MapLandingView == nil else { return }
         guard let view: MapLandingView = Bundle.module.loadNibNamed("MapLandingView", owner: nil)?.first as? MapLandingView else { return }
         view.delegate = self
+        addViewToCard(view)
+        topViewTopContraint.constant = -100
+    }
+    
+    func addViewToCard(_ view: UIView) {
         cardContainer.subviews.forEach({ $0.removeFromSuperview() })
         cardContainer.addSubview(view)
         view.snp.makeConstraints { make in
@@ -72,6 +135,8 @@ class SearchMapController: UIViewController {
         super.viewDidLayoutSubviews()
         card.round(corners: [.topLeft, .topRight], radius: 20.0)
         card.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
+        bookingTopView.layer.cornerRadius = 10.0
+        bookingTopView.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
     }
     
     @IBAction func changeUserLocationType() {
@@ -80,6 +145,10 @@ class SearchMapController: UIViewController {
         case .follow: map.userTrackingMode = .followWithHeading
         default: map.userTrackingMode = .none
         }
+    }
+    
+    @IBAction func showSearchController() {
+        search()
     }
 }
 
@@ -108,7 +177,13 @@ class UserAnnotation: NSObject, MKAnnotation {
 
 extension SearchMapController: MapLandingViewDelegate {
     func search() {
-        // push the search view with no start position
+        coordinatorDelegate?.showSearch(&bookingWrapper)
+    }
+}
+
+extension SearchMapController: BookingReadyDelegate {
+    func book() {
+        
     }
 }
 
@@ -134,5 +209,8 @@ extension SearchMapController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let view = view as? UserAnnotationView else { return }
         // push the search view with departure selected
+        map.deselectAnnotation(view.annotation, animated: false)
+        bookingWrapper.origin = view.placemark
+        search()
     }
 }

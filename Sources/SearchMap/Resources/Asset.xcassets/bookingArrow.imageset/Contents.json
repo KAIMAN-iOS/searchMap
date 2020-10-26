@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "DashedLine.png",
+      "filename" : "bookingArrow.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "DashedLine@2x.png",
+      "filename" : "bookingArrow@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "DashedLine@3x.png",
+      "filename" : "bookingArrow@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "original"
   }
 }

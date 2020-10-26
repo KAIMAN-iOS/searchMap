@@ -28,9 +28,9 @@ class UserAnnotationView: MKAnnotationView {
         iconBackground.backgroundColor = tintColor ?? #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
     }
     
-    var placemark: CLPlacemark!
+    var placemark: Placemark!
     func configure(_ placemark: CLPlacemark) {
-        self.placemark = placemark
+        self.placemark = placemark.asPlacemark
         destinationLabel.set(text: placemark.formattedAddress, for:FontType.default, textColor: #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1))
     }
 }
