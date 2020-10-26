@@ -21,6 +21,8 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     lazy var searchNavigationController = UINavigationController()
     lazy var reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self)
     public weak var favDelegate: FavouriteDisplayDelegate?
+    public var handleFavourites: Bool = true
+    
     public override init(router: RouterType?) {
         var moduleRouter = router
         if moduleRouter == nil {
@@ -41,6 +43,7 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
     func showSearch(_ booking: inout BookingWrapper) {
         let ctrl = SearchViewController.create(booking: &booking, searchDelegate: self)
         ctrl.viewModel.favDelegate = favDelegate
+        ctrl.viewModel.handleFavourites = handleFavourites
         if CLLocationCoordinate2DIsValid(searchMapController.map.userLocation.coordinate) {
             ctrl.userCoordinates = searchMapController.map.userLocation.coordinate
         }

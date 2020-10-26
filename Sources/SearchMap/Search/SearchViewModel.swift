@@ -9,13 +9,13 @@ import UIKit
 import MapKit
 import TableViewExtension
 
-public enum FavouriteType: Hashable {
-    case home, work
+public enum FavouriteType: Int, Hashable {
+    case home = 0, work
     
     var name: String {
         switch self {
-        case .home: return "home".bundleLocale()
-        case .work: return "work".bundleLocale()
+        case .home: return "Home".bundleLocale()
+        case .work: return "Work".bundleLocale()
         }
     }
     
@@ -97,8 +97,12 @@ public class SearchViewModel {
         }
     }
     weak var refreshDelegate: RefreshFavouritesDelegate?
+    var handleFavourites: Bool = true
     
     init() {
+        if handleFavourites {
+            items[.specificFavourite] = [.specificFavourite(.home, nil), .specificFavourite(.work, nil)]
+        }
     }
 
     typealias DataSource = UITableViewDiffableDataSource<SearchSection, CellType>
@@ -127,7 +131,24 @@ public class SearchViewModel {
             currentSnapShot.appendSections([key])
             switch key {
             case .favourite: currentSnapShot.appendItems(value, toSection: key)
-            case .specificFavourite: currentSnapShot.appendItems(value, toSection: key)
+            case .specificFavourite:
+                var allFavs: [CellType] = [.specificFavourite(.home, nil), .specificFavourite(.work, nil)]
+                value.forEach { cellType in
+                    switch cellType {
+                    case .specificFavourite(let favType, _):
+                        switch favType {
+                        case .home:
+                            allFavs.remove(at: 0)
+                            allFavs.insert(cellType, at: 0)
+                            
+                        case .work:
+                            allFavs.remove(at: 1)
+                            allFavs.insert(cellType, at: 1)
+                        }
+                    default: ()
+                    }
+                }
+                currentSnapShot.appendItems(Array(allFavs), toSection: key)
             case .history: currentSnapShot.appendItems(value, toSection: key)
             case .search: currentSnapShot.appendItems(value, toSection: key)
             }
