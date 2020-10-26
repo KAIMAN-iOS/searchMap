@@ -17,14 +17,15 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/jerometonnelier/KExtensions", from: "1.0.0"),
         .package(name: "KCoordinatorKit", url: "https://github.com/jerometonnelier/K-CoordinatorKit", from: "1.0.1"),
-        .package(url: "https://github.com/gordontucker/FittedSheets", from: "2.0.0"),
         .package(name: "IQKeyboardManagerSwift", url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "6.5.0"),
+        .package(url: "https://github.com/jerometonnelier/ActionButton", from: "1.0.0"),
+        .package(url: "https://github.com/jerometonnelier/ReverseGeocodingMap", from: "1.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SearchMap",
-            dependencies: ["KExtensions", "KCoordinatorKit", "IQKeyboardManagerSwift"])
+            dependencies: ["KExtensions", "KCoordinatorKit", "IQKeyboardManagerSwift", "ActionButton", "ReverseGeocodingMap"])
     ]
 )

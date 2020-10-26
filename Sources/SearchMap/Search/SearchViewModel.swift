@@ -136,7 +136,8 @@ public class SearchViewModel {
     func placemark(at indexPath: IndexPath) -> Placemark? {
         // fav or history
         guard indexPath.row < items[.search]?.count ?? 0 else {
-            return nil
+            let section = items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })
+            return items[section[indexPath.section]]?[indexPath.row]
         }
         return items[.search]?[indexPath.row]
     }

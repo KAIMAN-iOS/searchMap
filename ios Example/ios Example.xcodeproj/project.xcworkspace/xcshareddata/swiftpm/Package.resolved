@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "FittedSheets",
-        "repositoryURL": "https://github.com/gordontucker/FittedSheets",
-        "state": {
-          "branch": null,
-          "revision": "145023a002409e4378be6ff8c83f7bf9c1e07bab",
-          "version": "2.2.2"
-        }
-      },
-      {
         "package": "HGCircularSlider",
         "repositoryURL": "https://github.com/HamzaGhazouani/HGCircularSlider",
         "state": {

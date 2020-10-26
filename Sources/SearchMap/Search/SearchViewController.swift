@@ -192,11 +192,19 @@ class SearchViewController: UIViewController {
         case .destination: booking.destination = nil
         }
     }
+    
+    func updateBooking(_ place: Placemark) {
+        switch searchType {
+        case .origin: booking.origin = place
+        case .destination: booking.destination = place
+        }
+    }
 }
 
 extension SearchViewController: RefreshFavouritesDelegate {
     func refresh() {
-        if viewModel.placemark(at: IndexPath(row: 0, section: 0)) == nil {
+        // reload only if there are no search
+        if viewModel.items[.search] == nil {
             viewModel.applyPendingSnapshot(in: datasource)
         }
     }
@@ -204,13 +212,30 @@ extension SearchViewController: RefreshFavouritesDelegate {
 
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        view.endEditing(true)
-        guard let place = viewModel.placemark(at: indexPath) else { return }
-        switch searchType {
-        case .origin: booking.origin = place
-        case .destination: booking.destination = place
+        defer {
+            view.endEditing(true)
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let place = viewModel.placemark(at: indexPath) else { return }
+        
+        guard  originTextField.isFirstResponder || destinationTextField.isFirstResponder else {
+            let alertController = UIAlertController(title: "For which location do you want to update your journey ?".bundleLocale(), message: "".bundleLocale(), preferredStyle: .alert)
+            alertController.view.tintColor = #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+            alertController.addAction(UIAlertAction(title: "Cancel".bundleLocale(), style: .cancel, handler: { _ in
+            }))
+            alertController.addAction(UIAlertAction(title: "Origin".bundleLocale(), style: .default, handler: { [weak self] _ in
+                self?.searchType = .origin
+                self?.updateBooking(place)
+            }))
+            alertController.addAction(UIAlertAction(title: "Destination".bundleLocale(), style: .default, handler: { [weak self] _ in
+                self?.searchType = .destination
+                self?.updateBooking(place)
+            }))
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+        updateBooking(place)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -230,6 +255,15 @@ extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         clearBooking()
         viewModel.applyPendingSnapshot(in: datasource)
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
     
