@@ -26,6 +26,14 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: FavouriteDisplayDelegate {
+    func didAddFavourite(_: Placemark) {
+        
+    }
+    
+    func didDeleteFavourite(_: Placemark) {
+        
+    }
+    
     func loadFavourites(completion: @escaping (([SearchViewModel.SearchSection : [Placemark]]) -> Void)) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             completion([.favourite : [Placemark(name: "Test", address: "test address", coordinates: kCLLocationCoordinate2DInvalid)],

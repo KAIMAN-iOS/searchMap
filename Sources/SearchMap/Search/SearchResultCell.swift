@@ -23,7 +23,7 @@ class SearchResultCell: UITableViewCell {
     
     func configure(_ model: SearchViewModel.CellType) {
         switch model {
-        case .specificFavourite(let type): configure(type)
+        case .specificFavourite(let type, let place): configure(type, place: place)
         case .favourite(let place): configure(place)
         case .history(let place): configure(place, iconTintColor: #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1))
         case .search(let place): configure(place)
@@ -31,7 +31,7 @@ class SearchResultCell: UITableViewCell {
     }
     
     
-    func configure(_ favType: FavouriteType) {
+    func configure(_ favType: FavouriteType, place placemark: Placemark?) {
         icon.backgroundColor = #colorLiteral(red: 0.889537096, green: 0.9146017432, blue: 0.9526402354, alpha: 1)
         address.isHidden = true
         name.set(text: favType.name, for: FontType.default, textColor: #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1))

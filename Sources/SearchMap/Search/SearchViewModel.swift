@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import TableViewExtension
 
-public enum FavouriteType: Int {
+public enum FavouriteType: Hashable {
     case home, work
     
     var name: String {
@@ -29,6 +29,8 @@ public enum FavouriteType: Int {
 
 public protocol FavouriteDisplayDelegate: class {
     func loadFavourites(completion: @escaping (([SearchViewModel.SearchSection: [Placemark]]) -> Void))
+    func didAddFavourite(_: Placemark)
+    func didDeleteFavourite(_: Placemark)
 }
 
 protocol RefreshFavouritesDelegate: class {
@@ -52,7 +54,7 @@ public class SearchViewModel {
         static func == (lhs: CellType, rhs: CellType) -> Bool {
             return lhs.hashValue == rhs.hashValue
         }
-        case specificFavourite(_: FavouriteType), favourite(_: Placemark), history(_: Placemark), search(_: Placemark)
+        case specificFavourite(_: FavouriteType, _: Placemark?), favourite(_: Placemark), history(_: Placemark), search(_: Placemark)
         
         func hash(into hasher: inout Hasher) {
             switch self {
@@ -60,9 +62,10 @@ public class SearchViewModel {
                 hasher.combine("favourite")
                 hasher.combine(place)
                 
-            case .specificFavourite(let type):
+            case .specificFavourite(let type, let place):
                 hasher.combine("specificFavourite")
                 hasher.combine(type)
+                hasher.combine(place)
                 
             case .history(let place):
                 hasher.combine("history")
@@ -79,25 +82,37 @@ public class SearchViewModel {
         didSet {
             favDelegate?.loadFavourites(completion: { [weak self] favs in
                 favs.forEach { key, value in
-                    self?.items[key] = value
+                    switch key {
+                    case .favourite: self?.items[key] = value.compactMap({ .favourite($0) })
+                    case .specificFavourite: self?.items[key] = value.compactMap({ place -> CellType? in
+                        guard let type = place.specialFavourite else { return nil }
+                        return type == .home ? CellType.specificFavourite(.home, place) : CellType.specificFavourite(.work, place)
+                    })
+                    case .history: self?.items[key] = value.compactMap({ .history($0) })
+                    case .search: self?.items[key] = value.compactMap({ .search($0) })
+                    }
                 }
                 self?.refreshDelegate?.refresh()
             })
         }
     }
     weak var refreshDelegate: RefreshFavouritesDelegate?
+    
+    init() {
+    }
 
     typealias DataSource = UITableViewDiffableDataSource<SearchSection, CellType>
     typealias SnapShot = NSDiffableDataSourceSnapshot<SearchSection, CellType>
     var currentSnapShot: SnapShot!
-    var items: [SearchSection: [Placemark]] = [:]
+    var items: [SearchSection: [CellType]] = [:]
     func applySearchSnapshot(in dataSource: DataSource, results: [Placemark], animatingDifferences: Bool = true) {
         currentSnapShot = dataSource.snapshot()
         currentSnapShot.deleteSections(currentSnapShot.sectionIdentifiers)
         currentSnapShot.deleteAllItems()
         currentSnapShot.appendSections([.search])
-        currentSnapShot.appendItems(results.compactMap({ CellType.search($0) }), toSection: .search)
-        items[.search] = results
+        let seachCellType = results.compactMap({ CellType.search($0) })
+        currentSnapShot.appendItems(seachCellType, toSection: .search)
+        items[.search] = seachCellType
         dataSource.apply(currentSnapShot, animatingDifferences: false) {
             print("osiuvno")
         }
@@ -111,10 +126,10 @@ public class SearchViewModel {
         items.sorted(by: { $0.key.sortedIndex < $1.key.sortedIndex }).forEach { key, value in
             currentSnapShot.appendSections([key])
             switch key {
-            case .favourite: currentSnapShot.appendItems(value.compactMap({ CellType.favourite($0) }), toSection: key)
-            case .specificFavourite: currentSnapShot.appendItems(value.compactMap({$0.specialFavourite}).compactMap({ CellType.specificFavourite($0) }), toSection: key)
-            case .history: currentSnapShot.appendItems(value.compactMap({ CellType.history($0) }), toSection: key)
-            case .search: currentSnapShot.appendItems(value.compactMap({ CellType.search($0) }), toSection: key)
+            case .favourite: currentSnapShot.appendItems(value, toSection: key)
+            case .specificFavourite: currentSnapShot.appendItems(value, toSection: key)
+            case .history: currentSnapShot.appendItems(value, toSection: key)
+            case .search: currentSnapShot.appendItems(value, toSection: key)
             }
         }
         dataSource.apply(currentSnapShot, animatingDifferences: false) {
@@ -137,8 +152,17 @@ public class SearchViewModel {
         // fav or history
         guard indexPath.row < items[.search]?.count ?? 0 else {
             let section = items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })
-            return items[section[indexPath.section]]?[indexPath.row]
+            switch items[section[indexPath.section]]?[indexPath.row] {
+            case .favourite(let place): return place
+            case .history(let place): return place
+            case .search(let place): return place
+            case .specificFavourite(_, let place): return place
+            default: return nil
+            }
         }
-        return items[.search]?[indexPath.row]
+        switch items[.search]?[indexPath.row] {
+        case .search(let place): return place
+        default: return nil
+        }
     }
 }
