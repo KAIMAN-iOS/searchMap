@@ -17,6 +17,47 @@ enum BookingPlaceType {
     case origin, destination
 }
 
+public enum PlacemarkSection {
+    case favourite, specificFavourite, history, search
+    
+    var sortedIndex: Int {
+        switch self {
+        case .specificFavourite: return 0
+        case .favourite: return 1
+        case .history: return 2
+        case .search: return 3
+        }
+    }
+}
+
+enum PlacemarkCellType: Hashable, Equatable {
+    static func == (lhs: PlacemarkCellType, rhs: PlacemarkCellType) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    case specificFavourite(_: FavouriteType, _: Placemark?), favourite(_: Placemark), history(_: Placemark), search(_: Placemark)
+    
+    func hash(into hasher: inout Hasher) {
+        switch self {
+        case .favourite(let place):
+            hasher.combine("favourite")
+            hasher.combine(place)
+            
+        case .specificFavourite(let type, let place):
+            hasher.combine("specificFavourite")
+            hasher.combine(type)
+            hasher.combine(place)
+            
+        case .history(let place):
+            hasher.combine("history")
+            hasher.combine(place)
+            
+        case .search(let place):
+            hasher.combine("search")
+            hasher.combine(place)
+        }
+    }
+}
+
 public class BookingWrapper: NSObject {
     @objc dynamic public var origin: Placemark!
     @objc dynamic public var destination: Placemark!

@@ -11,7 +11,7 @@ import MapKit
 import LabelExtension
 import FontExtension
 
-class SearchResultCell: UITableViewCell {
+class PlacemarkCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         addDefaultSelectedBackground(#colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1).withAlphaComponent(0.5))
@@ -21,7 +21,7 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var address: UILabel!
     
     
-    func configure(_ model: SearchViewModel.CellType) {
+    func configure(_ model: PlacemarkCellType) {
         switch model {
         case .specificFavourite(let type, let place): configure(type, place: place)
         case .favourite(let place): configure(place)

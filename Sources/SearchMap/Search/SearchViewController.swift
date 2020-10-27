@@ -65,6 +65,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!  {
         didSet {
             tableView.tableFooterView = UIView()
+            tableView.register(UINib(nibName: "PlacemarkCell", bundle: .module), forCellReuseIdentifier: "PlacemarkCell")
         }
     }
     @IBOutlet weak var card: UIView!
@@ -240,6 +241,14 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 2
+    }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return viewModel.contextMenuConfigurationForRow(at: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return viewModel.swipeActionsConfigurationForRow(at: indexPath, in: tableView)
     }
 }
 

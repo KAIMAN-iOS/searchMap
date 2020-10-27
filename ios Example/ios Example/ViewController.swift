@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController: FavouriteDisplayDelegate {
+extension ViewController: FavouriteDelegate {
     func didAddFavourite(_: Placemark) {
         
     }
@@ -34,7 +34,7 @@ extension ViewController: FavouriteDisplayDelegate {
         
     }
     
-    func loadFavourites(completion: @escaping (([SearchViewModel.SearchSection : [Placemark]]) -> Void)) {
+    func loadFavourites(completion: @escaping (([PlacemarkSection : [Placemark]]) -> Void)) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             completion([.favourite : [Placemark(name: "Test", address: "test address", coordinates: kCLLocationCoordinate2DInvalid)],
                         .specificFavourite : [Placemark(name: "Test home", address: "test address home", coordinates: kCLLocationCoordinate2DInvalid, specialFavourite: .home)],

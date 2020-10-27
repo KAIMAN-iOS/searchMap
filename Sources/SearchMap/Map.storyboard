@@ -158,63 +158,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="663.5"/>
                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                                         <inset key="separatorInset" minX="63" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchResultCell" rowHeight="64" id="3V5-dC-9P9" customClass="SearchResultCell" customModule="SearchMap">
-                                                <rect key="frame" x="0.0" y="55.5" width="414" height="64"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3V5-dC-9P9" id="vMI-2J-rvc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home" translatesAutoresizingMaskIntoConstraints="NO" id="wxG-Hb-K6r">
-                                                            <rect key="frame" x="16" y="14" width="36" height="36"/>
-                                                            <color key="backgroundColor" name="lightGrayColor"/>
-                                                            <color key="tintColor" name="selectedTitleColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="36" id="7GO-4M-vjL"/>
-                                                                <constraint firstAttribute="width" secondItem="wxG-Hb-K6r" secondAttribute="height" multiplier="1:1" id="Fsw-fF-rjK"/>
-                                                            </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                    <integer key="value" value="18"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </imageView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="a66-Fz-uF4">
-                                                            <rect key="frame" x="64" y="11" width="318" height="42"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H4X-gO-dyf">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="318" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13m-RK-cbu">
-                                                                    <rect key="frame" x="0.0" y="20.5" width="318" height="21.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstItem="wxG-Hb-K6r" firstAttribute="centerY" secondItem="vMI-2J-rvc" secondAttribute="centerY" id="1iq-ZY-98L"/>
-                                                        <constraint firstItem="wxG-Hb-K6r" firstAttribute="leading" secondItem="vMI-2J-rvc" secondAttribute="leading" constant="16" id="XTu-UV-DVB"/>
-                                                        <constraint firstAttribute="bottomMargin" secondItem="a66-Fz-uF4" secondAttribute="bottom" id="Z88-01-zUH"/>
-                                                        <constraint firstItem="a66-Fz-uF4" firstAttribute="leading" secondItem="wxG-Hb-K6r" secondAttribute="trailing" constant="12" id="cth-Ni-hg8"/>
-                                                        <constraint firstItem="wxG-Hb-K6r" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vMI-2J-rvc" secondAttribute="top" constant="14" id="ji6-0b-B6X"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="a66-Fz-uF4" secondAttribute="trailing" constant="12" id="kLx-xl-sQG"/>
-                                                        <constraint firstItem="a66-Fz-uF4" firstAttribute="top" secondItem="vMI-2J-rvc" secondAttribute="topMargin" id="pcO-k4-1gN"/>
-                                                    </constraints>
-                                                </tableViewCellContentView>
-                                                <connections>
-                                                    <outlet property="address" destination="13m-RK-cbu" id="5vr-Dn-Gdl"/>
-                                                    <outlet property="icon" destination="wxG-Hb-K6r" id="fnk-8e-pC6"/>
-                                                    <outlet property="name" destination="H4X-gO-dyf" id="OlR-1z-WoO"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l4l-SI-eBU">
                                         <rect key="frame" x="0.0" y="663.5" width="414" height="98"/>
@@ -390,7 +333,6 @@
         <image name="bookingArrow" width="15.5" height="11.5"/>
         <image name="close" width="33.5" height="33.5"/>
         <image name="dashedLine" width="5.5" height="95"/>
-        <image name="home" width="13.5" height="15.5"/>
         <image name="location" width="119" height="119"/>
         <image name="map" width="23.5" height="19.5"/>
         <namedColor name="Color">
