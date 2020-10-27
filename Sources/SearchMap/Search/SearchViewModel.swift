@@ -169,17 +169,9 @@ public class SearchViewModel {
     func contextMenuConfigurationForRow(at indexPath: IndexPath) -> UIContextMenuConfiguration? {
         let section = sortedSections[indexPath.section]
         switch section {
-        case .favourite:
-            guard let place = placemark(at: indexPath) else { return nil }
-            return favourtiteViewModel?.contextMenuConfiguration(for: place)
-            
-        case .specificFavourite:
-            guard let place = placemark(at: indexPath) else {
-                return [FavouriteEditAction.edit].contextMenuConfiguration {  [weak self] action in
-                    self?.perform(action: action, at: indexPath)
-                }
-            }
-            return favourtiteViewModel?.contextMenuConfiguration(for: place)
+        case .favourite, .specificFavourite:
+            return favourtiteViewModel?.contextMenuConfiguration(for: placemark(at: indexPath),
+                                                                 specificType: section == .specificFavourite ? (indexPath.row == 0 ? .home : .work) : nil)
             
         default:
             guard let actions = actions(at: indexPath) else { return nil }
@@ -192,17 +184,10 @@ public class SearchViewModel {
     func swipeActionsConfigurationForRow(at indexPath: IndexPath, in tableView: UITableView) -> UISwipeActionsConfiguration? {
         let section = sortedSections[indexPath.section]
         switch section {
-        case .favourite:
-            guard let place = placemark(at: indexPath) else { return nil }
-            return favourtiteViewModel?.swipeActionsConfiguration(for: place, in: tableView)
-            
-        case .specificFavourite:
-            guard let place = placemark(at: indexPath) else {
-                return [FavouriteEditAction.edit].swipeActions { [weak self] action in
-                    self?.perform(action: action, at: indexPath)
-                }
-            }
-            return favourtiteViewModel?.swipeActionsConfiguration(for: place, in: tableView)
+        case .favourite, .specificFavourite:
+            return favourtiteViewModel?.swipeActionsConfiguration(for: placemark(at: indexPath),
+                                                                  specificType: section == .specificFavourite ? (indexPath.row == 0 ? .home : .work) : nil,
+                                                                  in: tableView)
             
         default:
             guard let actions = actions(at: indexPath) else { return nil }

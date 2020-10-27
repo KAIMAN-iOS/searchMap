@@ -101,7 +101,7 @@ class FavouriteViewModel {
     }
     
     
-    func perform(action: FavouriteEditAction, for place: Placemark) {
+    func perform(action: FavouriteEditAction, for place: Placemark?) {
         
     }
     
@@ -110,35 +110,29 @@ class FavouriteViewModel {
         return [.delete, .edit]
     }
     
-    func contextMenuConfiguration(for place: Placemark) -> UIContextMenuConfiguration? {
-        guard let actions = actions(for: place) else { return nil }
-        var contextActions: [UIAction] = []
-        actions.forEach { action in
-            contextActions.append(UIAction(title: action.title, image: action.icon) { [weak self] _ in
-                self?.perform(action: action, for: place)
-            })
+    func contextMenuConfiguration(for place: Placemark?, specificType: FavouriteType? = nil) -> UIContextMenuConfiguration? {
+        guard let place = place else {
+            return specificType == nil ? nil : [FavouriteEditAction.edit].contextMenuConfiguration {  [weak self] action in
+                self?.perform(action: action, for: nil)
+            }
         }
-        
-        return UIContextMenuConfiguration(identifier: nil,
-                                          previewProvider: nil) { _ in
-            UIMenu(title: "Actions".local(), children: contextActions)
+        guard let actions = actions(for: place) else { return nil }
+        return actions.contextMenuConfiguration {  [weak self] action in
+            self?.perform(action: action, for: place)
         }
     }
     
-    func swipeActionsConfiguration(for place: Placemark, in tableView: UITableView) -> UISwipeActionsConfiguration? {
-        guard let actions = actions(for: place) else { return nil }
-        var swipeActions: [UIContextualAction] = []
-        actions.forEach { action in
-            let swipe = UIContextualAction(style: .normal, title: action.title) { [weak self] (_, view, completionHandler) in
-                tableView.setEditing(false, animated: true)
-                self?.perform(action: action, for: place)
+    func swipeActionsConfiguration(for place: Placemark?, specificType: FavouriteType? = nil, in tableView: UITableView) -> UISwipeActionsConfiguration? {
+        guard let place = place else {
+            return specificType == nil ? nil : [FavouriteEditAction.edit].swipeActions { [weak self] action in
+                self?.perform(action: action, for: nil)
             }
-            swipe.backgroundColor = action.color
-            swipe.image = action.icon
-            swipeActions.append(swipe)
         }
-        
-        return UISwipeActionsConfiguration(actions: swipeActions)
+        guard let actions = actions(for: place) else { return nil }
+        return actions.swipeActions { [weak self] action in
+            tableView.setEditing(false, animated: true)
+            self?.perform(action: action, for: place)
+        }
     }
 }
 
