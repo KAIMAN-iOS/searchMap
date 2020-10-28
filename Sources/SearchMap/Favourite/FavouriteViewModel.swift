@@ -26,19 +26,23 @@ public enum FavouriteType: Int, Hashable {
 }
 
 enum FavouriteEditAction {
-    case edit, delete
+    case edit, delete, add, show
     
     var title: String {
         switch self {
         case .edit: return "edit".bundleLocale()
         case .delete: return "delete".bundleLocale()
+        case .add: return "plus".bundleLocale()
+        case .show: return "star".bundleLocale()
         }
     }
     
     var icon: UIImage? {
         switch self {
         case .edit: return UIImage(systemName: "pencil")
-        case .delete: return UIImage(systemName: "trash")
+        case .delete: return UIImage(systemName: "star.slash")
+        case .add: return UIImage(systemName: "star")
+        case .show: return UIImage(systemName: "list.bullet")
         }
     }
     
@@ -46,6 +50,8 @@ enum FavouriteEditAction {
         switch self {
         case .edit: return #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1)
         case .delete: return #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+        case .add: return #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+        case .show: return #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1)
         }
     }
 }
@@ -79,14 +85,21 @@ extension Array where Element ==  FavouriteEditAction {
     }
 }
 
-class FavouriteViewModel {
-    weak var favDelegate: FavouriteDelegate!
-    weak var refreshDelegate: RefreshFavouritesDelegate?
-    var favourites: [PlacemarkSection: [Placemark]] = [:]
+public class FavouriteViewModel {
+    public weak var favDelegate: FavouriteDelegate!
+    public weak var refreshDelegate: RefreshFavouritesDelegate?
+    public weak var coordinatorDelegate: FavouriteCoordinatorDelegate?
+    public var favourites: [PlacemarkSection: [Placemark]] = [:]
+    public static let shared: FavouriteViewModel = FavouriteViewModel()
     
-    init(favDelegate: FavouriteDelegate!) {
-        self.favDelegate = favDelegate
+    public var home: Placemark? {
+        return favourites.values.flatMap({$0}).filter({ $0.specialFavourite == .home }).first
     }
+    public var work: Placemark? {
+        return favourites.values.flatMap({$0}).filter({ $0.specialFavourite == .work }).first
+    }
+    
+    private init() { }
     
     func loadFavourites(completion: @escaping (([PlacemarkSection: [Placemark]]) -> Void)) {
         favDelegate?.loadFavourites(completion: { [weak self] favs in
@@ -100,38 +113,75 @@ class FavouriteViewModel {
         return true
     }
     
-    
     func perform(action: FavouriteEditAction, for place: Placemark?) {
-        
+        switch action {
+        case .edit:
+            guard let place = place else { return }
+            coordinatorDelegate?.editFavourite(place)
+            
+        case .delete:
+            guard let place = place else { return }
+            coordinatorDelegate?.deleteFavourite(place)
+            
+        case .add:
+            coordinatorDelegate?.addNewFavourite()
+            
+        case .show:
+            coordinatorDelegate?.showFavourites()
+        }
     }
     
-    func actions(for place: Placemark) -> [FavouriteEditAction]? {
+    func actions(for place: Placemark,
+                 showFavListButton: Bool = true) -> [FavouriteEditAction]? {
         guard favourites.values.contains([place]) else { return nil }
-        return [.delete, .edit]
+        return showFavListButton ? [.delete, .edit, .show] : [.delete, .edit]
     }
     
-    func contextMenuConfiguration(for place: Placemark?, specificType: FavouriteType? = nil) -> UIContextMenuConfiguration? {
+    func contextMenuConfiguration(for place: Placemark?,
+                                  specificType: FavouriteType? = nil,
+                                  showFavListButton: Bool = true,
+                                  selectCompletion: ((FavouriteEditAction, Placemark?) -> Void)? = nil) -> UIContextMenuConfiguration? {
         guard let place = place else {
-            return specificType == nil ? nil : [FavouriteEditAction.edit].contextMenuConfiguration {  [weak self] action in
-                self?.perform(action: action, for: nil)
+            return specificType == nil ? nil : [FavouriteEditAction.edit, FavouriteEditAction.show].contextMenuConfiguration {  [weak self] action in
+                if let completion = selectCompletion {
+                    completion(action, nil)
+                } else {
+                    self?.perform(action: action, for: nil)
+                }
             }
         }
-        guard let actions = actions(for: place) else { return nil }
+        guard let actions = actions(for: place, showFavListButton: showFavListButton) else { return nil }
         return actions.contextMenuConfiguration {  [weak self] action in
-            self?.perform(action: action, for: place)
+            if let completion = selectCompletion {
+                completion(action, place)
+            } else {
+                self?.perform(action: action, for: place)
+            }
         }
     }
     
-    func swipeActionsConfiguration(for place: Placemark?, specificType: FavouriteType? = nil, in tableView: UITableView) -> UISwipeActionsConfiguration? {
+    func swipeActionsConfiguration(for place: Placemark?,
+                                   specificType: FavouriteType? = nil,
+                                   in tableView: UITableView,
+                                   showFavListButton: Bool = true,
+                                   selectCompletion: ((FavouriteEditAction, Placemark?) -> Void)? = nil) -> UISwipeActionsConfiguration? {
         guard let place = place else {
-            return specificType == nil ? nil : [FavouriteEditAction.edit].swipeActions { [weak self] action in
-                self?.perform(action: action, for: nil)
+            return specificType == nil ? nil : [FavouriteEditAction.edit, FavouriteEditAction.show].swipeActions { [weak self] action in
+                if let completion = selectCompletion {
+                    completion(action, nil)
+                } else {
+                    self?.perform(action: action, for: nil)
+                }
             }
         }
-        guard let actions = actions(for: place) else { return nil }
+        guard let actions = actions(for: place, showFavListButton: showFavListButton) else { return nil }
         return actions.swipeActions { [weak self] action in
             tableView.setEditing(false, animated: true)
-            self?.perform(action: action, for: place)
+            if let completion = selectCompletion {
+                completion(action, place)
+            } else {
+                self?.perform(action: action, for: place)
+            }
         }
     }
 }

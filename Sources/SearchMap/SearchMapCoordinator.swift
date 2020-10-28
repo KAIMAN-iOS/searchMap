@@ -20,7 +20,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     let searchMapController = SearchMapController.create()
     lazy var searchNavigationController = UINavigationController()
     lazy var reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self)
-    public weak var favDelegate: FavouriteDelegate?
+    lazy var favCoordinator: FavouriteCoordinator<DeepLink> = FavouriteCoordinator(router: Router(navigationController: self.searchNavigationController))
     public var handleFavourites: Bool = true
     
     public override init(router: RouterType?) {
@@ -32,6 +32,8 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         super.init(router: moduleRouter!)
         searchMapController.coordinatorDelegate = self
         IQKeyboardManager.shared.enable = true
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
     }
     
     public override func toPresentable() -> UIViewController {
@@ -42,7 +44,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
 extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
     func showSearch(_ booking: inout BookingWrapper) {
         let ctrl = SearchViewController.create(booking: &booking, searchDelegate: self)
-        ctrl.viewModel.favDelegate = favDelegate
+        ctrl.viewModel.favourtiteViewModel.coordinatorDelegate = favCoordinator
         ctrl.viewModel.handleFavourites = handleFavourites
         if CLLocationCoordinate2DIsValid(searchMapController.map.userLocation.coordinate) {
             ctrl.userCoordinates = searchMapController.map.userLocation.coordinate
@@ -52,8 +54,6 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
         searchNavigationController.modalTransitionStyle = .crossDissolve
         searchNavigationController.navigationBar.isTranslucent = false
         searchNavigationController.navigationBar.tintColor = #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1)
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         router.present(searchNavigationController, animated: true)
     }
 }

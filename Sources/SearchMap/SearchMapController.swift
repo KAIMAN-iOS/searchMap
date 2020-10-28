@@ -72,6 +72,11 @@ class SearchMapController: UIViewController {
         checkAuthorization()
         map.showsUserLocation = false
         map.tintColor = #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+        if #available(iOS 14.0, *) {
+            self.navigationItem.backButtonDisplayMode = .minimal
+        } else {
+            navigationItem.backButtonTitle = ""
+        }
     }
     
     func handleObservers() {        

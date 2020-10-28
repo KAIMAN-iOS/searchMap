@@ -3,28 +3,31 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Favourite List View Controller-->
         <scene sceneID="uOu-cw-k8A">
             <objects>
-                <viewController id="GD6-8O-6S2" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavouriteListViewController" id="GD6-8O-6S2" customClass="FavouriteListViewController" customModule="SearchMap" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MCu-ud-SGX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x4u-bd-gJY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="x4u-bd-gJY">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="lightGrayColor"/>
+                                <color key="separatorColor" name="lightGrayColor"/>
+                                <inset key="separatorInset" minX="63" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Tb5-2W-Tjc"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="x4u-bd-gJY" secondAttribute="bottom" id="Yn8-b2-hHu"/>
                             <constraint firstItem="x4u-bd-gJY" firstAttribute="trailing" secondItem="Tb5-2W-Tjc" secondAttribute="trailing" id="luf-1q-5A6"/>
@@ -36,34 +39,133 @@
                     <navigationItem key="navigationItem" id="TXZ-DW-Ubi">
                         <barButtonItem key="rightBarButtonItem" title="add" image="plus" catalog="system" id="OUC-aV-Xv3">
                             <color key="tintColor" name="selectedTitleColor"/>
+                            <connections>
+                                <action selector="addNewFavourite" destination="GD6-8O-6S2" id="aFm-qZ-6IX"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="x4u-bd-gJY" id="nzN-PT-OSF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SqO-iv-VuP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1495.6521739130435" y="199.55357142857142"/>
         </scene>
-        <!--View Controller-->
+        <!--Favourite Edit View Controller-->
         <scene sceneID="uYi-I0-0n7">
             <objects>
-                <viewController id="3Qx-CS-v5O" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FavouriteEditViewController" id="3Qx-CS-v5O" customClass="FavouriteEditViewController" customModule="SearchMap" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7IY-Ub-G4F">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDa-8O-7Yr">
+                                <rect key="frame" x="0.0" y="8" width="414" height="329"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="398" placeholderIntrinsicHeight="50" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BOH-5F-E4g">
+                                        <rect key="frame" x="20" y="8" width="374" height="50"/>
+                                    </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3gX-I4-dos" customClass="AkiraTextField" customModule="TextFieldEffects">
+                                        <rect key="frame" x="20" y="78" width="374" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="ged-ZH-b7b"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1OY-8L-BdH" customClass="AkiraTextField" customModule="TextFieldEffects">
+                                        <rect key="frame" x="20" y="174" width="374" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="8FT-8w-MYo"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Say-qx-Idd" customClass="ActionButton" customModule="ActionButton">
+                                        <rect key="frame" x="20" y="257" width="197" height="52"/>
+                                        <color key="backgroundColor" name="backgroundColor"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="contentEdgeInsets" minX="30" minY="15" maxX="30" maxY="15"/>
+                                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="PICK ON MAP" image="map"/>
+                                        <connections>
+                                            <action selector="showMap" destination="3Qx-CS-v5O" eventType="touchUpInside" id="ssh-5V-N8j"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="1OY-8L-BdH" firstAttribute="leading" secondItem="3gX-I4-dos" secondAttribute="leading" id="5uT-yH-B55"/>
+                                    <constraint firstItem="3gX-I4-dos" firstAttribute="leading" secondItem="BOH-5F-E4g" secondAttribute="leading" id="Abf-Qk-58V"/>
+                                    <constraint firstItem="3gX-I4-dos" firstAttribute="top" secondItem="BOH-5F-E4g" secondAttribute="bottom" constant="20" id="Aix-25-zVD"/>
+                                    <constraint firstItem="BOH-5F-E4g" firstAttribute="top" secondItem="mDa-8O-7Yr" secondAttribute="top" constant="8" id="G36-T6-hUB"/>
+                                    <constraint firstItem="1OY-8L-BdH" firstAttribute="trailing" secondItem="3gX-I4-dos" secondAttribute="trailing" id="Jbq-ya-Ow2"/>
+                                    <constraint firstItem="Say-qx-Idd" firstAttribute="leading" secondItem="1OY-8L-BdH" secondAttribute="leading" id="TMl-UY-Uwt"/>
+                                    <constraint firstAttribute="bottom" secondItem="Say-qx-Idd" secondAttribute="bottom" constant="20" symbolic="YES" id="Vp9-Rj-aPo"/>
+                                    <constraint firstItem="BOH-5F-E4g" firstAttribute="leading" secondItem="mDa-8O-7Yr" secondAttribute="leading" constant="20" id="ZCG-sJ-Xw1"/>
+                                    <constraint firstAttribute="trailing" secondItem="BOH-5F-E4g" secondAttribute="trailing" constant="20" id="ag5-HO-dPj"/>
+                                    <constraint firstItem="3gX-I4-dos" firstAttribute="trailing" secondItem="BOH-5F-E4g" secondAttribute="trailing" id="fRs-uE-XU6"/>
+                                    <constraint firstItem="Say-qx-Idd" firstAttribute="top" secondItem="1OY-8L-BdH" secondAttribute="bottom" constant="23" id="gJC-5T-w89"/>
+                                    <constraint firstItem="1OY-8L-BdH" firstAttribute="top" secondItem="3gX-I4-dos" secondAttribute="bottom" constant="36" id="gcR-EJ-6TT"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ycd-Xq-s10" customClass="ActionButton" customModule="ActionButton">
+                                <rect key="frame" x="20" y="722" width="374" height="52"/>
+                                <color key="backgroundColor" name="backgroundColor"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="30" minY="15" maxX="30" maxY="15"/>
+                                <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="SAVE PLACE"/>
+                                <connections>
+                                    <action selector="save" destination="3Qx-CS-v5O" eventType="touchUpInside" id="4HW-Yc-IcW"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="5M6-vd-PNA"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="lightGrayColor"/>
+                        <constraints>
+                            <constraint firstItem="mDa-8O-7Yr" firstAttribute="top" secondItem="5M6-vd-PNA" secondAttribute="top" constant="8" id="28t-jR-W7N"/>
+                            <constraint firstItem="mDa-8O-7Yr" firstAttribute="trailing" secondItem="5M6-vd-PNA" secondAttribute="trailing" id="DTN-G0-Kmu"/>
+                            <constraint firstItem="Ycd-Xq-s10" firstAttribute="leading" secondItem="5M6-vd-PNA" secondAttribute="leading" constant="20" id="EL7-uu-lVw"/>
+                            <constraint firstItem="5M6-vd-PNA" firstAttribute="trailing" secondItem="Ycd-Xq-s10" secondAttribute="trailing" constant="20" id="J1D-l7-9ve"/>
+                            <constraint firstItem="mDa-8O-7Yr" firstAttribute="leading" secondItem="5M6-vd-PNA" secondAttribute="leading" id="Oav-fc-EZb"/>
+                            <constraint firstItem="Ycd-Xq-s10" firstAttribute="bottom" secondItem="5M6-vd-PNA" secondAttribute="bottom" id="aR2-rM-EQg"/>
+                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="address" destination="1OY-8L-BdH" id="fJQ-E3-Ucv"/>
+                        <outlet property="name" destination="3gX-I4-dos" id="vzK-6W-Lej"/>
+                        <outlet property="pickMapButton" destination="Say-qx-Idd" id="xQO-Q4-4bZ"/>
+                        <outlet property="saveButton" destination="Ycd-Xq-s10" id="wNa-Cw-4wH"/>
+                        <outlet property="typeStackView" destination="BOH-5F-E4g" id="2DH-19-wxJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DCJ-aP-JfG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2296" y="200"/>
+            <point key="canvasLocation" x="2224.6376811594205" y="199.55357142857142"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="1OY-8L-BdH">
+            <size key="intrinsicContentSize" width="5" height="22"/>
+        </designable>
+        <designable name="3gX-I4-dos">
+            <size key="intrinsicContentSize" width="5" height="22"/>
+        </designable>
+    </designables>
     <resources>
+        <image name="map" width="23.5" height="19.5"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <namedColor name="backgroundColor">
+            <color red="0.98400002717971802" green="0.28999999165534973" blue="0.27500000596046448" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="lightGrayColor">
+            <color red="0.96862745100000003" green="0.97647058819999999" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="selectedTitleColor">
             <color red="0.98400002717971802" green="0.28999999165534973" blue="0.27500000596046448" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

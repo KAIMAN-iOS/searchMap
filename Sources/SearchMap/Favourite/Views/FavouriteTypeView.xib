@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FavouriteTypeView" customModule="SearchMap">
+            <rect key="frame" x="0.0" y="0.0" width="134" height="49"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wge-8n-DFl">
+                    <rect key="frame" x="0.0" y="0.0" width="134" height="49"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wgi-P9-ZvG">
+                            <rect key="frame" x="33.5" y="8" width="67" height="33"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="home" translatesAutoresizingMaskIntoConstraints="NO" id="VZF-II-Kea">
+                                    <rect key="frame" x="0.0" y="0.0" width="13.5" height="33"/>
+                                    <color key="tintColor" name="placeholderColor"/>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9M-GR-Egh">
+                                    <rect key="frame" x="21.5" y="0.0" width="45.5" height="33"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" name="placeholderColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkV-qX-ezF">
+                            <rect key="frame" x="0.0" y="0.0" width="134" height="49"/>
+                            <connections>
+                                <action selector="select" destination="iN0-l3-epB" eventType="touchUpInside" id="xDJ-nE-G0l"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="hkV-qX-ezF" firstAttribute="top" secondItem="wge-8n-DFl" secondAttribute="top" id="3oj-6e-r6b"/>
+                        <constraint firstItem="wgi-P9-ZvG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wge-8n-DFl" secondAttribute="leading" constant="8" id="Av6-K4-GvA"/>
+                        <constraint firstAttribute="bottom" secondItem="hkV-qX-ezF" secondAttribute="bottom" id="MyN-wu-JdN"/>
+                        <constraint firstItem="wgi-P9-ZvG" firstAttribute="centerX" secondItem="wge-8n-DFl" secondAttribute="centerX" id="dWr-J6-sSl"/>
+                        <constraint firstAttribute="trailing" secondItem="hkV-qX-ezF" secondAttribute="trailing" id="g6a-su-02R"/>
+                        <constraint firstItem="wgi-P9-ZvG" firstAttribute="top" secondItem="wge-8n-DFl" secondAttribute="top" constant="8" id="hD9-Lx-zh4"/>
+                        <constraint firstItem="hkV-qX-ezF" firstAttribute="leading" secondItem="wge-8n-DFl" secondAttribute="leading" id="id6-TY-FOt"/>
+                        <constraint firstItem="wgi-P9-ZvG" firstAttribute="centerY" secondItem="wge-8n-DFl" secondAttribute="centerY" id="ljk-md-FaB"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="wge-8n-DFl" secondAttribute="bottom" id="4sV-1z-DVr"/>
+                <constraint firstItem="wge-8n-DFl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9bB-gp-aqV"/>
+                <constraint firstAttribute="trailing" secondItem="wge-8n-DFl" secondAttribute="trailing" id="Crh-sc-La0"/>
+                <constraint firstItem="wge-8n-DFl" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="JF8-2I-eR0"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="card" destination="wge-8n-DFl" id="hud-le-Gk6"/>
+                <outlet property="icon" destination="VZF-II-Kea" id="9AX-s3-Mfv"/>
+                <outlet property="title" destination="J9M-GR-Egh" id="7zW-dn-PjI"/>
+            </connections>
+            <point key="canvasLocation" x="-68.115942028985515" y="-146.31696428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="home" width="13.5" height="15.5"/>
+        <namedColor name="placeholderColor">
+            <color red="0.62400001287460327" green="0.65100002288818359" blue="0.70599997043609619" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

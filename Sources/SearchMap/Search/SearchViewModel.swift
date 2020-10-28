@@ -13,40 +13,21 @@ protocol Editable: class {
     func canEditRow(at indexPath: IndexPath) -> Bool
 }
 
-class SearchDatasource: UITableViewDiffableDataSource<PlacemarkSection, PlacemarkCellType> {
+class PlacemarkDatasource: UITableViewDiffableDataSource<PlacemarkSection, PlacemarkCellType> {
     weak var editableDelegate: Editable?
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return editableDelegate?.canEditRow(at: indexPath) ?? false
     }
 }
 
-protocol RefreshFavouritesDelegate: class {
+public protocol RefreshFavouritesDelegate: class {
     func refresh()
 }
 
 public class SearchViewModel {
-    var favourtiteViewModel: FavouriteViewModel?
-    // used to load asynchronously the favourites
-    weak var favDelegate: FavouriteDelegate?  {
-        didSet {
-            favourtiteViewModel = FavouriteViewModel(favDelegate: favDelegate)
-            favourtiteViewModel?.loadFavourites(completion: { [weak self] favs in
-                favs.forEach { key, value in
-                    switch key {
-                    case .favourite: self?.items[key] = value.compactMap({ .favourite($0) })
-                    case .specificFavourite: self?.items[key] = value.compactMap({ place -> PlacemarkCellType? in
-                        guard let type = place.specialFavourite else { return nil }
-                        return type == .home ? PlacemarkCellType.specificFavourite(.home, place) : PlacemarkCellType.specificFavourite(.work, place)
-                    })
-                    case .history: self?.items[key] = value.compactMap({ .history($0) })
-                    case .search: self?.items[key] = value.compactMap({ .search($0) })
-                    }
-                }
-                self?.refreshDelegate?.refresh()
-            })
-        }
-    }
+    var favourtiteViewModel: FavouriteViewModel = FavouriteViewModel.shared
     weak var refreshDelegate: RefreshFavouritesDelegate?
+    weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
     var handleFavourites: Bool = true
     var sortedSections: [PlacemarkSection] {
         get {
@@ -58,12 +39,30 @@ public class SearchViewModel {
         if handleFavourites {
             items[.specificFavourite] = [.specificFavourite(.home, nil), .specificFavourite(.work, nil)]
         }
+        loadFavorites()
+    }
+    
+    func loadFavorites() {
+        favourtiteViewModel.loadFavourites(completion: { [weak self] favs in
+            favs.forEach { key, value in
+                switch key {
+                case .favourite: self?.items[key] = value.compactMap({ .favourite($0) })
+                case .specificFavourite: self?.items[key] = value.compactMap({ place -> PlacemarkCellType? in
+                    guard let type = place.specialFavourite else { return nil }
+                    return type == .home ? PlacemarkCellType.specificFavourite(.home, place) : PlacemarkCellType.specificFavourite(.work, place)
+                })
+                case .history: self?.items[key] = value.compactMap({ .history($0) })
+                case .search: self?.items[key] = value.compactMap({ .search($0) })
+                }
+            }
+            self?.refreshDelegate?.refresh()
+        })
     }
 
     typealias SnapShot = NSDiffableDataSourceSnapshot<PlacemarkSection, PlacemarkCellType>
     var currentSnapShot: SnapShot!
     var items: [PlacemarkSection: [PlacemarkCellType]] = [:]
-    func applySearchSnapshot(in dataSource: SearchDatasource, results: [Placemark], animatingDifferences: Bool = true) {
+    func applySearchSnapshot(in dataSource: PlacemarkDatasource, results: [Placemark], animatingDifferences: Bool = true) {
         currentSnapShot = dataSource.snapshot()
         currentSnapShot.deleteSections(currentSnapShot.sectionIdentifiers)
         currentSnapShot.deleteAllItems()
@@ -76,7 +75,7 @@ public class SearchViewModel {
         }
     }
     
-    func applyPendingSnapshot(in dataSource: SearchDatasource, animatingDifferences: Bool = true) {
+    func applyPendingSnapshot(in dataSource: PlacemarkDatasource, animatingDifferences: Bool = true) {
         items[.search] = nil
         currentSnapShot = dataSource.snapshot()
         currentSnapShot.deleteSections(currentSnapShot.sectionIdentifiers)
@@ -114,8 +113,8 @@ public class SearchViewModel {
         }
     }
     
-    func dataSource(for tableView: UITableView) -> SearchDatasource {
-        let datasource = SearchDatasource(tableView: tableView)  { (tableView, indexPath, model) -> UITableViewCell? in
+    func dataSource(for tableView: UITableView) -> PlacemarkDatasource {
+        let datasource = PlacemarkDatasource(tableView: tableView)  { (tableView, indexPath, model) -> UITableViewCell? in
             guard let cell: PlacemarkCell = tableView.automaticallyDequeueReusableCell(forIndexPath: indexPath) else {
                 return nil
             }
@@ -144,7 +143,21 @@ public class SearchViewModel {
     }
     
     func perform(action: FavouriteEditAction, at indexPath: IndexPath) {
-        
+        switch action {
+        case .edit:
+            guard let place = placemark(at: indexPath) else { return }
+            FavouriteViewModel.shared.coordinatorDelegate?.editFavourite(place)
+            
+        case .delete:
+            guard let place = placemark(at: indexPath) else { return }
+            FavouriteViewModel.shared.coordinatorDelegate?.deleteFavourite(place)
+            
+        case .add:
+            FavouriteViewModel.shared.coordinatorDelegate?.addNewFavourite()
+            
+        case .show:
+            FavouriteViewModel.shared.coordinatorDelegate?.showFavourites()
+        }
     }
     
     func actions(at indexPath: IndexPath) -> [FavouriteEditAction]? {
@@ -155,13 +168,13 @@ public class SearchViewModel {
         switch section {
         case .favourite, .specificFavourite:
             guard let place = placemark(at: indexPath) else { return nil }
-            return favourtiteViewModel?.actions(for: place)
+            return favourtiteViewModel.actions(for: place)
             
         default:
             switch items[sortedSections[indexPath.section]]?[indexPath.row] {
             case .favourite: return [.edit, .delete]
             case .specificFavourite(_, let place): return place == nil ? [.edit] : [.edit, .delete]
-            default: return nil
+            default: return [.add, .show]
             }
         }
     }
@@ -170,8 +183,11 @@ public class SearchViewModel {
         let section = sortedSections[indexPath.section]
         switch section {
         case .favourite, .specificFavourite:
-            return favourtiteViewModel?.contextMenuConfiguration(for: placemark(at: indexPath),
-                                                                 specificType: section == .specificFavourite ? (indexPath.row == 0 ? .home : .work) : nil)
+            return favourtiteViewModel.contextMenuConfiguration(for: placemark(at: indexPath),
+                                                                 specificType: section == .specificFavourite ? (indexPath.row == 0 ? .home : .work) : nil,
+                                                                 selectCompletion: { [weak self] (action, place) in
+                                                                    self?.perform(action: action, at: indexPath)
+                                                                 })
             
         default:
             guard let actions = actions(at: indexPath) else { return nil }
@@ -185,9 +201,12 @@ public class SearchViewModel {
         let section = sortedSections[indexPath.section]
         switch section {
         case .favourite, .specificFavourite:
-            return favourtiteViewModel?.swipeActionsConfiguration(for: placemark(at: indexPath),
+            return favourtiteViewModel.swipeActionsConfiguration(for: placemark(at: indexPath),
                                                                   specificType: section == .specificFavourite ? (indexPath.row == 0 ? .home : .work) : nil,
-                                                                  in: tableView)
+                                                                  in: tableView,
+                                                                  selectCompletion: { [weak self] (action, place) in
+                                                                     self?.perform(action: action, at: indexPath)
+                                                                  })
             
         default:
             guard let actions = actions(at: indexPath) else { return nil }
@@ -204,12 +223,12 @@ extension SearchViewModel: Editable {
         switch sortedSections[indexPath.section] {
         case .favourite:
             guard let place = placemark(at: indexPath) else { return false }
-            return favourtiteViewModel?.canEdit(place) ?? false
+            return favourtiteViewModel.canEdit(place)
             
         case .specificFavourite:
             // if the specific favs is not found, the specific fav is just empty, we can edit it
             guard let place = placemark(at: indexPath) else { return true }
-            return favourtiteViewModel?.canEdit(place) ?? false
+            return favourtiteViewModel.canEdit(place)
             
         default: return actions(at: indexPath)  != nil
         }

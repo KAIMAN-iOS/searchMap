@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
         "state": {
           "branch": null,
-          "revision": "c9ef497e8730c225e13723a3a0b38ecc607b4b41",
-          "version": "1.0.3"
+          "revision": "64d0b64997e689a4ee263bdf158302bcf1fa9a8c",
+          "version": "1.0.4"
         }
       },
       {
@@ -80,6 +80,15 @@
           "branch": null,
           "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
           "version": "5.0.1"
+        }
+      },
+      {
+        "package": "TextFieldEffects",
+        "repositoryURL": "https://github.com/raulriera/TextFieldEffects",
+        "state": {
+          "branch": null,
+          "revision": "7e563d4d6d755bb1ab6c1c049f8c215d7c489100",
+          "version": "1.7.0"
         }
       }
     ]

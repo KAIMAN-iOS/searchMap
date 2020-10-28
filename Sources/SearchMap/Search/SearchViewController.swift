@@ -75,6 +75,11 @@ class SearchViewController: UIViewController {
     var originObserver: NSKeyValueObservation?
     var destinationObserver: NSKeyValueObservation?
     let viewModel = SearchViewModel()
+    weak var coordinatorDelegate: SearchMapCoordinatorDelegate?  {
+        didSet {
+            viewModel.coordinatorDelegate = coordinatorDelegate
+        }
+    }
     
     deinit {
         print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
@@ -84,6 +89,11 @@ class SearchViewController: UIViewController {
     
     @IBAction func close() {
         searchDelegate?.close()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     @IBAction func showMap() {
