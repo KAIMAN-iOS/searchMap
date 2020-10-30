@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/jerometonnelier/KExtensions", from: "1.0.0"),
-        .package(name: "KCoordinatorKit", url: "https://github.com/jerometonnelier/K-CoordinatorKit", from: "1.0.1"),
+        .package(url: "https://github.com/jerometonnelier/KCoordinatorKit", from: "1.0.1"),
         .package(name: "IQKeyboardManagerSwift", url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "6.5.0"),
         .package(url: "https://github.com/jerometonnelier/ActionButton", from: "1.0.0"),
         .package(url: "https://github.com/jerometonnelier/ReverseGeocodingMap", from: "1.0.0"),
