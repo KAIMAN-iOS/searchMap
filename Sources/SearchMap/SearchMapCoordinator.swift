@@ -21,7 +21,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     lazy var searchNavigationController = UINavigationController()
     lazy var reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self)
     lazy var favCoordinator: FavouriteCoordinator<DeepLink> = FavouriteCoordinator(router: Router(navigationController: self.searchNavigationController))
-    public var handleFavourites: Bool = true
+    public var handleFavourites: Bool = false
     
     public override init(router: RouterType?) {
         var moduleRouter = router
