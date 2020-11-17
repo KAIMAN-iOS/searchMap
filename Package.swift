@@ -20,7 +20,7 @@ let package = Package(
         .package(name: "IQKeyboardManagerSwift", url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "6.5.0"),
         .package(url: "https://github.com/jerometonnelier/ActionButton", from: "1.0.0"),
         .package(url: "https://github.com/jerometonnelier/ReverseGeocodingMap", from: "1.0.0"),
-        .package(url: "https://github.com/raulriera/TextFieldEffects", from: "1.7.0"),
+        .package(url: "https://github.com/jerometonnelier/TextFieldEffects", from: "1.7.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

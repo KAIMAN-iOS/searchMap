@@ -84,11 +84,11 @@
       },
       {
         "package": "TextFieldEffects",
-        "repositoryURL": "https://github.com/raulriera/TextFieldEffects",
+        "repositoryURL": "https://github.com/jerometonnelier/TextFieldEffects",
         "state": {
           "branch": null,
-          "revision": "7e563d4d6d755bb1ab6c1c049f8c215d7c489100",
-          "version": "1.7.0"
+          "revision": "2cea8aeac71fb8c92d593d4b9fc9dd27d6180f78",
+          "version": "1.7.1"
         }
       }
     ]
