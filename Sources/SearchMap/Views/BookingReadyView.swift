@@ -17,7 +17,7 @@ protocol BookingReadyDelegate: class {
 class BookingReadyView: UIView {
     @IBOutlet weak var title: UILabel!  {
         didSet {
-            title.set(text: "All set".bundleLocale(), for: FontType.title, textColor: #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1))
+            title.set(text: "All set".bundleLocale(), for: FontType.title, textColor: SearchMapController.configuration.palette.mainTexts)
         }
     }
 

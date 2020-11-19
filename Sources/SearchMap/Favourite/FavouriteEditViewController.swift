@@ -25,9 +25,9 @@ class FavouriteEditViewController: UIViewController {
         didSet {
             name.placeholder = "Place name".bundleLocale()
             name.font = FontType.default.font
-            name.textColor = #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1)
-            name.placeholderColor = #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1)
-            name.borderColor = #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1)
+            name.textColor = FavouriteListViewController.configuration.palette.mainTexts
+            name.placeholderColor = FavouriteListViewController.configuration.palette.inactive
+            name.borderColor = FavouriteListViewController.configuration.palette.inactive
             name.setContentCompressionResistancePriority(.required, for: .vertical)
         }
     }
@@ -36,9 +36,9 @@ class FavouriteEditViewController: UIViewController {
         didSet {
             address.placeholder = "Place address".bundleLocale()
             address.font = FontType.default.font
-            address.textColor = #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1)
-            address.placeholderColor = #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1)
-            address.borderColor = #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1)
+            address.textColor = FavouriteListViewController.configuration.palette.mainTexts
+            address.placeholderColor = FavouriteListViewController.configuration.palette.inactive
+            address.borderColor = FavouriteListViewController.configuration.palette.inactive
             address.setContentCompressionResistancePriority(.required, for: .vertical)
         }
     }
@@ -57,7 +57,9 @@ class FavouriteEditViewController: UIViewController {
     @IBOutlet weak var pickMapButton: ActionButton!
     
     @IBAction func showMap() {
-        let map = ReverseGeocodingMap.create(delegate: self, centerCoordinates: CLLocationCoordinate2DIsValid(placeMark.coordinates) ? placeMark.coordinates : nil)
+        let map = ReverseGeocodingMap.create(delegate: self,
+                                             centerCoordinates: CLLocationCoordinate2DIsValid(placeMark.coordinates) ? placeMark.coordinates : nil,
+                                             conf: FavouriteListViewController.configuration)
         map.showSearchButton = false
         navigationController?.pushViewController(map, animated: true)
     }

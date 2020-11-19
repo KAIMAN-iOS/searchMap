@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "ATAConfiguration",
+        "repositoryURL": "https://github.com/jerometonnelier/ATAConfiguration",
+        "state": {
+          "branch": null,
+          "revision": "8ec9be62f1f5783ce0acb71ff1cb885ca8265df2",
+          "version": "1.0.3"
+        }
+      },
+      {
         "package": "HGCircularSlider",
         "repositoryURL": "https://github.com/HamzaGhazouani/HGCircularSlider",
         "state": {
@@ -42,8 +51,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/KExtensions",
         "state": {
           "branch": null,
-          "revision": "43dd9976c8234987382d5c7780fd8c8992caa40a",
-          "version": "1.0.14"
+          "revision": "085931de555250aec77be1421a1704928afeadec",
+          "version": "1.0.19"
         }
       },
       {
@@ -60,8 +69,8 @@
         "repositoryURL": "https://github.com/kean/Nuke",
         "state": {
           "branch": null,
-          "revision": "a2a56211cd80614e1ac90bf2e76c5329f4f6b3d0",
-          "version": "9.1.2"
+          "revision": "7df01b0d5b42b3fa8930cf0803264116c4e219e1",
+          "version": "9.1.3"
         }
       },
       {
@@ -69,8 +78,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
         "state": {
           "branch": null,
-          "revision": "64d0b64997e689a4ee263bdf158302bcf1fa9a8c",
-          "version": "1.0.4"
+          "revision": "e70df5e6263831a4fd53d43e39e2cd551e4b7655",
+          "version": "1.0.7"
         }
       },
       {
@@ -87,8 +96,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/TextFieldEffects",
         "state": {
           "branch": null,
-          "revision": "2cea8aeac71fb8c92d593d4b9fc9dd27d6180f78",
-          "version": "1.7.1"
+          "revision": "34c87d76b1675f2001bec6e16462f8cc0b8dbbd2",
+          "version": "1.7.2"
         }
       }
     ]

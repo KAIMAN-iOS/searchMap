@@ -22,17 +22,17 @@ class FavouriteTypeView: UIView {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var card: UIView!  {
         didSet {
-            card.addCardBorder(with: #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1))
+            card.addCardBorder(with: SearchMapController.configuration.palette.inactive)
             card.cornerRadius = 5.0
         }
     }
     
     func configure(_ favouriteType: FavouriteType?) {
         if let type = favouriteType {
-            title.set(text: type.name.capitalized, for: FontType.footnote, textColor: #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1))
+            title.set(text: type.name.capitalized, for: FontType.footnote, textColor: FavouriteListViewController.configuration.palette.inactive)
             icon.image = type.icon
         } else {
-            title.set(text: "other".bundleLocale().capitalized, for: FontType.footnote, textColor: #colorLiteral(red: 0.6176490188, green: 0.6521512866, blue: 0.7114837766, alpha: 1))
+            title.set(text: "other".bundleLocale().capitalized, for: FontType.footnote, textColor: FavouriteListViewController.configuration.palette.inactive)
             icon.image = UIImage(named: "historyItem", in: .module, with: nil)?.withRenderingMode(.alwaysTemplate)
         }
     }

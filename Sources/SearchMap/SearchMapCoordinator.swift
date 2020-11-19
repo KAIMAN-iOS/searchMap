@@ -10,6 +10,7 @@ import UIKit
 import ReverseGeocodingMap
 import MapKit
 import IQKeyboardManagerSwift
+import ATAConfiguration
 
 protocol SearchMapCoordinatorDelegate: class {
     func showSearch(_ booking: inout BookingWrapper)
@@ -19,18 +20,21 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var standAloneMode: Bool = false
     let searchMapController = SearchMapController.create()
     lazy var searchNavigationController = UINavigationController()
-    lazy var reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self)
-    lazy var favCoordinator: FavouriteCoordinator<DeepLink> = FavouriteCoordinator(router: Router(navigationController: self.searchNavigationController))
+    var reverseGeocodingMap: ReverseGeocodingMap!
+    var favCoordinator: FavouriteCoordinator<DeepLink>!
     public var handleFavourites: Bool = false
     
-    public override init(router: RouterType?) {
+    public init(router: RouterType?, conf: ATAConfiguration) {
         var moduleRouter = router
         if moduleRouter == nil {
             standAloneMode = true
             moduleRouter = Router(navigationController: UINavigationController(rootViewController: searchMapController))
         }
         super.init(router: moduleRouter!)
+        favCoordinator = FavouriteCoordinator(router: Router(navigationController: self.searchNavigationController), conf: conf)
+        reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self, conf: conf)
         searchMapController.coordinatorDelegate = self
+        SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)

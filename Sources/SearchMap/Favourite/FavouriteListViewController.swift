@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import ATAConfiguration
 
 class FavouriteListViewController: UIViewController {
-    static func create() -> FavouriteListViewController {
+    static var configuration: ATAConfiguration!
+    static func create(conf: ATAConfiguration) -> FavouriteListViewController {
+        FavouriteListViewController.configuration = conf
         let ctrl: FavouriteListViewController =  UIStoryboard(name: "Favourite", bundle: .module).instantiateViewController(identifier: "FavouriteListViewController") as! FavouriteListViewController
         return ctrl
     }

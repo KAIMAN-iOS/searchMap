@@ -98,7 +98,7 @@ class SearchViewController: UIViewController {
     
     @IBAction func showMap() {
         let alertController = UIAlertController(title: "For which location do you want to show a map picker ?".bundleLocale(), message: nil, preferredStyle: .alert)
-        alertController.view.tintColor = #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+        alertController.view.tintColor = SearchMapController.configuration.palette.primary
         alertController.addAction(UIAlertAction(title: "Cancel".bundleLocale(), style: .cancel, handler: { _ in
             
         }))
@@ -171,7 +171,7 @@ class SearchViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         card.layer.cornerRadius = 20.0
-        card.addShadow(roundCorners: false, shadowColor: #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1), shadowOffset: CGSize(width: 5, height: 5), shadowRadius: 5, shadowOpacity: 0.2, useMotionEffect: true)
+        card.addShadow(roundCorners: false, shadowColor: SearchMapController.configuration.palette.mainTexts.cgColor, shadowOffset: CGSize(width: 5, height: 5), shadowRadius: 5, shadowOpacity: 0.2, useMotionEffect: true)
     }
     
     func performSearch() {
@@ -232,7 +232,7 @@ extension SearchViewController: UITableViewDelegate {
         
         guard  originTextField.isFirstResponder || destinationTextField.isFirstResponder else {
             let alertController = UIAlertController(title: "For which location do you want to update your journey ?".bundleLocale(), message: "".bundleLocale(), preferredStyle: .alert)
-            alertController.view.tintColor = #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+            alertController.view.tintColor = SearchMapController.configuration.palette.primary
             alertController.addAction(UIAlertAction(title: "Cancel".bundleLocale(), style: .cancel, handler: { _ in
             }))
             alertController.addAction(UIAlertAction(title: "Origin".bundleLocale(), style: .default, handler: { [weak self] _ in

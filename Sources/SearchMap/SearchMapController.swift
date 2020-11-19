@@ -11,8 +11,10 @@ import SnapKit
 import CoreLocation
 import UIViewExtension
 import LocationExtension
+import ATAConfiguration
 
 class SearchMapController: UIViewController {
+    static var configuration: ATAConfiguration!
     static func create() -> SearchMapController {
         return UIStoryboard(name: "Map", bundle: .module).instantiateInitialViewController() as! SearchMapController
     }
@@ -71,7 +73,7 @@ class SearchMapController: UIViewController {
         handleObservers()
         checkAuthorization()
         map.showsUserLocation = false
-        map.tintColor = #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+        map.tintColor = SearchMapController.configuration.palette.primary
         if #available(iOS 14.0, *) {
             self.navigationItem.backButtonDisplayMode = .minimal
         } else {
@@ -205,7 +207,7 @@ extension SearchMapController: MKMapViewDelegate {
         guard let annotation = annotation as? UserAnnotation,
               let view: UserAnnotationView = Bundle.module.loadNibNamed("UserAnnotationView", owner: nil)?.first as? UserAnnotationView else { return nil }
         view.configure(annotation.placemark)
-        view.tintColor = #colorLiteral(red: 1, green: 0.192286253, blue: 0.2298730612, alpha: 1)
+        view.tintColor = SearchMapController.configuration.palette.primary
         view.layoutIfNeeded()
         view.centerOffset = CGPoint(x: 0, y: -view.bounds.midY)
         return view

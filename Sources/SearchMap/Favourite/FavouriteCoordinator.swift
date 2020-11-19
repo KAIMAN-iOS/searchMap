@@ -7,6 +7,7 @@
 
 import UIKit
 import KCoordinatorKit
+import ATAConfiguration
 
 public protocol FavouriteDelegate: class {
     func loadFavourites(completion: @escaping (([PlacemarkSection: [Placemark]]) -> Void))
@@ -23,10 +24,12 @@ public protocol FavouriteCoordinatorDelegate: class {
 
 public class FavouriteCoordinator<DeepLink>: Coordinator<DeepLink> {
     var favouriteViewModel: FavouriteViewModel = FavouriteViewModel.shared
-    lazy var  favListController: FavouriteListViewController = FavouriteListViewController.create()
+    var favListController: FavouriteListViewController
     public init(router: RouterType,
                 favDelegate: FavouriteDelegate? = nil,
-                coordinatorDelegate: FavouriteCoordinatorDelegate? = nil) {
+                coordinatorDelegate: FavouriteCoordinatorDelegate? = nil,
+                conf: ATAConfiguration) {
+        favListController = FavouriteListViewController.create(conf: conf)
         super.init(router: router)
         if let delegate = favDelegate  {
             self.favouriteViewModel.favDelegate = delegate
