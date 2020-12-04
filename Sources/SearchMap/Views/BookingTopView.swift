@@ -14,7 +14,7 @@ class BookingTopView: UIView {
     @IBOutlet weak var destinationLabel: UILabel!
     
     func configure(_ booking: BookingWrapper) {
-        originLabel.set(text: booking.origin?.name, for: FontType.footnote, textColor: SearchMapController.configuration.palette.mainTexts)
-        destinationLabel.set(text: booking.destination?.name, for: FontType.footnote, textColor: SearchMapController.configuration.palette.mainTexts)
+        originLabel.set(text: booking.origin?.name, for: .footnote, textColor: SearchMapController.configuration.palette.mainTexts)
+        destinationLabel.set(text: booking.destination?.name, for: .footnote, textColor: SearchMapController.configuration.palette.mainTexts)
     }
 }

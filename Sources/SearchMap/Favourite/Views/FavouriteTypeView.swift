@@ -29,10 +29,10 @@ class FavouriteTypeView: UIView {
     
     func configure(_ favouriteType: FavouriteType?) {
         if let type = favouriteType {
-            title.set(text: type.name.capitalized, for: FontType.footnote, textColor: FavouriteListViewController.configuration.palette.inactive)
+            title.set(text: type.name.capitalized, for: .footnote, textColor: FavouriteListViewController.configuration.palette.inactive)
             icon.image = type.icon
         } else {
-            title.set(text: "other".bundleLocale().capitalized, for: FontType.footnote, textColor: FavouriteListViewController.configuration.palette.inactive)
+            title.set(text: "other".bundleLocale().capitalized, for: .footnote, textColor: FavouriteListViewController.configuration.palette.inactive)
             icon.image = UIImage(named: "historyItem", in: .module, with: nil)?.withRenderingMode(.alwaysTemplate)
         }
     }

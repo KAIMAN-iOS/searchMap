@@ -27,7 +27,7 @@ class MapLandingView: UIView {
 
     @IBOutlet weak var selectDestinationLabel: UILabel!  {
         didSet {
-            selectDestinationLabel.set(text: "Enter destination".bundleLocale(), for: FontType.default, textColor: SearchMapController.configuration.palette.inactive)
+            selectDestinationLabel.set(text: "Enter destination".bundleLocale(), for: .body, textColor: SearchMapController.configuration.palette.inactive)
         }
     }
 

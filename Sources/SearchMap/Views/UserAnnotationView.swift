@@ -31,7 +31,7 @@ class UserAnnotationView: MKAnnotationView {
     var placemark: Placemark!
     func configure(_ placemark: CLPlacemark) {
         self.placemark = placemark.asPlacemark
-        destinationLabel.set(text: placemark.formattedAddress, for:FontType.default, textColor: SearchMapController.configuration.palette.mainTexts)
+        destinationLabel.set(text: placemark.formattedAddress, for:.body, textColor: SearchMapController.configuration.palette.mainTexts)
     }
 }
 

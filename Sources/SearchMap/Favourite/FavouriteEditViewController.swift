@@ -12,6 +12,7 @@ import FontExtension
 import ReverseGeocodingMap
 import CoreLocation
 import ActionButton
+import Ampersand
 
 class FavouriteEditViewController: UIViewController {
     static func create(placeMark: Placemark? = nil) -> FavouriteEditViewController {
@@ -24,7 +25,7 @@ class FavouriteEditViewController: UIViewController {
     @IBOutlet weak var name: AkiraTextField!  {
         didSet {
             name.placeholder = "Place name".bundleLocale()
-            name.font = FontType.default.font
+            name.font = .applicationFont(forTextStyle: .body)
             name.textColor = FavouriteListViewController.configuration.palette.mainTexts
             name.placeholderColor = FavouriteListViewController.configuration.palette.inactive
             name.borderColor = FavouriteListViewController.configuration.palette.inactive
@@ -35,7 +36,7 @@ class FavouriteEditViewController: UIViewController {
     @IBOutlet weak var address: AkiraTextField!  {
         didSet {
             address.placeholder = "Place address".bundleLocale()
-            address.font = FontType.default.font
+            address.font = .applicationFont(forTextStyle: .body)
             address.textColor = FavouriteListViewController.configuration.palette.mainTexts
             address.placeholderColor = FavouriteListViewController.configuration.palette.inactive
             address.borderColor = FavouriteListViewController.configuration.palette.inactive

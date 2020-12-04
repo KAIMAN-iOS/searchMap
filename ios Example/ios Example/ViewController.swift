@@ -9,6 +9,30 @@ import UIKit
 import SearchMap
 import KCoordinatorKit
 import CoreLocation
+import ATAConfiguration
+
+class Configuration: ATAConfiguration {
+    var logo: UIImage? { nil }
+    var palette: Palettable { Palette() }
+}
+
+class Palette: Palettable {
+    var primary: UIColor { #colorLiteral(red: 0.8604696393, green: 0, blue: 0.1966537535, alpha: 1) }
+    var secondary: UIColor { #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) }
+    
+    var mainTexts: UIColor { #colorLiteral(red: 0.1879811585, green: 0.1879865527, blue: 0.1879836619, alpha: 1) }
+    
+    var secondaryTexts: UIColor { #colorLiteral(red: 0.1565656662, green: 0.1736218631, blue: 0.2080874145, alpha: 1) }
+    
+    var textOnPrimary: UIColor { #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) }
+    
+    var inactive: UIColor { #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) }
+    
+    var placeholder: UIColor { #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) }
+    var lightGray: UIColor { #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1) }
+    
+    
+}
 
 class ViewController: UIViewController {
 
@@ -17,7 +41,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    lazy var coord: SearchMapCoordinator<Int> = SearchMapCoordinator(router: Router(navigationController: self.navigationController!))
+    lazy var coord: SearchMapCoordinator<Int> = SearchMapCoordinator(router: Router(navigationController: self.navigationController!), conf: Configuration())
     @IBAction func show(_ sender: Any) {
         FavouriteViewModel.shared.favDelegate = self
         navigationController?.pushViewController(coord.toPresentable(), animated: true)
