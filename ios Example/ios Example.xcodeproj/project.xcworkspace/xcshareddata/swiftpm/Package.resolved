@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/ActionButton",
         "state": {
           "branch": null,
-          "revision": "3ae3d2b60324051f8ee9cb0ab63feb5866ef454c",
-          "version": "1.0.3"
+          "revision": "379ad87fa9895546ecb2eeb0bd2628467e992ac8",
+          "version": "1.0.7"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/ATAConfiguration",
         "state": {
           "branch": null,
-          "revision": "8ec9be62f1f5783ce0acb71ff1cb885ca8265df2",
-          "version": "1.0.3"
+          "revision": "0c1bb6372ec4b9fca70ea96d406cfe958fd786fc",
+          "version": "1.0.4"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/jerometonnelier/KExtensions",
         "state": {
           "branch": null,
-          "revision": "8e29ed4a1b0ee56f1bd7f858acb1b88bd7d5c810",
-          "version": "1.0.20"
+          "revision": "08cb0df7c365de5ca2e7da425b3f2831c5834b8a",
+          "version": "1.0.29"
         }
       },
       {
@@ -78,17 +78,8 @@
         "repositoryURL": "https://github.com/kean/Nuke",
         "state": {
           "branch": null,
-          "revision": "ef122e4512e84020dca9d8f598408fdb38658946",
-          "version": "9.2.0"
-        }
-      },
-      {
-        "package": "ReverseGeocodingMap",
-        "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
-        "state": {
-          "branch": null,
-          "revision": "7fb07d62d5c20d9b61c34ee0ab3438e9ee23677c",
-          "version": "1.0.8"
+          "revision": "961597d324949c7003c77d602bfc4d5519b47e81",
+          "version": "9.2.4"
         }
       },
       {
@@ -98,6 +89,15 @@
           "branch": null,
           "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
           "version": "5.0.1"
+        }
+      },
+      {
+        "package": "SwiftLocation",
+        "repositoryURL": "https://github.com/malcommac/SwiftLocation",
+        "state": {
+          "branch": null,
+          "revision": "f8ec8e97095eb3a5312370ad94b921768217625f",
+          "version": "5.1.0"
         }
       },
       {

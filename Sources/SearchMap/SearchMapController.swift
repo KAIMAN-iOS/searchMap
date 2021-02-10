@@ -12,8 +12,10 @@ import CoreLocation
 import UIViewExtension
 import LocationExtension
 import ATAConfiguration
+import SwiftLocation
 
 class SearchMapController: UIViewController {
+    var mode: DisplayMode = .driver
     static var configuration: ATAConfiguration!
     static func create() -> SearchMapController {
         return UIStoryboard(name: "Map", bundle: .module).instantiateInitialViewController() as! SearchMapController
@@ -31,13 +33,37 @@ class SearchMapController: UIViewController {
             }
         }
     }
+    @IBOutlet weak var originLabel: UILabel!
+    @IBOutlet weak var originIndicator: UIView!  {
+        didSet {
+            originIndicator.roundedCorners = true
+            originIndicator.backgroundColor = SearchMapController.configuration.palette.confirmation
+        }
+    }
+    @IBOutlet weak var destinationContainer: UIStackView!
+    @IBOutlet weak var destinationLabel: UILabel!
+    @IBOutlet weak var destinationIndicator: UIView! {
+        didSet {
+            destinationIndicator.roundedCorners = true
+            destinationIndicator.backgroundColor = SearchMapController.configuration.palette.primary
+        }
+    }
     var bookingWrapper = BookingWrapper()
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
+    private var locationRequest: GPSLocationRequest?
     
     let geocoder = CLGeocoder()
     @IBOutlet weak var map: MKMapView!  {
         didSet {
             map.delegate = self
+        }
+    }
+    @IBOutlet weak var dashView: DottedView!  {
+        didSet {
+            dashView.orientation = .vertical
+            dashView.backgroundColor = .clear
+            dashView.dashes = [4, 4]
+            dashView.dotColor = SearchMapController.configuration.palette.inactive
         }
     }
     @IBOutlet weak var locatioButton: UIButton!  {
@@ -54,7 +80,13 @@ class SearchMapController: UIViewController {
     }
     @IBOutlet weak var card: UIView!
     @IBOutlet weak var cardContainer: UIView!
-    @IBOutlet weak var bookingTopView: BookingTopView!
+    @IBOutlet weak var bookingTopView: UIView!  {
+        didSet {
+            bookingTopView.layer.cornerRadius = 10
+            bookingTopView.addShadow(roundCorners: false)
+        }
+    }
+
     @IBOutlet weak var topViewTopContraint: NSLayoutConstraint!
     
     var originObserver: NSKeyValueObservation?
@@ -64,11 +96,14 @@ class SearchMapController: UIViewController {
         print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
         originObserver?.invalidate()
         destinationObserver?.invalidate()
+        stopLocationUpdate()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        userButton.isHidden = mode.hideUserIcon
         navigationController?.setNavigationBarHidden(true, animated: true)
+        startLocationUpdates()
         loadSearchCard()
         handleObservers()
         checkAuthorization()
@@ -79,6 +114,41 @@ class SearchMapController: UIViewController {
         } else {
             navigationItem.backButtonTitle = ""
         }
+    }
+    
+    func startLocationUpdates() {
+        let serviceOptions = GPSLocationOptions()
+        serviceOptions.subscription = .continous // continous updated until you stop it
+        serviceOptions.accuracy = .house
+        serviceOptions.minDistance = 5
+        serviceOptions.activityType = .automotiveNavigation
+        
+        locationRequest = SwiftLocation.gpsLocationWith(serviceOptions)
+        locationRequest?
+            .then { [weak self] result in // you can attach one or more subscriptions via `then`.
+                guard let self = self else { return }
+                switch result {
+                case .success(let newData):
+                    self.geocoder.cancelGeocode()
+                    self.geocoder.reverseGeocodeLocation(newData.coordinate.asLocation) { [weak self] (placemarks, error) in
+                        guard let self = self, let placemark = placemarks?.first else { return }
+                        if let userAnno = self.map.annotations.compactMap({ $0 as? UserAnnotation }).first {
+                            userAnno.coordinate = newData.coordinate
+                        } else {
+                            self.map.addAnnotation(UserAnnotation(placemark: placemark))
+                            self.map.setCenter(newData.coordinate, animated: true)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print("An error has occurred: \(error.localizedDescription)")
+                }
+            }
+    }
+    
+    func stopLocationUpdate() {
+        locationRequest?.cancelRequest()
+        locationRequest = nil
     }
     
     func handleObservers() {        
@@ -93,7 +163,7 @@ class SearchMapController: UIViewController {
     }
     
     func handleBookingCard() {
-        guard bookingWrapper.origin != nil, bookingWrapper.destination != nil else {
+        guard bookingWrapper.origin != nil else {
             loadSearchCard()
             return
         }
@@ -101,13 +171,24 @@ class SearchMapController: UIViewController {
     }
     
     func loadBookingReadyCard() {
+        defer {
+            configureTopView()
+        }
         // no need to reload the view if it is already the right one
         guard cardContainer.subviews.first as? BookingReadyView == nil else { return }
         guard let view: BookingReadyView = Bundle.module.loadNibNamed("BookingReadyView", owner: nil)?.first as? BookingReadyView else { return }
         view.delegate = self
         addViewToCard(view)
         topViewTopContraint.constant = 0
-        bookingTopView.configure(bookingWrapper)
+    }
+    
+    func configureTopView() {
+        guard bookingWrapper.origin != nil else { return }
+        originLabel.set(text: bookingWrapper.origin?.name, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+        let noDestination = bookingWrapper.destination?.name?.isEmpty ?? true == true
+        destinationLabel.set(text: bookingWrapper.destination?.name ?? "no destination".bundleLocale(),
+                             for: .body,
+                             textColor: noDestination ? SearchMapController.configuration.palette.lightGray : SearchMapController.configuration.palette.secondaryTexts)
     }
     
     func loadSearchCard() {
@@ -116,7 +197,7 @@ class SearchMapController: UIViewController {
         guard let view: MapLandingView = Bundle.module.loadNibNamed("MapLandingView", owner: nil)?.first as? MapLandingView else { return }
         view.delegate = self
         addViewToCard(view)
-        topViewTopContraint.constant = -100
+        topViewTopContraint.constant = -200
     }
     
     func addViewToCard(_ view: UIView) {
@@ -135,7 +216,6 @@ class SearchMapController: UIViewController {
         case .authorizedAlways, .authorizedWhenInUse: locatioButton.isHidden = false
         default: locatioButton.isHidden = true
         }
-        map.showsUserLocation = false
     }
     
     public override func viewDidLayoutSubviews() {
@@ -164,17 +244,15 @@ extension SearchMapController: CLLocationManagerDelegate {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse, .authorizedAlways:
             locatioButton.isHidden = false
-            map.showsUserLocation = true
             
         default:
             locatioButton.isHidden = true
-            map.showsUserLocation = false
         }
     }
 }
 
 class UserAnnotation: NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D
+    dynamic var coordinate: CLLocationCoordinate2D
     var placemark: CLPlacemark!
     init(placemark: CLPlacemark) {
         self.placemark = placemark
@@ -195,14 +273,6 @@ extension SearchMapController: BookingReadyDelegate {
 }
 
 extension SearchMapController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        geocoder.cancelGeocode()
-        geocoder.reverseGeocodeLocation(userLocation.coordinate.asLocation) { [weak self] (placemarks, error) in
-            guard let self = self, let placemark = placemarks?.first else { return }
-            self.map.addAnnotation(UserAnnotation(placemark: placemark))
-        }
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let annotation = annotation as? UserAnnotation,
               let view: UserAnnotationView = Bundle.module.loadNibNamed("UserAnnotationView", owner: nil)?.first as? UserAnnotationView else { return nil }

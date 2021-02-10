@@ -16,6 +16,18 @@ protocol SearchMapCoordinatorDelegate: class {
     func showSearch(_ booking: inout BookingWrapper)
 }
 
+public enum DisplayMode {
+    case driver, passenger, business
+    
+    var hideUserIcon: Bool {
+        switch self {
+        case .driver: return true
+        case .passenger: return false
+        case .business: return false
+        }
+    }
+}
+
 public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var standAloneMode: Bool = false
     let searchMapController = SearchMapController.create()
@@ -24,7 +36,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var favCoordinator: FavouriteCoordinator<DeepLink>!
     public var handleFavourites: Bool = false
     
-    public init(router: RouterType?, conf: ATAConfiguration) {
+    public init(router: RouterType?, mode: DisplayMode = .driver, conf: ATAConfiguration) {
         var moduleRouter = router
         if moduleRouter == nil {
             standAloneMode = true
@@ -34,6 +46,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         favCoordinator = FavouriteCoordinator(router: Router(navigationController: self.searchNavigationController), conf: conf)
         reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self, conf: conf)
         searchMapController.coordinatorDelegate = self
+        searchMapController.mode = mode
         SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -63,7 +76,8 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
 }
 
 extension SearchMapCoordinator: SearchViewControllerDelegate {
-    func showMapPicker(for location: BookingPlaceType) {
+    func showMapPicker(for location: BookingPlaceType, coordinates: CLLocationCoordinate2D?) {
+        reverseGeocodingMap.centerCoordinates = coordinates
         searchNavigationController.pushViewController(reverseGeocodingMap, animated: true)
     }
     

@@ -12,7 +12,12 @@ import Contacts
 import FontExtension
 
 class UserAnnotationView: MKAnnotationView {
-    @IBOutlet weak var pickUpLabel: UILabel!
+    @IBOutlet weak var pickUpLabel: UILabel!  {
+        didSet {
+            pickUpLabel.set(text: "pick up at".bundleLocale().uppercased(), for: .callout, fontScale: 0.8, textColor: SearchMapController.configuration.palette.inactive)
+        }
+    }
+
     @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var card: UIView!  {
         didSet {

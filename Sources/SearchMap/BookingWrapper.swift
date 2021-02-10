@@ -58,11 +58,15 @@ enum PlacemarkCellType: Hashable, Equatable {
     }
 }
 
+public enum Option {
+    case numberOfPassenger, numberOfLuggages, vehicleType
+}
+
 public class BookingWrapper: NSObject {
     @objc dynamic public var origin: Placemark!
     @objc dynamic public var destination: Placemark!
     public var message: String?
-    public var options: [String: Any] = [:]
+    public var options: [Option: Int] = [:]
     public var pickUpDate: DateWrapper = .now
 }
 
@@ -74,13 +78,6 @@ public class Placemark: NSObject {
     var address: String?
     var coordinates: CLLocationCoordinate2D
     var specialFavourite: FavouriteType?
-    
-//    override func hash(into hasher: inout Hasher) {
-//        hasher.combine(name)
-//        hasher.combine(address)
-//        hasher.combine(coordinates.latitude)
-//        hasher.combine(coordinates.longitude)
-//    }
     
     public init(name: String?,
                 address: String?,

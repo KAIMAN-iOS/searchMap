@@ -12,7 +12,7 @@ import CoreLocation
 import ActionButton
 
 protocol SearchViewControllerDelegate: class {
-    func showMapPicker(for location: BookingPlaceType)
+    func showMapPicker(for location: BookingPlaceType, coordinates: CLLocationCoordinate2D?)
     func close()
 }
 
@@ -33,7 +33,12 @@ class SearchViewController: UIViewController {
         }
     }
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var mapButton: UIButton!
+    lazy var mapButton: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "map", in: .module, compatibleWith: nil), for: .normal)
+        btn.addTarget(self, action: #selector(showMap), for: .touchUpInside)
+        return btn
+    } ()
     @IBOutlet weak var validateButton: ActionButton!  {
         didSet {
             validateButton.shape = .rounded(value: 10.0)
@@ -50,7 +55,8 @@ class SearchViewController: UIViewController {
     }
     @IBOutlet weak var originIndicator: UIView!  {
         didSet {
-            originIndicator.layer.cornerRadius = originIndicator.bounds.midX
+            originIndicator.roundedCorners = true
+            originIndicator.backgroundColor = SearchMapController.configuration.palette.confirmation
         }
     }
 
@@ -60,8 +66,22 @@ class SearchViewController: UIViewController {
             destinationTextField.delegate = self
         }
     }
-    @IBOutlet weak var destinationIndicator: UIView!
-    @IBOutlet weak var dashView: UIView!
+    @IBOutlet weak var destinationIndicator: UIView! {
+        didSet {
+            destinationIndicator.roundedCorners = true
+            destinationIndicator.backgroundColor = SearchMapController.configuration.palette.primary
+        }
+    }
+
+    @IBOutlet weak var dashView: DottedView!  {
+        didSet {
+            dashView.orientation = .vertical
+            dashView.backgroundColor = .clear
+            dashView.dashes = [4, 4]
+            dashView.dotColor = SearchMapController.configuration.palette.inactive
+        }
+    }
+
     @IBOutlet weak var tableView: UITableView!  {
         didSet {
             tableView.tableFooterView = UIView()
@@ -71,7 +91,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var card: UIView!
     
     var booking: BookingWrapper!
-    var searchType: BookingPlaceType = .origin
+    var searchType: BookingPlaceType? = nil
     var originObserver: NSKeyValueObservation?
     var destinationObserver: NSKeyValueObservation?
     let viewModel = SearchViewModel()
@@ -96,24 +116,28 @@ class SearchViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
+    var textFieldHasFocus: Bool = false  {
+        didSet {
+            switch textFieldHasFocus {
+            case true:
+                navigationItem.rightBarButtonItem = UIBarButtonItem(customView: mapButton)
+                
+            case false:
+                if viewModel.items[.search] == nil {
+                    viewModel.clear(dataSource: datasource)
+                }
+                navigationItem.rightBarButtonItem = nil
+            }
+        }
+    }
+    
     @IBAction func showMap() {
-        let alertController = UIAlertController(title: "For which location do you want to show a map picker ?".bundleLocale(), message: nil, preferredStyle: .alert)
-        alertController.view.tintColor = SearchMapController.configuration.palette.primary
-        alertController.addAction(UIAlertAction(title: "Cancel".bundleLocale(), style: .cancel, handler: { _ in
-            
-        }))
-        alertController.addAction(UIAlertAction(title: "Origin".bundleLocale(), style: .default, handler: { [weak self] _ in
-            self?.searchType = .origin
-            self?.searchDelegate?.showMapPicker(for: .origin)
-        }))
-        alertController.addAction(UIAlertAction(title: "Destination".bundleLocale(), style: .default, handler: { [weak self] _ in
-            self?.searchType = .destination
-            self?.searchDelegate?.showMapPicker(for: .destination)
-        }))
-        present(alertController, animated: true, completion: nil)
+        guard let searchType = searchType else { return }
+        searchDelegate?.showMapPicker(for: searchType, coordinates: searchType == .origin ? booking.origin?.coordinates : booking.destination?.coordinates)
     }
     
     func didChoose(_ placemark: CLPlacemark) {
+        guard let searchType = searchType else { return }
         switch searchType {
         case .origin: booking.origin = placemark.asPlacemark
         case .destination: booking.destination = placemark.asPlacemark
@@ -133,7 +157,6 @@ class SearchViewController: UIViewController {
         tableView.dataSource = datasource
         tableView.delegate = self
         viewModel.refreshDelegate = self
-        viewModel.applyPendingSnapshot(in: datasource)
     }
     
     func handleObservers() {
@@ -158,14 +181,16 @@ class SearchViewController: UIViewController {
         NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillShowNotification, object: nil, queue: nil) { [weak self] notification in
             guard let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
             self?.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: frame.height, right: 0)
+            self?.textFieldHasFocus = true
         }
         NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillHideNotification, object: nil, queue: nil) { [weak self] _ in
             self?.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+            self?.textFieldHasFocus = false
         }
     }
     
     func handleValidateButton() {
-        validateContainer.isHidden = booking.origin == nil || booking.destination == nil
+        validateContainer.isHidden = booking.origin == nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -198,6 +223,7 @@ class SearchViewController: UIViewController {
     }
     
     func clearBooking() {
+        guard let searchType = searchType else { return }
         switch searchType {
         case .origin: booking.origin = nil
         case .destination: booking.destination = nil
@@ -205,6 +231,7 @@ class SearchViewController: UIViewController {
     }
     
     func updateBooking(_ place: Placemark) {
+        guard let searchType = searchType else { return }
         switch searchType {
         case .origin: booking.origin = place
         case .destination: booking.destination = place
@@ -215,7 +242,7 @@ class SearchViewController: UIViewController {
 extension SearchViewController: RefreshFavouritesDelegate {
     func refresh() {
         // reload only if there are no search
-        if viewModel.items[.search] == nil {
+        if viewModel.items[.search] == nil && textFieldHasFocus {
             viewModel.applyPendingSnapshot(in: datasource)
         }
     }
@@ -229,23 +256,6 @@ extension SearchViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         guard let place = viewModel.placemark(at: indexPath) else { return }
-        
-        guard  originTextField.isFirstResponder || destinationTextField.isFirstResponder else {
-            let alertController = UIAlertController(title: "For which location do you want to update your journey ?".bundleLocale(), message: "".bundleLocale(), preferredStyle: .alert)
-            alertController.view.tintColor = SearchMapController.configuration.palette.primary
-            alertController.addAction(UIAlertAction(title: "Cancel".bundleLocale(), style: .cancel, handler: { _ in
-            }))
-            alertController.addAction(UIAlertAction(title: "Origin".bundleLocale(), style: .default, handler: { [weak self] _ in
-                self?.searchType = .origin
-                self?.updateBooking(place)
-            }))
-            alertController.addAction(UIAlertAction(title: "Destination".bundleLocale(), style: .default, handler: { [weak self] _ in
-                self?.searchType = .destination
-                self?.updateBooking(place)
-            }))
-            present(alertController, animated: true, completion: nil)
-            return
-        }
         updateBooking(place)
     }
     
@@ -278,7 +288,7 @@ extension SearchViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+//        searchType = nil
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

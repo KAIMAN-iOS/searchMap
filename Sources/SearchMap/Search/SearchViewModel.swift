@@ -113,6 +113,13 @@ public class SearchViewModel {
         }
     }
     
+    func clear(dataSource: PlacemarkDatasource) {
+        currentSnapShot = dataSource.snapshot()
+        currentSnapShot.deleteSections(currentSnapShot.sectionIdentifiers)
+        currentSnapShot.deleteAllItems()
+        dataSource.apply(currentSnapShot, animatingDifferences: false) { }
+    }
+    
     func dataSource(for tableView: UITableView) -> PlacemarkDatasource {
         let datasource = PlacemarkDatasource(tableView: tableView)  { (tableView, indexPath, model) -> UITableViewCell? in
             guard let cell: PlacemarkCell = tableView.automaticallyDequeueReusableCell(forIndexPath: indexPath) else {

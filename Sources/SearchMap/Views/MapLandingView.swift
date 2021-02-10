@@ -14,8 +14,18 @@ protocol MapLandingViewDelegate: class {
 }
 
 class MapLandingView: UIView {
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var subTitle: UILabel!
+    @IBOutlet weak var title: UILabel!  {
+        didSet {
+            title.set(text: "Welcome search title".bundleLocale(), for: .title2, textColor: SearchMapController.configuration.palette.mainTexts)
+        }
+    }
+
+    @IBOutlet weak var subTitle: UILabel!  {
+        didSet {
+            subTitle.set(text: "Welcome search message".bundleLocale(), for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+        }
+    }
+
     @IBOutlet weak var bottomCard: UIView!  {
         didSet {
             bottomCard.backgroundColor = .white
