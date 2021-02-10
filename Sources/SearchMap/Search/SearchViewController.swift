@@ -89,6 +89,24 @@ class SearchViewController: UIViewController {
         }
     }
     @IBOutlet weak var card: UIView!
+    var isLoading: Bool = false  {
+        didSet {
+            switch (isLoading, textFieldHasFocus) {
+            case (true, _):
+                let loader = UIActivityIndicatorView(style: .medium)
+                loader.color = SearchMapController.configuration.palette.primary
+                loader.startAnimating()
+                navigationItem.rightBarButtonItem = UIBarButtonItem(customView: loader)
+                
+            case (false, false):
+                navigationItem.rightBarButtonItem = nil
+                
+            case (false, true):
+                navigationItem.rightBarButtonItem = UIBarButtonItem(customView: mapButton)
+            }
+        }
+    }
+
     
     var booking: BookingWrapper!
     var searchType: BookingPlaceType? = nil
@@ -204,6 +222,7 @@ class SearchViewController: UIViewController {
             // clear TV
             return
         }
+        isLoading = true
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = text
         if let coord = userCoordinates {
@@ -211,14 +230,17 @@ class SearchViewController: UIViewController {
         }
         let search = MKLocalSearch(request: request)
         search.start { response, _ in
+            var items: [Placemark] = []
+            defer {
+                self.viewModel.applySearchSnapshot(in: self.datasource, results: items, animatingDifferences: true)
+                self.isLoading = false
+            }
             guard let response = response else {
                 return
             }
-            let items = response.mapItems.compactMap { item -> Placemark in
+            items = response.mapItems.compactMap { item -> Placemark in
                 item.placemark.asPlacemark
             }
-            print("items \(items)")
-            self.viewModel.applySearchSnapshot(in: self.datasource, results: items, animatingDifferences: true)
         }
     }
     
