@@ -7,3 +7,14 @@
 "Welcome search message" = "Réservez des courses immédiates ou programmées";
 "Welcome search title" = "Où allez vous ?";
 "pick up at" = "Partir de";
+"Passenger phone" = "Numéro de téléphone";
+"Passenger name" = "Nom et prénom";
+"nb passenger" = "Nombre de passagers";
+"max available" = "Maximum autorisés";
+"Choose your options" = "Choissisez vos options";
+"departure date" = "Date de départ";
+"vehicle type" = "Type de taxi";
+"book" = "Rechercher un taxi";
+"passenger details" = "Concernant le passager";
+"now" = "Maintenant";
+"later" = "Choisir\nune date";

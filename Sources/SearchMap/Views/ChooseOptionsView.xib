@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChooseOptionsView" customModule="SearchMap">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="491"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-Ou-rWA">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="491"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Choose your options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yv0-Ll-dGj">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="33.5"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="j5i-kM-dPI">
+                            <rect key="frame" x="0.0" y="45.5" width="414" height="75.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de départ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUO-u5-6Jf">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-5N-mEI">
+                                    <rect key="frame" x="0.0" y="6" width="414" height="69.5"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXh-jp-07P" customClass="SelectableButton" customModule="ATAViews">
+                                            <rect key="frame" x="0.0" y="0.0" width="197" height="69.5"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xaJ-5n-5b4" customClass="SelectableButton" customModule="ATAViews">
+                                            <rect key="frame" x="217" y="0.0" width="197" height="69.5"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                        <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Tey-OK-b62" customClass="StepperView" customModule="ATAViews">
+                            <rect key="frame" x="0.0" y="133" width="414" height="26"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Gww-9P-A7x">
+                            <rect key="frame" x="0.0" y="171" width="414" height="132"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de départ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cf0-1T-A8x">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="16"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="jlR-ec-iB0" customClass="BorderedTextField" customModule="ATAViews">
+                                    <rect key="frame" x="0.0" y="24" width="414" height="50"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="nD7-n1-rqN" customClass="BorderedTextField" customModule="ATAViews">
+                                    <rect key="frame" x="0.0" y="82" width="414" height="50"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6vr-Oh-B0h">
+                            <rect key="frame" x="0.0" y="315" width="414" height="116"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Type de véhicule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lcz-zi-vbr">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="16"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aSZ-Ob-zkM">
+                                    <rect key="frame" x="0.0" y="16" width="414" height="100"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="K3m-7g-KDU"/>
+                                    </constraints>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="a5E-Xl-pul">
+                                        <size key="itemSize" width="128" height="128"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                </collectionView>
+                            </subviews>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4t-WL-YPR" customClass="ActionButton" customModule="ActionButton">
+                            <rect key="frame" x="0.0" y="443" width="414" height="48"/>
+                            <color key="backgroundColor" name="backgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Wze-xh-eyK"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="10" minY="15" maxX="10" maxY="15"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" name="selectedButtonColor"/>
+                            </state>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5fx-Ou-rWA" secondAttribute="trailing" id="0vn-ZV-cWd"/>
+                <constraint firstItem="5fx-Ou-rWA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="okh-rL-Yau"/>
+                <constraint firstItem="5fx-Ou-rWA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qaa-Tn-Vm9"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="5fx-Ou-rWA" secondAttribute="bottom" id="zm8-s3-Sze"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="bookButton" destination="v4t-WL-YPR" id="Q7x-md-x1z"/>
+                <outlet property="chooseDateLabel" destination="zUO-u5-6Jf" id="Ett-d7-WhZ"/>
+                <outlet property="laterButton" destination="xaJ-5n-5b4" id="Jtu-h2-cxC"/>
+                <outlet property="nameTextfield" destination="jlR-ec-iB0" id="fwV-rn-Ev1"/>
+                <outlet property="nowButton" destination="XXh-jp-07P" id="uNb-R1-TdQ"/>
+                <outlet property="passengerContainer" destination="Gww-9P-A7x" id="ogo-eC-Ki1"/>
+                <outlet property="passengerDetailLabel" destination="Cf0-1T-A8x" id="fvV-hs-DLq"/>
+                <outlet property="phoneTextfield" destination="nD7-n1-rqN" id="xLP-e1-oqa"/>
+                <outlet property="stepper" destination="Tey-OK-b62" id="MUz-s9-8tQ"/>
+                <outlet property="title" destination="Yv0-Ll-dGj" id="lFi-NY-mKi"/>
+                <outlet property="vehicleType" destination="Lcz-zi-vbr" id="PNo-XT-98j"/>
+                <outlet property="vehicleTypeCollectionView" destination="aSZ-Ob-zkM" id="1Pg-Nl-Ndi"/>
+            </connections>
+            <point key="canvasLocation" x="-520.28985507246375" y="-187.83482142857142"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="Tey-OK-b62">
+            <size key="intrinsicContentSize" width="414" height="50"/>
+        </designable>
+        <designable name="jlR-ec-iB0">
+            <size key="intrinsicContentSize" width="414" height="50"/>
+        </designable>
+        <designable name="nD7-n1-rqN">
+            <size key="intrinsicContentSize" width="414" height="50"/>
+        </designable>
+    </designables>
+    <resources>
+        <namedColor name="backgroundColor">
+            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="selectedButtonColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

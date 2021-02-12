@@ -23,12 +23,14 @@ let package = Package(
         .package(url: "https://github.com/jerometonnelier/TextFieldEffects", from: "1.7.0"),
         .package(url: "https://github.com/jerometonnelier/ATAConfiguration", from: "1.0.0"),
         .package(url: "https://github.com/malcommac/SwiftLocation", from: "5.1.0"),
+        .package(url: "https://github.com/jerometonnelier/ATAViews", .branch("master")),
+        .package(name: "AlertsAndPickers", url: "https://github.com/jerometonnelier/alerts-and-pickers", .branch("spm"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SearchMap",
-            dependencies: ["KExtensions", "KCoordinatorKit", "IQKeyboardManagerSwift", "ActionButton", "ReverseGeocodingMap", "TextFieldEffects", "ATAConfiguration", "SwiftLocation"])
+            dependencies: ["KExtensions", "KCoordinatorKit", "IQKeyboardManagerSwift", "ActionButton", "ReverseGeocodingMap", "TextFieldEffects", "ATAConfiguration", "SwiftLocation", "ATAViews", "AlertsAndPickers"])
     ]
 )

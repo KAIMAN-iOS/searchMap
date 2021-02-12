@@ -39,16 +39,16 @@
                                 <rect key="frame" x="0.0" y="718" width="414" height="178"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="370" placeholderIntrinsicHeight="102" translatesAutoresizingMaskIntoConstraints="NO" id="LBd-bu-cAm">
-                                        <rect key="frame" x="22" y="26" width="370" height="102"/>
+                                        <rect key="frame" x="22" y="14" width="370" height="114"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="LBd-bu-cAm" firstAttribute="leading" secondItem="cvT-GS-Ss6" secondAttribute="leading" constant="22" id="2DJ-Ts-Eij"/>
-                                    <constraint firstAttribute="bottom" secondItem="LBd-bu-cAm" secondAttribute="bottom" constant="50" id="CXK-pb-d5N"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="LBd-bu-cAm" secondAttribute="bottom" constant="8" id="CXK-pb-d5N"/>
                                     <constraint firstAttribute="trailing" secondItem="LBd-bu-cAm" secondAttribute="trailing" constant="22" id="Nno-VT-9r7"/>
-                                    <constraint firstItem="LBd-bu-cAm" firstAttribute="top" secondItem="cvT-GS-Ss6" secondAttribute="top" constant="26" id="OmP-NI-a4z"/>
+                                    <constraint firstItem="LBd-bu-cAm" firstAttribute="top" secondItem="cvT-GS-Ss6" secondAttribute="top" constant="14" id="OmP-NI-a4z"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xgc-2Y-SC7">

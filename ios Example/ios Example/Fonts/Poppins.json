@@ -42,18 +42,18 @@
     },
     {
       "textStyle": "UICTFontTextStyleFootnote",
-      "fontName": "Poppins-Thin",
-      "pointSize": 15
+      "fontName": "Poppins-Regular",
+      "pointSize": 13
     },
     {
       "textStyle": "UICTFontTextStyleCaption1",
-      "fontName": "Poppins-ExtraLight",
-      "pointSize": 14
+      "fontName": "Poppins-Regular",
+      "pointSize": 12
     },
     {
       "textStyle": "UICTFontTextStyleCaption2",
-      "fontName": "Poppins-ExtraLight",
-      "pointSize": 12
+      "fontName": "Poppins-Regular",
+      "pointSize": 11
     }
   ],
   "weights": [

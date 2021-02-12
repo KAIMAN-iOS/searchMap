@@ -39,10 +39,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         let configurationURL = Bundle.main.url(forResource: "Poppins", withExtension: "json")!
         UIFont.registerApplicationFont(withConfigurationAt: configurationURL)
-        ActionButton.primaryColor = #colorLiteral(red: 0.8604696393, green: 0, blue: 0.1966537535, alpha: 1)
+        ActionButton.primaryColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     }
 
-    lazy var coord: SearchMapCoordinator<Int> = SearchMapCoordinator(router: Router(navigationController: self.navigationController!), conf: Configuration())
+    lazy var coord: SearchMapCoordinator<Int> = SearchMapCoordinator(router: Router(navigationController: self.navigationController!), conf: Configuration(), vehicleTypes: [])
     @IBAction func show(_ sender: Any) {
         FavouriteViewModel.shared.favDelegate = self
         navigationController?.pushViewController(coord.toPresentable(), animated: true)

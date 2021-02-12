@@ -11,6 +11,13 @@ import DateExtension
 
 public enum DateWrapper {
     case now, date(_: Date)
+    
+    var date: Date {
+        switch self {
+        case .now: return Date()
+        case .date(let date): return date
+        }
+    }
 }
 
 enum BookingPlaceType {

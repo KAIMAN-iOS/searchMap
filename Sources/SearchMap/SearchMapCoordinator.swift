@@ -12,6 +12,12 @@ import MapKit
 import IQKeyboardManagerSwift
 import ATAConfiguration
 
+public protocol VehicleTypeable {
+    var rawValue: Int { get }
+    var displayText: String { get }
+    var icon: UIImage? { get }
+}
+
 protocol SearchMapCoordinatorDelegate: class {
     func showSearch(_ booking: inout BookingWrapper)
 }
@@ -36,7 +42,10 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var favCoordinator: FavouriteCoordinator<DeepLink>!
     public var handleFavourites: Bool = false
     
-    public init(router: RouterType?, mode: DisplayMode = .driver, conf: ATAConfiguration) {
+    public init(router: RouterType?,
+                mode: DisplayMode = .driver,
+                conf: ATAConfiguration,
+                vehicleTypes: [VehicleTypeable]) {
         var moduleRouter = router
         if moduleRouter == nil {
             standAloneMode = true
@@ -78,6 +87,7 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
 extension SearchMapCoordinator: SearchViewControllerDelegate {
     func showMapPicker(for location: BookingPlaceType, coordinates: CLLocationCoordinate2D?) {
         reverseGeocodingMap.centerCoordinates = coordinates
+        reverseGeocodingMap.placemarkIcon = UIImage(named: location == .origin ? "startMapIcon" : "endMapIcon", in: .module, compatibleWith: nil)!
         searchNavigationController.pushViewController(reverseGeocodingMap, animated: true)
     }
     

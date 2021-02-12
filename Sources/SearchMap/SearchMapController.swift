@@ -13,6 +13,7 @@ import UIViewExtension
 import LocationExtension
 import ATAConfiguration
 import SwiftLocation
+import AlertsAndPickers
 
 class SearchMapController: UIViewController {
     var mode: DisplayMode = .driver
@@ -167,7 +168,9 @@ class SearchMapController: UIViewController {
             loadSearchCard()
             return
         }
-        loadBookingReadyCard()
+        DispatchQueue.main.async { [weak self]  in
+            self?.loadBookingReadyCard()
+        }
     }
     
     func loadBookingReadyCard() {
@@ -175,10 +178,11 @@ class SearchMapController: UIViewController {
             configureTopView()
         }
         // no need to reload the view if it is already the right one
-        guard cardContainer.subviews.first as? BookingReadyView == nil else { return }
-        guard let view: BookingReadyView = Bundle.module.loadNibNamed("BookingReadyView", owner: nil)?.first as? BookingReadyView else { return }
+        guard cardContainer.subviews.first as? ChooseOptionsView == nil else { return }
+        guard let view: ChooseOptionsView = Bundle.module.loadNibNamed("ChooseOptionsView", owner: nil)?.first as? ChooseOptionsView else { return }
         view.delegate = self
         addViewToCard(view)
+        view.configure()
         topViewTopContraint.constant = 0
     }
     
@@ -266,9 +270,20 @@ extension SearchMapController: MapLandingViewDelegate {
     }
 }
 
-extension SearchMapController: BookingReadyDelegate {
+extension SearchMapController: BookDelegate {
     func book() {
         
+    }
+    
+    func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void)) {
+        
+        let alertController = UIAlertController(title: "departure date".local(), message: nil, preferredStyle: .actionSheet)
+        alertController.addDatePicker(mode: .dateAndTime, date: actualDate, minimumDate: Date(), maximumDate: nil) { [weak self] date in
+            completion(date)
+        }
+        alertController.addAction(title: "OK".bundleLocale(), style: .cancel)
+        alertController.view.tintColor = SearchMapController.configuration.palette.mainTexts
+        present(alertController, animated: true, completion: nil)
     }
 }
 

@@ -83,6 +83,24 @@
         }
       },
       {
+        "package": "ReverseGeocodingMap",
+        "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
+        "state": {
+          "branch": null,
+          "revision": "bf0f984695449e4edc5b6d9ca3bb30bdde9b8847",
+          "version": "1.0.9"
+        }
+      },
+      {
+        "package": "SearchMap",
+        "repositoryURL": "https://github.com/jerometonnelier/searchMap",
+        "state": {
+          "branch": "master",
+          "revision": "9f508a2278a24b63c238e6c477806783c6abb893",
+          "version": null
+        }
+      },
+      {
         "package": "SnapKit",
         "repositoryURL": "https://github.com/SnapKit/SnapKit",
         "state": {

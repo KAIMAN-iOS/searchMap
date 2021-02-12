@@ -43,6 +43,7 @@ class SearchViewController: UIViewController {
         didSet {
             validateButton.shape = .rounded(value: 10.0)
             validateButton.setTitle("validate".bundleLocale().uppercased(), for: .normal)
+            validateButton.actionButtonType = .primary
         }
     }
 
