@@ -36,6 +36,7 @@ class ChooseOptionsViewModel {
     typealias SnapShot = NSDiffableDataSourceSnapshot<Section, CellType>
     private var dataSource: DataSource!
     private var sections: [Section] = []
+    var selectedIndex: Int = 0
     
     func dataSource(for collectionView: UICollectionView) -> DataSource {
         // Handle cells
@@ -54,7 +55,7 @@ class ChooseOptionsViewModel {
         snap.deleteAllItems()
         sections.removeAll()
         snap.appendSections([.main])
-        snap.appendItems(vehicles.compactMap({ CellType.vehicle($0, isSelected: $0.rawValue == self.vehicles.first?.rawValue) }), toSection: .main)
+        snap.appendItems(vehicles.compactMap({ CellType.vehicle($0, isSelected: $0.rawValue == self.selectedIndex) }), toSection: .main)
         // add items here
         dataSource.apply(snap, animatingDifferences: animatingDifferences, completion: completion)
     }
@@ -67,17 +68,32 @@ class ChooseOptionsViewModel {
         return layout
     }
     
+    func select(at indexPath: IndexPath) {
+        selectedIndex = indexPath.row
+        applySnapshot(in: dataSource)
+    }
+    
     private func generateLayout(for section: Int, environnement: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
-        let fullItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
+        let fullItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                                                  heightDimension: .estimated(35)))
+        fullItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0)
         
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
-                                                                                        heightDimension: .estimated(35)),
+        let vGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                                                        heightDimension: .fractionalHeight(1.0)),
                                                      subitem: fullItem,
                                                      count: 2)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        vGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(vehicles.count > 4 ? 0.9 : 1),
+                                                                                        heightDimension: .fractionalHeight(1.0)),
+                                                     subitem: vGroup,
+                                                     count: 2)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0)
+        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(10)
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
+//        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
         return section
     }
 }

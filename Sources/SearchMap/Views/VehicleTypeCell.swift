@@ -25,6 +25,10 @@ class VehicleTypeCell: UICollectionViewCell {
             }
         }
         button.setTitle(vehicleType.displayText, for: .normal)
+        button.titleLabel?.minimumScaleFactor = 0.5
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.isSelected = isSelected
+        button.buttonCornerRadius = 5.0
+        button.isUserInteractionEnabled = false
     }
 }

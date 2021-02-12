@@ -1,6 +1,6 @@
-"Enter origin" = "Choissisez votre départ";
+"Enter origin" = "Choisissez votre départ";
 "validate" = "suivant";
-"Enter destination" = "Choissisez votre destination";
+"Enter destination" = "Choisissez votre destination";
 "All set" = "Choisissez vos options";
 "Launch search" = "Rechercher un taxi";
 "no destination" = "Aucune destination saisie";
@@ -11,10 +11,14 @@
 "Passenger name" = "Nom et prénom";
 "nb passenger" = "Nombre de passagers";
 "max available" = "Maximum autorisés";
-"Choose your options" = "Choissisez vos options";
+"Choose your options" = "Choisissez vos options";
 "departure date" = "Date de départ";
 "vehicle type" = "Type de taxi";
 "book" = "Rechercher un taxi";
 "passenger details" = "Concernant le passager";
 "now" = "Maintenant";
 "later" = "Choisir\nune date";
+"next" = "Suivant";
+"save for me" = "Enregistrer cette course";
+"share to groups" = "Partager dans mes groupes";
+"nb luggages" = "Nombre de baggages";

@@ -170,6 +170,9 @@ class SearchViewController: UIViewController {
         handleObservers()
         handleKeyboard()
         handleTableView()
+        DispatchQueue.main.async { [weak self] in
+            self?.originTextField.becomeFirstResponder()
+        }
     }
     
     func handleTableView() {

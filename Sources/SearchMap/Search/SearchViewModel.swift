@@ -28,7 +28,7 @@ public class SearchViewModel {
     var favourtiteViewModel: FavouriteViewModel = FavouriteViewModel.shared
     weak var refreshDelegate: RefreshFavouritesDelegate?
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
-    var handleFavourites: Bool = true
+    var handleFavourites: Bool = false
     var sortedSections: [PlacemarkSection] {
         get {
             items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })

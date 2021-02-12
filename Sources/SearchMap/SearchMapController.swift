@@ -14,6 +14,8 @@ import LocationExtension
 import ATAConfiguration
 import SwiftLocation
 import AlertsAndPickers
+import UIViewControllerExtension
+import SwiftDate
 
 class SearchMapController: UIViewController {
     var mode: DisplayMode = .driver
@@ -34,6 +36,7 @@ class SearchMapController: UIViewController {
             }
         }
     }
+    var vehicles: [VehicleTypeable] = [] 
     @IBOutlet weak var originLabel: UILabel!
     @IBOutlet weak var originIndicator: UIView!  {
         didSet {
@@ -102,18 +105,17 @@ class SearchMapController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideBackButtonText = true
         userButton.isHidden = mode.hideUserIcon
-        navigationController?.setNavigationBarHidden(true, animated: true)
         startLocationUpdates()
         loadSearchCard()
         handleObservers()
         checkAuthorization()
         map.showsUserLocation = false
         map.tintColor = SearchMapController.configuration.palette.primary
-        if #available(iOS 14.0, *) {
-            self.navigationItem.backButtonDisplayMode = .minimal
-        } else {
-            navigationItem.backButtonTitle = ""
+        
+        if mode == .driver {
+            showSearchController()
         }
     }
     
@@ -181,6 +183,8 @@ class SearchMapController: UIViewController {
         guard cardContainer.subviews.first as? ChooseOptionsView == nil else { return }
         guard let view: ChooseOptionsView = Bundle.module.loadNibNamed("ChooseOptionsView", owner: nil)?.first as? ChooseOptionsView else { return }
         view.delegate = self
+        view.vehicles = vehicles
+        view.mode = mode
         addViewToCard(view)
         view.configure()
         topViewTopContraint.constant = 0
@@ -248,6 +252,10 @@ extension SearchMapController: CLLocationManagerDelegate {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse, .authorizedAlways:
             locatioButton.isHidden = false
+            if mode == .driver {
+                map.showsUserLocation = true
+                map.tintColor = SearchMapController.configuration.palette.primary
+            }
             
         default:
             locatioButton.isHidden = true
@@ -276,9 +284,12 @@ extension SearchMapController: BookDelegate {
     }
     
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void)) {
-        
-        let alertController = UIAlertController(title: "departure date".local(), message: nil, preferredStyle: .actionSheet)
-        alertController.addDatePicker(mode: .dateAndTime, date: actualDate, minimumDate: Date(), maximumDate: nil) { [weak self] date in
+        let alertController = UIAlertController(title: "departure date".bundleLocale(), message: nil, preferredStyle: .actionSheet)
+        alertController.addDatePicker(mode: .dateAndTime,
+                                      date: actualDate,
+                                      minimumDate: Date(),
+                                      maximumDate: nil,
+                                      minuteInterval: 5) {date in
             completion(date)
         }
         alertController.addAction(title: "OK".bundleLocale(), style: .cancel)
@@ -289,7 +300,8 @@ extension SearchMapController: BookDelegate {
 
 extension SearchMapController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? UserAnnotation,
+        guard mode != .driver,
+              let annotation = annotation as? UserAnnotation,
               let view: UserAnnotationView = Bundle.module.loadNibNamed("UserAnnotationView", owner: nil)?.first as? UserAnnotationView else { return nil }
         view.configure(annotation.placemark)
         view.tintColor = SearchMapController.configuration.palette.primary
@@ -299,7 +311,7 @@ extension SearchMapController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let view = view as? UserAnnotationView else { return }
+        guard let view = view as? UserAnnotationView, mode != .driver else { return }
         // push the search view with departure selected
         map.deselectAnnotation(view.annotation, animated: false)
         bookingWrapper.origin = view.placemark

@@ -11,6 +11,7 @@ import ReverseGeocodingMap
 import MapKit
 import IQKeyboardManagerSwift
 import ATAConfiguration
+import ATAGroup
 
 public protocol VehicleTypeable {
     var rawValue: Int { get }
@@ -34,6 +35,13 @@ public enum DisplayMode {
     }
 }
 
+public protocol SearchMapDelegate: NSObjectProtocol {
+    func book(_ booking: BookingWrapper)
+    func save(_ booking: BookingWrapper)
+    func share(_ booking: BookingWrapper, to groups: [Group])
+    func groups() -> [Group]
+}
+
 public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var standAloneMode: Bool = false
     let searchMapController = SearchMapController.create()
@@ -41,6 +49,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var reverseGeocodingMap: ReverseGeocodingMap!
     var favCoordinator: FavouriteCoordinator<DeepLink>!
     public var handleFavourites: Bool = false
+    public weak var delegate: SearchMapDelegate?
     
     public init(router: RouterType?,
                 mode: DisplayMode = .driver,
@@ -56,10 +65,15 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self, conf: conf)
         searchMapController.coordinatorDelegate = self
         searchMapController.mode = mode
+        searchMapController.vehicles = vehicleTypes
         SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+    }
+    
+    deinit {
+        print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
     }
     
     public override func toPresentable() -> UIViewController {
@@ -78,8 +92,8 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
         searchNavigationController.setViewControllers([ctrl], animated: false)
         searchNavigationController.modalPresentationStyle = .fullScreen
         searchNavigationController.modalTransitionStyle = .crossDissolve
-        searchNavigationController.navigationBar.isTranslucent = false
-        searchNavigationController.navigationBar.tintColor = #colorLiteral(red: 0.1234303191, green: 0.1703599989, blue: 0.2791167498, alpha: 1)
+        searchNavigationController.navigationBar.isTranslucent = true
+        searchNavigationController.navigationBar.tintColor = SearchMapController.configuration.palette.mainTexts
         router.present(searchNavigationController, animated: true)
     }
 }

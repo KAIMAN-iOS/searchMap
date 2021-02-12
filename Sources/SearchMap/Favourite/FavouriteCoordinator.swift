@@ -34,7 +34,7 @@ public class FavouriteCoordinator<DeepLink>: Coordinator<DeepLink> {
         if let delegate = favDelegate  {
             self.favouriteViewModel.favDelegate = delegate
         } else if FavouriteViewModel.shared.favDelegate == nil {
-            fatalError("FavouriteViewModel.shared.favDelegate has to be set in order to use FavouriteCoordinator")
+//            fatalError("FavouriteViewModel.shared.favDelegate has to be set in order to use FavouriteCoordinator")
         }
         self.favouriteViewModel.coordinatorDelegate = coordinatorDelegate ?? self
     }

@@ -13,50 +13,98 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChooseOptionsView" customModule="SearchMap">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="491"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-Ou-rWA">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="491"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="787"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Choose your options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yv0-Ll-dGj">
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDv-po-crf">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="33.5"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="j5i-kM-dPI">
-                            <rect key="frame" x="0.0" y="45.5" width="414" height="75.5"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de départ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUO-u5-6Jf">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uc-M5-RLq">
+                                    <rect key="frame" x="0.0" y="0.0" width="38" height="33.5"/>
+                                    <color key="tintColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
+                                    <state key="normal" image="back"/>
+                                    <connections>
+                                        <action selector="back" destination="iN0-l3-epB" eventType="touchUpInside" id="8V2-s3-z66"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Choose your options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yv0-Ll-dGj">
+                                    <rect key="frame" x="38" y="0.0" width="376" height="33.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-5N-mEI">
-                                    <rect key="frame" x="0.0" y="6" width="414" height="69.5"/>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="1FZ-hT-S6q">
+                            <rect key="frame" x="0.0" y="45.5" width="414" height="389.5"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="j5i-kM-dPI">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="91.5"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXh-jp-07P" customClass="SelectableButton" customModule="ATAViews">
-                                            <rect key="frame" x="0.0" y="0.0" width="197" height="69.5"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xaJ-5n-5b4" customClass="SelectableButton" customModule="ATAViews">
-                                            <rect key="frame" x="217" y="0.0" width="197" height="69.5"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de départ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUO-u5-6Jf">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-5N-mEI">
+                                            <rect key="frame" x="0.0" y="22" width="414" height="69.5"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXh-jp-07P" customClass="SelectableButton" customModule="ATAViews">
+                                                    <rect key="frame" x="0.0" y="0.0" width="197" height="69.5"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xaJ-5n-5b4" customClass="SelectableButton" customModule="ATAViews">
+                                                    <rect key="frame" x="217" y="0.0" width="197" height="69.5"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Tey-OK-b62" customClass="StepperView" customModule="ATAViews">
+                                    <rect key="frame" x="0.0" y="103.5" width="414" height="50"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="y6P-Mo-Icf" customClass="StepperView" customModule="ATAViews">
+                                    <rect key="frame" x="0.0" y="165.5" width="414" height="50"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6vr-Oh-B0h">
+                                    <rect key="frame" x="0.0" y="227.5" width="414" height="162"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Type de véhicule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lcz-zi-vbr">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aSZ-Ob-zkM">
+                                            <rect key="frame" x="0.0" y="62" width="414" height="100"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="100" id="K3m-7g-KDU"/>
+                                            </constraints>
+                                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="a5E-Xl-pul">
+                                                <size key="itemSize" width="128" height="128"/>
+                                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            </collectionViewFlowLayout>
+                                        </collectionView>
                                     </subviews>
                                 </stackView>
                             </subviews>
                         </stackView>
-                        <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Tey-OK-b62" customClass="StepperView" customModule="ATAViews">
-                            <rect key="frame" x="0.0" y="133" width="414" height="26"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Gww-9P-A7x">
-                            <rect key="frame" x="0.0" y="171" width="414" height="132"/>
+                            <rect key="frame" x="0.0" y="447" width="414" height="220"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de départ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cf0-1T-A8x">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info passager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cf0-1T-A8x">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="16"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="textColor"/>
@@ -70,34 +118,21 @@
                                     <rect key="frame" x="0.0" y="82" width="414" height="50"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                            </subviews>
-                        </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6vr-Oh-B0h">
-                            <rect key="frame" x="0.0" y="315" width="414" height="116"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Type de véhicule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lcz-zi-vbr">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="16"/>
-                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aSZ-Ob-zkM">
-                                    <rect key="frame" x="0.0" y="16" width="414" height="100"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xC4-oW-j1u" customClass="GrowingTextView" customModule="GrowingTextView">
+                                    <rect key="frame" x="0.0" y="140" width="414" height="80"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="100" id="K3m-7g-KDU"/>
+                                        <constraint firstAttribute="height" constant="80" id="LAg-RJ-1Ml"/>
                                     </constraints>
-                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="a5E-Xl-pul">
-                                        <size key="itemSize" width="128" height="128"/>
-                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    </collectionViewFlowLayout>
-                                </collectionView>
+                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                    <color key="textColor" systemColor="labelColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
                             </subviews>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4t-WL-YPR" customClass="ActionButton" customModule="ActionButton">
-                            <rect key="frame" x="0.0" y="443" width="414" height="48"/>
+                            <rect key="frame" x="0.0" y="679" width="414" height="48"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Wze-xh-eyK"/>
@@ -106,6 +141,23 @@
                             <state key="normal" title="Button">
                                 <color key="titleColor" name="selectedButtonColor"/>
                             </state>
+                            <connections>
+                                <action selector="mainAction" destination="iN0-l3-epB" eventType="touchUpInside" id="7lJ-f1-oxh"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tde-jg-Oaj" customClass="ActionButton" customModule="ActionButton">
+                            <rect key="frame" x="0.0" y="739" width="414" height="48"/>
+                            <color key="backgroundColor" name="backgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Ere-Pc-TM8"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="10" minY="15" maxX="10" maxY="15"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" name="selectedButtonColor"/>
+                            </state>
+                            <connections>
+                                <action selector="secondaryAction" destination="iN0-l3-epB" eventType="touchUpInside" id="9Ql-MF-Suh"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>
@@ -120,40 +172,52 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="bookButton" destination="v4t-WL-YPR" id="Q7x-md-x1z"/>
+                <outlet property="backButton" destination="9uc-M5-RLq" id="Zyw-sy-cMl"/>
                 <outlet property="chooseDateLabel" destination="zUO-u5-6Jf" id="Ett-d7-WhZ"/>
                 <outlet property="laterButton" destination="xaJ-5n-5b4" id="Jtu-h2-cxC"/>
+                <outlet property="luggagesStepper" destination="y6P-Mo-Icf" id="mlS-7D-weB"/>
+                <outlet property="mainButton" destination="v4t-WL-YPR" id="Q7x-md-x1z"/>
                 <outlet property="nameTextfield" destination="jlR-ec-iB0" id="fwV-rn-Ev1"/>
                 <outlet property="nowButton" destination="XXh-jp-07P" id="uNb-R1-TdQ"/>
                 <outlet property="passengerContainer" destination="Gww-9P-A7x" id="ogo-eC-Ki1"/>
                 <outlet property="passengerDetailLabel" destination="Cf0-1T-A8x" id="fvV-hs-DLq"/>
+                <outlet property="passengerStepper" destination="Tey-OK-b62" id="s9D-Sf-1wa"/>
                 <outlet property="phoneTextfield" destination="nD7-n1-rqN" id="xLP-e1-oqa"/>
-                <outlet property="stepper" destination="Tey-OK-b62" id="MUz-s9-8tQ"/>
+                <outlet property="secondaryButton" destination="tde-jg-Oaj" id="APi-Fi-vcQ"/>
+                <outlet property="taxiContainer" destination="1FZ-hT-S6q" id="RGQ-37-rPW"/>
+                <outlet property="textView" destination="xC4-oW-j1u" id="Bme-kU-bgq"/>
                 <outlet property="title" destination="Yv0-Ll-dGj" id="lFi-NY-mKi"/>
                 <outlet property="vehicleType" destination="Lcz-zi-vbr" id="PNo-XT-98j"/>
                 <outlet property="vehicleTypeCollectionView" destination="aSZ-Ob-zkM" id="1Pg-Nl-Ndi"/>
             </connections>
-            <point key="canvasLocation" x="-520.28985507246375" y="-187.83482142857142"/>
+            <point key="canvasLocation" x="-520.28985507246375" y="-88.727678571428569"/>
         </view>
     </objects>
     <designables>
-        <designable name="Tey-OK-b62">
-            <size key="intrinsicContentSize" width="414" height="50"/>
-        </designable>
         <designable name="jlR-ec-iB0">
             <size key="intrinsicContentSize" width="414" height="50"/>
         </designable>
         <designable name="nD7-n1-rqN">
             <size key="intrinsicContentSize" width="414" height="50"/>
         </designable>
+        <designable name="tde-jg-Oaj">
+            <size key="intrinsicContentSize" width="66" height="48"/>
+        </designable>
+        <designable name="v4t-WL-YPR">
+            <size key="intrinsicContentSize" width="66" height="48"/>
+        </designable>
     </designables>
     <resources>
+        <image name="back" width="18" height="32.5"/>
         <namedColor name="backgroundColor">
-            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="selectedButtonColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
