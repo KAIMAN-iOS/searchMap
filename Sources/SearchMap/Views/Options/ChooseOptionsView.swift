@@ -113,7 +113,7 @@ class ChooseOptionsView: UIView {
 
     @IBOutlet weak var passengerStepper: ATAStepper!  {
         didSet {
-            passengerStepper.largeComponent = false
+//            passengerStepper.largeComponent = false
             passengerStepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
         }
     }
@@ -125,7 +125,7 @@ class ChooseOptionsView: UIView {
 
     @IBOutlet weak var luggagesStepper: ATAStepper!  {
         didSet {
-            luggagesStepper.largeComponent = false
+//            luggagesStepper.largeComponent = false
             luggagesStepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
         }
     }
