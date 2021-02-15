@@ -12,6 +12,7 @@ import MapKit
 import IQKeyboardManagerSwift
 import ATAConfiguration
 import ATAGroup
+import PromiseKit
 
 public protocol VehicleTypeable {
     var rawValue: Int { get }
@@ -36,10 +37,21 @@ public enum DisplayMode {
 }
 
 public protocol SearchMapDelegate: NSObjectProtocol {
-    func book(_ booking: BookingWrapper)
-    func save(_ booking: BookingWrapper)
-    func share(_ booking: BookingWrapper, to groups: [Group])
-    func groups() -> [Group]
+    func book(_ booking: BookingWrapper) -> Promise<Bool>
+    func save(_ booking: BookingWrapper)-> Promise<Bool>
+    func share(_ booking: BookingWrapper, to groups: [Group])-> Promise<Bool>
+}
+
+public struct OptionConfiguration {
+    public struct StepperConfiguration {
+        var minValue: Int = 0
+        var maxValue: Int = 10
+    }
+    public var passengerConfiguration: StepperConfiguration
+    public var luggagesConfiguration: StepperConfiguration
+    
+    public static var `default`: OptionConfiguration = OptionConfiguration(passengerConfiguration: StepperConfiguration(minValue: 1, maxValue: 8),
+                                                                    luggagesConfiguration: StepperConfiguration(minValue: 0, maxValue: 6))
 }
 
 public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
@@ -52,9 +64,12 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     public weak var delegate: SearchMapDelegate?
     
     public init(router: RouterType?,
+                delegate: SearchMapDelegate,
                 mode: DisplayMode = .driver,
                 conf: ATAConfiguration,
-                vehicleTypes: [VehicleTypeable]) {
+                vehicleTypes: [VehicleTypeable],
+                groups: [Group] = [],
+                configurationOptions: OptionConfiguration = OptionConfiguration.default) {
         var moduleRouter = router
         if moduleRouter == nil {
             standAloneMode = true
@@ -66,6 +81,9 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.coordinatorDelegate = self
         searchMapController.mode = mode
         searchMapController.vehicles = vehicleTypes
+        searchMapController.groups = groups
+        searchMapController.configurationOptions = configurationOptions
+        searchMapController.delegate = delegate
         SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
         UINavigationBar.appearance().shadowImage = UIImage()
@@ -111,7 +129,7 @@ extension SearchMapCoordinator: SearchViewControllerDelegate {
 }
 
 extension SearchMapCoordinator: ReverseGeocodingMapDelegate {
-    public func geocodingComplete(_: Result<CLPlacemark, Error>) {
+    public func geocodingComplete(_: Swift.Result<CLPlacemark, Error>) {
         
     }
     

@@ -14,13 +14,18 @@ import AlertsAndPickers
 import DateExtension
 import GrowingTextView
 import SwiftDate
+import ATAGroup
+import PromiseKit
+
 
 protocol BookDelegate: class {
-    func book()
+    func book(_ booking: BookingWrapper) -> Promise<Bool>
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void))
+    func share(_ booking: BookingWrapper)
 }
 
 class ChooseOptionsView: UIView {
+    public weak var searchMapDelegate: SearchMapDelegate?
     var mode: DisplayMode = .driver
     
     enum OptionState: Int {
@@ -38,7 +43,7 @@ class ChooseOptionsView: UIView {
                     self.backButton.isHidden = false
                     self.taxiContainer.isHidden = true
                     self.passengerContainer.isHidden = false
-                    self.secondaryButton.isHidden = self.mode != .driver
+                    self.secondaryButton.isHidden = self.mode != .driver && self.groups.isEmpty == false
                     self.mainButton.setTitle(self.mode == .driver ? "save for me".bundleLocale() : "book".bundleLocale(), for: .normal)
                     
                 case .taxi:
@@ -52,6 +57,10 @@ class ChooseOptionsView: UIView {
                 }
             }
             animator.startAnimation()
+        }
+        
+        didSet {
+            enableNextButton()
         }
     }
     @IBOutlet weak var title: UILabel!  {
@@ -70,30 +79,54 @@ class ChooseOptionsView: UIView {
             passengerDetailLabel.set(text: "passenger details".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
         }
     }
+    enum FieldType: FieldTypeConfigurable {
+        var configuration: FieldTypeConfiguration {
+            switch self {
+            case .name: return .text
+            case .phone: return .phone
+            }
+        }
+        
+        var isMandatory: Bool { true }
+        
+        case name, phone
+    }
     @IBOutlet weak var nameTextfield: BorderedTextField!  {
         didSet {
             nameTextfield.textfield.placeholder = "Passenger name".bundleLocale()
+            nameTextfield.configure(FieldType.name)
+            nameTextfield.textfield.delegate = self
         }
     }
     @IBOutlet weak var phoneTextfield: BorderedTextField!  {
         didSet {
             phoneTextfield.textfield.placeholder = "Passenger phone".bundleLocale()
+            phoneTextfield.configure(FieldType.phone)
+            phoneTextfield.textfield.delegate = self
         }
     }
-    @IBOutlet weak var passengerStepper: StepperView!  {
+    @IBOutlet weak var passengerLabel: UILabel!  {
         didSet {
-//            passengerStepper.largeComponent = false
-            passengerStepper.stepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
-            passengerStepper.title.set(text: "nb passenger".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
-            passengerStepper.subtitle.set(text: "max available".bundleLocale(), for: .callout, textColor: SearchMapController.configuration.palette.mainTexts)
+            passengerLabel.set(text: "nb passenger".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
         }
     }
-    @IBOutlet weak var luggagesStepper: StepperView!  {
+
+    @IBOutlet weak var passengerStepper: ATAStepper!  {
         didSet {
-//            luggagesStepper.largeComponent = false
-            luggagesStepper.stepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
-            luggagesStepper.title.set(text: "nb luggages".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
-            luggagesStepper.subtitle.set(text: "max available".bundleLocale(), for: .callout, textColor: SearchMapController.configuration.palette.mainTexts)
+            passengerStepper.largeComponent = false
+            passengerStepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
+        }
+    }
+    @IBOutlet weak var luggagesLabel: UILabel!  {
+        didSet {
+            luggagesLabel.set(text: "nb luggages".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
+        }
+    }
+
+    @IBOutlet weak var luggagesStepper: ATAStepper!  {
+        didSet {
+            luggagesStepper.largeComponent = false
+            luggagesStepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
         }
     }
 
@@ -142,7 +175,7 @@ class ChooseOptionsView: UIView {
     @IBOutlet weak var secondaryButton: ActionButton!  {
         didSet {
             secondaryButton.setTitle("share to groups".bundleLocale(), for: .normal)
-            secondaryButton.actionButtonType = .smoked
+            secondaryButton.actionButtonType = .secondary
             secondaryButton.isHidden = true
         }
     }
@@ -218,7 +251,10 @@ class ChooseOptionsView: UIView {
         SelectableButton.unselectedColor = SearchMapController.configuration.palette.textOnPrimary
     }
     
-    func configure() {
+    var groups: [Group] = []
+    var booking: BookingWrapper!
+    func configure(options configurationOptions: OptionConfiguration, booking: inout BookingWrapper) {
+        self.booking = booking
         state = .taxi
         nameTextfield.textfield.placeholder = "Passenger name".bundleLocale()
         let datasource = viewModel.dataSource(for: vehicleTypeCollectionView)
@@ -227,6 +263,10 @@ class ChooseOptionsView: UIView {
         viewModel.applySnapshot(in: datasource)
         nameTextfield.isHidden = mode == .passenger
         phoneTextfield.isHidden = mode == .passenger
+        passengerStepper.minimumValue = Double(configurationOptions.passengerConfiguration.minValue)
+        passengerStepper.maximumValue = Double(configurationOptions.passengerConfiguration.maxValue)
+        luggagesStepper.minimumValue = Double(configurationOptions.luggagesConfiguration.minValue)
+        luggagesStepper.maximumValue = Double(configurationOptions.luggagesConfiguration.maxValue)
     }
     
     @objc func chooseDate(sender: SelectableButton) {
@@ -240,16 +280,64 @@ class ChooseOptionsView: UIView {
         }
     }
     
+    func enableNextButton() {
+        switch state {
+        case .passenger where mode == .driver:
+            mainButton.isEnabled = nameTextfield.textfield.text?.isEmpty ?? true == false
+                && phoneTextfield.textfield.text?.isEmpty ?? true == false
+            
+        default: mainButton.isEnabled = true
+        }
+    }
+    
     @IBAction func mainAction() {
         // booking
         guard let nextState = state.next else {
+            mainButton.isLoading = true
+            switch mode {
+            case .driver:
+                delegate?
+                    .book(booking)
+                    .ensure { [weak self] in
+                        self?.mainButton.isLoading = false
+                    }
+                    .done({ _ in })
+                    .catch({ _ in })
+                
+            case .passenger:
+                delegate?.book(booking)
+                    .ensure { [weak self] in
+                        self?.mainButton.isLoading = false
+                    }
+                    .done({ _ in })
+                    .catch({ _ in })
+                
+            case .business:
+                delegate?.book(booking)
+                    .ensure { [weak self] in
+                        self?.mainButton.isLoading = false
+                    }
+                    .done({ _ in })
+                    .catch({ _ in })
+            }
             return
         }
         state = nextState
     }
     
     @IBAction func secondaryAction() {
+        secondaryButton.isLoading = true
+        delegate?.share(booking)
+    }
+    
+    func updateBooking() {
         
+    }
+}
+
+extension ChooseOptionsView: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        enableNextButton()
     }
 }
 

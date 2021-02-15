@@ -16,9 +16,12 @@ import SwiftLocation
 import AlertsAndPickers
 import UIViewControllerExtension
 import SwiftDate
+import PromiseKit
+import ATAGroup
 
 class SearchMapController: UIViewController {
     var mode: DisplayMode = .driver
+    var configurationOptions: OptionConfiguration!
     static var configuration: ATAConfiguration!
     static func create() -> SearchMapController {
         return UIStoryboard(name: "Map", bundle: .module).instantiateInitialViewController() as! SearchMapController
@@ -36,7 +39,8 @@ class SearchMapController: UIViewController {
             }
         }
     }
-    var vehicles: [VehicleTypeable] = [] 
+    var vehicles: [VehicleTypeable] = []
+    var groups: [Group] = []
     @IBOutlet weak var originLabel: UILabel!
     @IBOutlet weak var originIndicator: UIView!  {
         didSet {
@@ -54,6 +58,7 @@ class SearchMapController: UIViewController {
     }
     var bookingWrapper = BookingWrapper()
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
+    public weak var delegate: SearchMapDelegate!
     private var locationRequest: GPSLocationRequest?
     
     let geocoder = CLGeocoder()
@@ -185,8 +190,10 @@ class SearchMapController: UIViewController {
         view.delegate = self
         view.vehicles = vehicles
         view.mode = mode
+        view.groups = groups
+        view.searchMapDelegate = delegate
         addViewToCard(view)
-        view.configure()
+        view.configure(options: configurationOptions, booking: &bookingWrapper)
         topViewTopContraint.constant = 0
     }
     
@@ -279,8 +286,13 @@ extension SearchMapController: MapLandingViewDelegate {
 }
 
 extension SearchMapController: BookDelegate {
-    func book() {
-        
+    func book(_ booking: BookingWrapper) -> Promise<Bool> {
+        guard let delegate = delegate else {
+            return Promise<Bool>.init { (resolver) in
+                resolver.fulfill(false)
+            }
+        }
+        return delegate.book(booking)
     }
     
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void)) {
@@ -295,6 +307,11 @@ extension SearchMapController: BookDelegate {
         alertController.addAction(title: "OK".bundleLocale(), style: .cancel)
         alertController.view.tintColor = SearchMapController.configuration.palette.mainTexts
         present(alertController, animated: true, completion: nil)
+    }
+    
+    func share(_ booking: BookingWrapper) {
+        let choose = ChooseGroupsView.create(booking: booking, groups: groups, delegate: delegate)
+        addViewToCard(choose)
     }
 }
 

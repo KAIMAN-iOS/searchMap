@@ -52,40 +52,67 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-5N-mEI">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-5N-mEI">
                                             <rect key="frame" x="0.0" y="22" width="414" height="69.5"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXh-jp-07P" customClass="SelectableButton" customModule="ATAViews">
-                                                    <rect key="frame" x="0.0" y="0.0" width="197" height="69.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="202" height="69.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xaJ-5n-5b4" customClass="SelectableButton" customModule="ATAViews">
-                                                    <rect key="frame" x="217" y="0.0" width="197" height="69.5"/>
+                                                    <rect key="frame" x="212" y="0.0" width="202" height="69.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </view>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                 </stackView>
-                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Tey-OK-b62" customClass="StepperView" customModule="ATAViews">
-                                    <rect key="frame" x="0.0" y="103.5" width="414" height="50"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </view>
-                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="y6P-Mo-Icf" customClass="StepperView" customModule="ATAViews">
-                                    <rect key="frame" x="0.0" y="165.5" width="414" height="50"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </view>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4po-te-5k3">
+                                    <rect key="frame" x="0.0" y="103.5" width="414" height="70"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="bpb-r5-D2F">
+                                            <rect key="frame" x="0.0" y="0.0" width="202" height="70"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de départ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLH-HW-WfL">
+                                                    <rect key="frame" x="0.0" y="0.0" width="202" height="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="Hru-Ud-7Ho" customClass="ATAStepper" customModule="ATAViews">
+                                                    <rect key="frame" x="0.0" y="20" width="202" height="50"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                            </subviews>
+                                        </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Guh-5w-Fkz">
+                                            <rect key="frame" x="212" y="0.0" width="202" height="70"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date de départ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5y1-Na-1OY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="202" height="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="j7V-Kg-kE2" customClass="ATAStepper" customModule="ATAViews">
+                                                    <rect key="frame" x="0.0" y="20" width="202" height="50"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6vr-Oh-B0h">
-                                    <rect key="frame" x="0.0" y="227.5" width="414" height="162"/>
+                                    <rect key="frame" x="0.0" y="185.5" width="414" height="204"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Type de véhicule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lcz-zi-vbr">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="62"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="104"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="aSZ-Ob-zkM">
-                                            <rect key="frame" x="0.0" y="62" width="414" height="100"/>
+                                            <rect key="frame" x="0.0" y="104" width="414" height="100"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="100" id="K3m-7g-KDU"/>
@@ -175,13 +202,15 @@
                 <outlet property="backButton" destination="9uc-M5-RLq" id="Zyw-sy-cMl"/>
                 <outlet property="chooseDateLabel" destination="zUO-u5-6Jf" id="Ett-d7-WhZ"/>
                 <outlet property="laterButton" destination="xaJ-5n-5b4" id="Jtu-h2-cxC"/>
-                <outlet property="luggagesStepper" destination="y6P-Mo-Icf" id="mlS-7D-weB"/>
+                <outlet property="luggagesLabel" destination="5y1-Na-1OY" id="06S-ja-F85"/>
+                <outlet property="luggagesStepper" destination="j7V-Kg-kE2" id="y2b-7M-RSL"/>
                 <outlet property="mainButton" destination="v4t-WL-YPR" id="Q7x-md-x1z"/>
                 <outlet property="nameTextfield" destination="jlR-ec-iB0" id="fwV-rn-Ev1"/>
                 <outlet property="nowButton" destination="XXh-jp-07P" id="uNb-R1-TdQ"/>
                 <outlet property="passengerContainer" destination="Gww-9P-A7x" id="ogo-eC-Ki1"/>
                 <outlet property="passengerDetailLabel" destination="Cf0-1T-A8x" id="fvV-hs-DLq"/>
-                <outlet property="passengerStepper" destination="Tey-OK-b62" id="s9D-Sf-1wa"/>
+                <outlet property="passengerLabel" destination="LLH-HW-WfL" id="XHP-Sy-jas"/>
+                <outlet property="passengerStepper" destination="Hru-Ud-7Ho" id="P98-Lk-wwL"/>
                 <outlet property="phoneTextfield" destination="nD7-n1-rqN" id="xLP-e1-oqa"/>
                 <outlet property="secondaryButton" destination="tde-jg-Oaj" id="APi-Fi-vcQ"/>
                 <outlet property="taxiContainer" destination="1FZ-hT-S6q" id="RGQ-37-rPW"/>
@@ -194,6 +223,12 @@
         </view>
     </objects>
     <designables>
+        <designable name="Hru-Ud-7Ho">
+            <size key="intrinsicContentSize" width="414" height="50"/>
+        </designable>
+        <designable name="j7V-Kg-kE2">
+            <size key="intrinsicContentSize" width="414" height="50"/>
+        </designable>
         <designable name="jlR-ec-iB0">
             <size key="intrinsicContentSize" width="414" height="50"/>
         </designable>
@@ -210,7 +245,7 @@
     <resources>
         <image name="back" width="18" height="32.5"/>
         <namedColor name="backgroundColor">
-            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="selectedButtonColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

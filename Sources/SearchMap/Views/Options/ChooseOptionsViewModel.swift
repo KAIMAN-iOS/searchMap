@@ -36,7 +36,7 @@ class ChooseOptionsViewModel {
     typealias SnapShot = NSDiffableDataSourceSnapshot<Section, CellType>
     private var dataSource: DataSource!
     private var sections: [Section] = []
-    var selectedIndex: Int = 0
+    var selectedIndex: Int = -1
     
     func dataSource(for collectionView: UICollectionView) -> DataSource {
         // Handle cells
@@ -69,13 +69,13 @@ class ChooseOptionsViewModel {
     }
     
     func select(at indexPath: IndexPath) {
-        selectedIndex = indexPath.row
+        selectedIndex = selectedIndex == indexPath.row ? -1 : indexPath.row
         applySnapshot(in: dataSource)
     }
     
     private func generateLayout(for section: Int, environnement: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let fullItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                                 heightDimension: .estimated(35)))
+                                                                                 heightDimension: .estimated(30)))
         fullItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0)
         
         let vGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
