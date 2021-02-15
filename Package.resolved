@@ -5,9 +5,27 @@
         "package": "ActionButton",
         "repositoryURL": "https://github.com/jerometonnelier/ActionButton",
         "state": {
+          "branch": "master",
+          "revision": "379ad87fa9895546ecb2eeb0bd2628467e992ac8",
+          "version": null
+        }
+      },
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire",
+        "state": {
           "branch": null,
-          "revision": "3ae3d2b60324051f8ee9cb0ab63feb5866ef454c",
-          "version": "1.0.3"
+          "revision": "eaf6e622dd41b07b251d8f01752eab31bc811493",
+          "version": "5.4.1"
+        }
+      },
+      {
+        "package": "AlertsAndPickers",
+        "repositoryURL": "https://github.com/jerometonnelier/alerts-and-pickers",
+        "state": {
+          "branch": "spm",
+          "revision": "86f35dbe5a5900815bec752f2afc8b4f44b7ad50",
+          "version": null
         }
       },
       {
@@ -23,9 +41,45 @@
         "package": "ATAConfiguration",
         "repositoryURL": "https://github.com/jerometonnelier/ATAConfiguration",
         "state": {
+          "branch": "master",
+          "revision": "0c1bb6372ec4b9fca70ea96d406cfe958fd786fc",
+          "version": null
+        }
+      },
+      {
+        "package": "ATAGroup",
+        "repositoryURL": "https://github.com/jerometonnelier/ATAGroup",
+        "state": {
+          "branch": "master",
+          "revision": "c7bd11e6fef7593565758795bf280280c3fd887e",
+          "version": null
+        }
+      },
+      {
+        "package": "ATAViews",
+        "repositoryURL": "https://github.com/jerometonnelier/ATAViews",
+        "state": {
+          "branch": "master",
+          "revision": "f6cde7da2f5addeb8ae1c570fb94821a705a2c96",
+          "version": null
+        }
+      },
+      {
+        "package": "FittedSheets",
+        "repositoryURL": "https://github.com/gordontucker/FittedSheets",
+        "state": {
           "branch": null,
-          "revision": "8ec9be62f1f5783ce0acb71ff1cb885ca8265df2",
-          "version": "1.0.3"
+          "revision": "0502be20c95d5bae93a155081a1f1d7ca69924d3",
+          "version": "2.4.0"
+        }
+      },
+      {
+        "package": "GrowingTextView",
+        "repositoryURL": "https://github.com/KennethTsang/GrowingTextView",
+        "state": {
+          "branch": null,
+          "revision": "0cda2caf03bf6cb2ec6dc006873c3c865933be09",
+          "version": "0.7.2"
         }
       },
       {
@@ -50,18 +104,27 @@
         "package": "KCoordinatorKit",
         "repositoryURL": "https://github.com/jerometonnelier/KCoordinatorKit",
         "state": {
-          "branch": null,
+          "branch": "master",
           "revision": "20bb96f4f55c366fbeba61e97287bd6ee4a14d03",
-          "version": "1.0.1"
+          "version": null
         }
       },
       {
         "package": "KExtensions",
         "repositoryURL": "https://github.com/jerometonnelier/KExtensions",
         "state": {
+          "branch": "master",
+          "revision": "b0d5cd83adc01cae24ce17ce820091264b00f32a",
+          "version": null
+        }
+      },
+      {
+        "package": "KStorage",
+        "repositoryURL": "https://github.com/jerometonnelier/KStorage",
+        "state": {
           "branch": null,
-          "revision": "8e29ed4a1b0ee56f1bd7f858acb1b88bd7d5c810",
-          "version": "1.0.20"
+          "revision": "330de84d7b9601468a842c099c7627069ab92016",
+          "version": "1.0.0"
         }
       },
       {
@@ -83,12 +146,21 @@
         }
       },
       {
+        "package": "PromiseKit",
+        "repositoryURL": "https://github.com/mxcl/PromiseKit",
+        "state": {
+          "branch": null,
+          "revision": "aea48ea1855f5d82e2dffa6027afce3aab8f3dd7",
+          "version": "6.13.3"
+        }
+      },
+      {
         "package": "ReverseGeocodingMap",
         "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
         "state": {
-          "branch": null,
-          "revision": "7fb07d62d5c20d9b61c34ee0ab3438e9ee23677c",
-          "version": "1.0.8"
+          "branch": "master",
+          "revision": "22bc900a0555dbed6f48fd4182ae3e943a319ffc",
+          "version": null
         }
       },
       {
@@ -101,12 +173,30 @@
         }
       },
       {
+        "package": "SwiftDate",
+        "repositoryURL": "https://github.com/malcommac/SwiftDate",
+        "state": {
+          "branch": null,
+          "revision": "6190d0cefff3013e77ed567e6b074f324e5c5bf5",
+          "version": "6.3.1"
+        }
+      },
+      {
+        "package": "SwiftLocation",
+        "repositoryURL": "https://github.com/malcommac/SwiftLocation",
+        "state": {
+          "branch": null,
+          "revision": "f8ec8e97095eb3a5312370ad94b921768217625f",
+          "version": "5.1.0"
+        }
+      },
+      {
         "package": "TextFieldEffects",
         "repositoryURL": "https://github.com/jerometonnelier/TextFieldEffects",
         "state": {
-          "branch": null,
+          "branch": "master",
           "revision": "34c87d76b1675f2001bec6e16462f8cc0b8dbbd2",
-          "version": "1.7.2"
+          "version": null
         }
       }
     ]

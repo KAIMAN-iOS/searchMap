@@ -23,14 +23,17 @@ let package = Package(
         .package(url: "https://github.com/jerometonnelier/TextFieldEffects", .branch("master")),
         .package(url: "https://github.com/jerometonnelier/ATAConfiguration", .branch("master")),
         .package(url: "https://github.com/malcommac/SwiftLocation", from: "5.1.0"),
+        .package(url: "https://github.com/malcommac/SwiftDate", from: "6.3.1"),
         .package(url: "https://github.com/jerometonnelier/ATAViews", .branch("master")),
-        .package(name: "AlertsAndPickers", url: "https://github.com/jerometonnelier/alerts-and-pickers", .branch("spm"))
+        .package(url: "https://github.com/jerometonnelier/ATAGroup", .branch("master")),
+        .package(name: "AlertsAndPickers", url: "https://github.com/jerometonnelier/alerts-and-pickers", .branch("spm")),
+        .package(url: "https://github.com/KennethTsang/GrowingTextView", from: "0.7.2"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SearchMap",
-            dependencies: ["KExtensions", "KCoordinatorKit", "IQKeyboardManagerSwift", "ActionButton", "ReverseGeocodingMap", "TextFieldEffects", "ATAConfiguration", "SwiftLocation", "ATAViews", "AlertsAndPickers"])
+            dependencies: ["KExtensions", "KCoordinatorKit", "IQKeyboardManagerSwift", "ActionButton", "ReverseGeocodingMap", "TextFieldEffects", "ATAConfiguration", "SwiftLocation", "ATAViews", "AlertsAndPickers", "ATAGroup", "SwiftDate", "GrowingTextView"])
     ]
 )
