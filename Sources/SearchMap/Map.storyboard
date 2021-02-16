@@ -52,7 +52,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xgc-2Y-SC7">
-                                <rect key="frame" x="20" y="44" width="374" height="71"/>
+                                <rect key="frame" x="20" y="44" width="374" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwS-rR-flv">
                                         <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
@@ -65,23 +65,23 @@
                                         <color key="tintColor" name="Color"/>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNi-aT-hJu">
-                                        <rect key="frame" x="53" y="0.0" width="321" height="71"/>
+                                        <rect key="frame" x="53" y="0.0" width="321" height="80"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" verticalHuggingPriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="2uI-Be-b9N">
-                                                <rect key="frame" x="0.0" y="4" width="321" height="63"/>
+                                                <rect key="frame" x="0.0" y="4" width="321" height="72"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aW5-aB-dpY" customClass="DottedView" customModule="UIViewExtension">
-                                                        <rect key="frame" x="14.5" y="8" width="2" height="46.5"/>
+                                                        <rect key="frame" x="14.5" y="8" width="2" height="55.5"/>
                                                         <color key="backgroundColor" name="secondaryTexts"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="2" id="fZ3-6b-XHI"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vY5-Ju-RJj">
-                                                        <rect key="frame" x="8" y="0.0" width="305" height="55"/>
+                                                        <rect key="frame" x="8" y="0.0" width="305" height="64"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="245" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="588-SO-sAE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="305" height="55"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="305" height="64"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="geT-oD-C5q">
                                                                         <rect key="frame" x="0.0" y="0.0" width="305" height="31"/>
@@ -118,8 +118,26 @@
                                                                             <constraint firstItem="Hw5-YQ-jnZ" firstAttribute="centerY" secondItem="j9W-ZN-31F" secondAttribute="centerY" id="Tpk-To-8c0"/>
                                                                         </constraints>
                                                                     </stackView>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sv2-8h-0Cu">
+                                                                        <rect key="frame" x="0.0" y="39" width="305" height="1"/>
+                                                                        <subviews>
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UAD-rn-wVW">
+                                                                                <rect key="frame" x="23" y="0.0" width="282" height="1"/>
+                                                                                <color key="backgroundColor" white="1" alpha="0.49448933791314531" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="1" id="1Ml-Yh-ngC"/>
+                                                                                </constraints>
+                                                                            </view>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <constraints>
+                                                                            <constraint firstItem="UAD-rn-wVW" firstAttribute="top" secondItem="sv2-8h-0Cu" secondAttribute="top" id="BZT-Qf-W7l"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="UAD-rn-wVW" secondAttribute="trailing" id="aOY-xh-Q3Z"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="UAD-rn-wVW" secondAttribute="bottom" id="jiN-pn-cYs"/>
+                                                                        </constraints>
+                                                                    </view>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ty1-TI-UP9">
-                                                                        <rect key="frame" x="0.0" y="39" width="305" height="16"/>
+                                                                        <rect key="frame" x="0.0" y="48" width="305" height="16"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jc3-Z3-7XW">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="15" height="16"/>
@@ -152,6 +170,7 @@
                                                                     </stackView>
                                                                 </subviews>
                                                                 <constraints>
+                                                                    <constraint firstItem="UAD-rn-wVW" firstAttribute="leading" secondItem="j9W-ZN-31F" secondAttribute="leading" id="2qc-hY-1Fd"/>
                                                                     <constraint firstItem="mHh-5i-fV5" firstAttribute="height" secondItem="Hw5-YQ-jnZ" secondAttribute="height" id="nZ0-dJ-H5r"/>
                                                                     <constraint firstItem="mHh-5i-fV5" firstAttribute="width" secondItem="Hw5-YQ-jnZ" secondAttribute="width" id="r2c-9s-Tlf"/>
                                                                 </constraints>
@@ -171,7 +190,7 @@
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkG-ZF-42i">
-                                                <rect key="frame" x="0.0" y="0.0" width="321" height="71"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="321" height="80"/>
                                                 <connections>
                                                     <action selector="showSearchController" destination="ib7-P8-GYj" eventType="touchUpInside" id="FGC-SU-vNk"/>
                                                 </connections>
@@ -417,7 +436,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="close" width="42" height="42"/>
+        <image name="close" width="33.5" height="33.5"/>
         <image name="location" width="119" height="119"/>
         <namedColor name="Color">
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
@@ -438,7 +457,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="selectedTitleColor">
-            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="textColor">
             <color red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

@@ -7,7 +7,7 @@
 
 import UIKit
 
-public enum FavouriteType: Int, Hashable {
+public enum FavouriteType: Int, Hashable, Codable {
     case home = 0, work
     
     var name: String {

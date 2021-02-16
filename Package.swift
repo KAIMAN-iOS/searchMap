@@ -26,6 +26,7 @@ let package = Package(
         .package(url: "https://github.com/malcommac/SwiftDate", from: "6.3.1"),
         .package(url: "https://github.com/jerometonnelier/ATAViews", .branch("master")),
         .package(url: "https://github.com/jerometonnelier/ATAGroup", .branch("master")),
+        .package(url: "https://github.com/jerometonnelier/KStorage", .branch("master")),
         .package(name: "AlertsAndPickers", url: "https://github.com/jerometonnelier/alerts-and-pickers", .branch("spm")),
         .package(url: "https://github.com/KennethTsang/GrowingTextView", from: "0.7.2"),
     ],
@@ -34,6 +35,19 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SearchMap",
-            dependencies: ["KExtensions", "KCoordinatorKit", "IQKeyboardManagerSwift", "ActionButton", "ReverseGeocodingMap", "TextFieldEffects", "ATAConfiguration", "SwiftLocation", "ATAViews", "AlertsAndPickers", "ATAGroup", "SwiftDate", "GrowingTextView"])
+            dependencies: ["KExtensions",
+                           "KCoordinatorKit",
+                           "IQKeyboardManagerSwift",
+                           "ActionButton",
+                           "ReverseGeocodingMap",
+                           "TextFieldEffects",
+                           "ATAConfiguration",
+                           "SwiftLocation",
+                           "ATAViews",
+                           "AlertsAndPickers",
+                           "ATAGroup",
+                           "SwiftDate",
+                           "GrowingTextView",
+                           "KStorage"])
     ]
 )

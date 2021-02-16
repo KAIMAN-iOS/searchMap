@@ -199,7 +199,12 @@ class SearchMapController: UIViewController {
                             if let overlay = overlays.first {
                                 self.map.removeOverlays(self.map.overlays)
                                 self.map.addOverlay(overlay)
-                                self.map.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: self.bookingTopView.frame.maxY + 10, left: 20, bottom: self.locatioButton.frame.height + 20, right: 50), animated: true)
+                                self.map.setVisibleMapRect(route.polyline.boundingMapRect,
+                                                           edgePadding: UIEdgeInsets(top: self.bookingTopView.frame.maxY + 30,
+                                                                                     left: self.locatioButton.frame.width + 20,
+                                                                                     bottom: self.locatioButton.frame.height + 30,
+                                                                                     right: 50),
+                                                           animated: true)
                             }
                         }
                     }

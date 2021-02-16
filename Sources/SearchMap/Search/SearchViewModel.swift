@@ -40,6 +40,14 @@ public class SearchViewModel {
             items[.specificFavourite] = [.specificFavourite(.home, nil), .specificFavourite(.work, nil)]
         }
         loadFavorites()
+        updateHistory()
+    }
+    
+    func updateHistory() {
+        let history = RecentPlacemarkManager.fetchHistory()
+        if history.count > 0 {
+            items[.history] = history.compactMap({ .history($0) })
+        }
     }
     
     func loadFavorites() {
@@ -132,19 +140,25 @@ public class SearchViewModel {
         return datasource
     }
     
+    func returnAndSave(_ placemark: Placemark) -> Placemark {
+        RecentPlacemarkManager.add(placemark)
+        updateHistory()
+        return placemark
+    }
+    
     func placemark(at indexPath: IndexPath) -> Placemark? {
         // fav or history
         guard indexPath.row < items[.search]?.count ?? 0 else {
             switch items[sortedSections[indexPath.section]]?[indexPath.row] {
-            case .favourite(let place): return place
-            case .history(let place): return place
-            case .search(let place): return place
-            case .specificFavourite(_, let place): return place
+            case .favourite(let place): return returnAndSave(place)
+            case .history(let place): return returnAndSave(place)
+            case .search(let place): return returnAndSave(place)
+            case .specificFavourite(_, let place): return place == nil ? nil : returnAndSave(place!)
             default: return nil
             }
         }
         switch items[.search]?[indexPath.row] {
-        case .search(let place): return place
+        case .search(let place): return returnAndSave(place)
         default: return nil
         }
     }

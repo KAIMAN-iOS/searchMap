@@ -99,7 +99,7 @@ public struct BookingDirections: Directions {
     }
 }
 
-public class Placemark: NSObject {
+public class Placemark: NSObject, Codable {
     public static func == (lhs: Placemark, rhs: Placemark) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
