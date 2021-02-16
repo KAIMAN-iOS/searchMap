@@ -22,14 +22,14 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F0O-HW-aIv">
                         <rect key="frame" x="0.0" y="8" width="289" height="138"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="U2m-p5-tcJ">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="U2m-p5-tcJ">
                                 <rect key="frame" x="8" y="8" width="170.5" height="122"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Fv-s3-Cpr">
-                                        <rect key="frame" x="0.0" y="0.0" width="133" height="40.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="133" height="38"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ign-Q5-5YU">
-                                                <rect key="frame" x="0.0" y="11" width="133" height="18.5"/>
+                                                <rect key="frame" x="0.0" y="10" width="133" height="18.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GROUPE JURIDIQUE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x31-OW-0h4">
                                                         <rect key="frame" x="8" y="2" width="117" height="14.5"/>
@@ -47,7 +47,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="Ign-Q5-5YU" firstAttribute="top" relation="greaterThanOrEqual" secondItem="5Fv-s3-Cpr" secondAttribute="top" id="6Pc-s7-hdZ"/>
                                             <constraint firstItem="Ign-Q5-5YU" firstAttribute="centerY" secondItem="5Fv-s3-Cpr" secondAttribute="centerY" id="LKJ-Zc-iWP"/>
@@ -57,13 +57,13 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="800" text="TAXI RADIO AIXOIS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yut-D6-U23">
-                                        <rect key="frame" x="0.0" y="40.5" width="170.5" height="41"/>
+                                        <rect key="frame" x="0.0" y="42" width="170.5" height="38"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="35 membres" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NlR-tF-HcZ">
-                                        <rect key="frame" x="0.0" y="81.5" width="111" height="40.5"/>
+                                        <rect key="frame" x="0.0" y="84" width="111" height="38"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -80,7 +80,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="wLk-eC-TVa" firstAttribute="centerY" secondItem="F0O-HW-aIv" secondAttribute="centerY" id="AgY-IG-nCk"/>
                             <constraint firstAttribute="trailing" secondItem="wLk-eC-TVa" secondAttribute="trailing" constant="16" id="MVi-7g-c4R"/>
@@ -92,6 +92,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="F0O-HW-aIv" firstAttribute="leading" secondItem="g0p-Pg-gQF" secondAttribute="leading" id="CWF-jW-2TH"/>
                     <constraint firstAttribute="trailing" secondItem="F0O-HW-aIv" secondAttribute="trailing" constant="8" id="bHN-oE-EDX"/>
@@ -99,6 +100,7 @@
                     <constraint firstItem="F0O-HW-aIv" firstAttribute="top" secondItem="g0p-Pg-gQF" secondAttribute="top" constant="8" id="pEj-sz-jqW"/>
                 </constraints>
             </collectionViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <size key="customSize" width="297" height="154"/>
             <connections>
                 <outlet property="card" destination="F0O-HW-aIv" id="eUt-VS-9zm"/>
@@ -119,9 +121,6 @@
         <namedColor name="textOnPrimary">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

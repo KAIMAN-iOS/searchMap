@@ -25,7 +25,7 @@ protocol BookDelegate: class {
 }
 
 class ChooseOptionsView: UIView {
-    public weak var searchMapDelegate: SearchMapDelegate?
+    public weak var searchMapDelegate: SearchRideDelegate?
     var mode: DisplayMode = .driver
     
     enum OptionState: Int {
@@ -65,7 +65,7 @@ class ChooseOptionsView: UIView {
     }
     @IBOutlet weak var title: UILabel!  {
         didSet {
-            title.set(text: "Choose your options".bundleLocale(), for: .title2, textColor: SearchMapController.configuration.palette.mainTexts)
+            title.set(text: "Choose your options".bundleLocale().uppercased(), for: .title3, textColor: SearchMapController.configuration.palette.textOnPrimary)
         }
     }
     @IBOutlet weak var passengerContainer: UIStackView!  {
@@ -76,7 +76,7 @@ class ChooseOptionsView: UIView {
 
     @IBOutlet weak var passengerDetailLabel: UILabel!  {
         didSet {
-            passengerDetailLabel.set(text: "passenger details".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
+            passengerDetailLabel.set(text: "passenger details".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.textOnPrimary)
         }
     }
     enum FieldType: FieldTypeConfigurable {
@@ -93,40 +93,50 @@ class ChooseOptionsView: UIView {
     }
     @IBOutlet weak var nameTextfield: BorderedTextField!  {
         didSet {
-            nameTextfield.textfield.placeholder = "Passenger name".bundleLocale()
+            nameTextfield.textfield.attributedPlaceholder = "Passenger name".bundleLocale().asAttributedString(for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.lightGray)
+            nameTextfield.borderColor = SearchMapController.configuration.palette.lightGray
+            nameTextfield.textfield.textColor = SearchMapController.configuration.palette.textOnPrimary
             nameTextfield.configure(FieldType.name)
             nameTextfield.textfield.delegate = self
         }
     }
     @IBOutlet weak var phoneTextfield: BorderedTextField!  {
         didSet {
-            phoneTextfield.textfield.placeholder = "Passenger phone".bundleLocale()
+            phoneTextfield.textfield.attributedPlaceholder = "Passenger phone".bundleLocale().asAttributedString(for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.lightGray)
+            phoneTextfield.borderColor = SearchMapController.configuration.palette.lightGray
+            phoneTextfield.textfield.textColor = SearchMapController.configuration.palette.textOnPrimary
             phoneTextfield.configure(FieldType.phone)
             phoneTextfield.textfield.delegate = self
         }
     }
     @IBOutlet weak var passengerLabel: UILabel!  {
         didSet {
-            passengerLabel.set(text: "nb passenger".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
+            passengerLabel.set(text: "nb passenger".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.textOnPrimary)
         }
     }
 
     @IBOutlet weak var passengerStepper: ATAStepper!  {
         didSet {
 //            passengerStepper.largeComponent = false
-            passengerStepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
+            passengerStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
+            passengerStepper.cornerRadius = 10.0
+            passengerStepper.stepperColor = .white
+            passengerStepper.stepperTextColor = SearchMapController.configuration.palette.mainTexts
         }
     }
     @IBOutlet weak var luggagesLabel: UILabel!  {
         didSet {
-            luggagesLabel.set(text: "nb luggages".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
+            luggagesLabel.set(text: "nb luggages".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.textOnPrimary)
         }
     }
 
     @IBOutlet weak var luggagesStepper: ATAStepper!  {
         didSet {
 //            luggagesStepper.largeComponent = false
-            luggagesStepper.limitHitAnimationColor = SearchMapController.configuration.palette.mainTexts
+            luggagesStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
+            luggagesStepper.cornerRadius = 10.0
+            luggagesStepper.stepperColor = .white
+            luggagesStepper.stepperTextColor = SearchMapController.configuration.palette.mainTexts
         }
     }
 
@@ -155,11 +165,13 @@ class ChooseOptionsView: UIView {
         didSet {
             textView.text = nil
             textView.placeholder = "enter your message here".local()
-            textView.placeholderColor = SearchMapController.configuration.palette.inactive
-            textView.font = .applicationFont(ofSize: 17, weight: .regular)
-            textView.textColor = SearchMapController.configuration.palette.secondaryTexts
-            textView.backgroundColor = SearchMapController.configuration.palette.lightGray
-            textView.cornerRadius = 10
+            textView.placeholderColor = SearchMapController.configuration.palette.lightGray
+            textView.font = .applicationFont(forTextStyle: .callout)
+            textView.layer.borderColor = SearchMapController.configuration.palette.lightGray.cgColor
+            textView.layer.borderWidth = 1
+            textView.cornerRadius = 0
+            textView.textColor = SearchMapController.configuration.palette.textOnPrimary
+            textView.backgroundColor = .clear
             textView.minHeight = 100
             textView.maxHeight = 100
         }
@@ -168,7 +180,7 @@ class ChooseOptionsView: UIView {
     @IBOutlet weak var mainButton: ActionButton!  {
         didSet {
             mainButton.setTitle("next".bundleLocale(), for: .normal)
-            mainButton.actionButtonType = .primary
+            mainButton.actionButtonType = .confirmation
         }
     }
     
@@ -182,16 +194,18 @@ class ChooseOptionsView: UIView {
 
     @IBOutlet weak var chooseDateLabel: UILabel!  {
         didSet {
-            chooseDateLabel.set(text: "departure date".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
+            chooseDateLabel.set(text: "departure date".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.textOnPrimary)
         }
     }
 
     @IBOutlet weak var nowButton: SelectableButton!  {
         didSet {
             nowButton.titleLabel?.font = .applicationFont(forTextStyle: .footnote)
+            nowButton.selectedColor = .white
+            nowButton.unselectedColor = SearchMapController.configuration.palette.secondary
             nowButton.setTitle("now".bundleLocale(), for: .normal)
             nowButton.isSelected = true
-            nowButton.buttonCornerRadius = 5.0
+//            nowButton.buttonCornerRadius = 5.0
             nowButton.addTarget(self, action: #selector(chooseDate(sender:)), for: .touchUpInside)
             nowButton.contentInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
         }
@@ -201,7 +215,9 @@ class ChooseOptionsView: UIView {
         didSet {
             laterButton.titleLabel?.font = .applicationFont(forTextStyle: .footnote)
             laterButton.setTitle("later".bundleLocale(), for: .normal)
-            laterButton.buttonCornerRadius = 5.0
+            laterButton.selectedColor = .white
+            laterButton.unselectedColor = SearchMapController.configuration.palette.secondary
+//            laterButton.buttonCornerRadius = 5.0
             laterButton.addTarget(self, action: #selector(chooseDate(sender:)), for: .touchUpInside)
             laterButton.titleLabel?.numberOfLines = 2
             laterButton.titleLabel?.textAlignment = .center
@@ -235,7 +251,7 @@ class ChooseOptionsView: UIView {
     }
     @IBOutlet weak var vehicleType: UILabel!  {
         didSet {
-            vehicleType.set(text: "vehicle type".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
+            vehicleType.set(text: "vehicle type".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.textOnPrimary)
         }
     }
 

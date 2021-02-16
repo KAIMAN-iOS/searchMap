@@ -12,8 +12,8 @@ import PromiseKit
 
 class ChooseGroupsView: UIView {
     var booking: BookingWrapper!
-    weak var delegate: SearchMapDelegate!
-    static func create(booking: BookingWrapper, groups: [Group], delegate: SearchMapDelegate) -> ChooseGroupsView {
+    weak var delegate: SearchRideDelegate!
+    static func create(booking: BookingWrapper, groups: [Group], delegate: SearchRideDelegate) -> ChooseGroupsView {
         let ctrl: ChooseGroupsView = Bundle.module.loadNibNamed("ChooseGroupsView", owner: nil)?.first as! ChooseGroupsView
         ctrl.booking = booking
         ctrl.delegate = delegate
@@ -23,17 +23,20 @@ class ChooseGroupsView: UIView {
     }
     @IBOutlet weak var title: UILabel!  {
         didSet {
-            title.set(text: "Share with groups".bundleLocale(), for: .title2, textColor: SearchMapController.configuration.palette.mainTexts)
+            title.set(text: "Share with groups".bundleLocale().uppercased(), for: .title3, textColor: SearchMapController.configuration.palette.textOnPrimary)
         }
     }
     @IBOutlet weak var shareRideButton: ActionButton!  {
         didSet {
-            shareRideButton.actionButtonType = .primary
+            shareRideButton.actionButtonType = .confirmation
             shareRideButton.setTitle("Share with groups".bundleLocale(), for: .normal)
             shareRideButton.isEnabled = false
         }
     }
 
+    @IBAction func back() {
+        
+    }
     
     var viewModel: ChooseGroupsViewModel!
     @IBOutlet weak var collectionView: UICollectionView!  {

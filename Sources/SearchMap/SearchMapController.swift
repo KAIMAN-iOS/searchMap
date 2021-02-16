@@ -30,6 +30,13 @@ class SearchMapController: UIViewController {
     enum State {
         case search
         case bookingReady
+        
+        var backgroudColor: UIColor {
+            switch self {
+            case .search: return .white
+            case .bookingReady: return SearchMapController.configuration.palette.secondary
+            }
+        }
     }
     var state: State = .search  {
         didSet {
@@ -37,6 +44,8 @@ class SearchMapController: UIViewController {
             case .search: loadSearchCard()
             case .bookingReady: ()
             }
+            card.backgroundColor = state.backgroudColor
+            cardContainer.backgroundColor = .clear
         }
     }
     var vehicles: [VehicleTypeable] = []
@@ -58,7 +67,8 @@ class SearchMapController: UIViewController {
     }
     var bookingWrapper = BookingWrapper()
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
-    public weak var delegate: SearchMapDelegate!
+    weak var searchMapDelegate: SearchMapDelegate!
+    public weak var delegate: SearchRideDelegate!
     private var locationRequest: GPSLocationRequest?
     
     let geocoder = CLGeocoder()
@@ -91,8 +101,9 @@ class SearchMapController: UIViewController {
     @IBOutlet weak var cardContainer: UIView!
     @IBOutlet weak var bookingTopView: UIView!  {
         didSet {
-            bookingTopView.layer.cornerRadius = 10
+            bookingTopView.layer.cornerRadius = 25
             bookingTopView.addShadow(roundCorners: false)
+            bookingTopView.backgroundColor = SearchMapController.configuration.palette.secondary
         }
     }
 
@@ -113,7 +124,7 @@ class SearchMapController: UIViewController {
         hideBackButtonText = true
         userButton.isHidden = mode.hideUserIcon
         startLocationUpdates()
-        loadSearchCard()
+        state = .search
         handleObservers()
         checkAuthorization()
         map.showsUserLocation = false
@@ -171,8 +182,32 @@ class SearchMapController: UIViewController {
     }
     
     func handleBookingCard() {
+        defer {
+            if bookingWrapper.origin != nil && bookingWrapper.destination != nil {
+                searchMapDelegate
+                    .loadRoutes(for: bookingWrapper)
+                    .done { [weak self] response in
+                        guard let self = self else { return }
+                        let anno = self.searchMapDelegate.annotations(for: self.bookingWrapper)
+                        if anno.count > 0 {
+                            self.map.removeAnnotations(self.map.annotations.filter({ $0 as? UserAnnotationView == nil }))
+                            self.map.addAnnotations(anno)
+                        }
+                        // routes
+                        if let route = response.directions.values.first {
+                            let overlays = self.searchMapDelegate.overlays(for: route)
+                            if let overlay = overlays.first {
+                                self.map.removeOverlays(self.map.overlays)
+                                self.map.addOverlay(overlay)
+                                self.map.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: self.bookingTopView.frame.maxY + 10, left: 20, bottom: self.locatioButton.frame.height + 20, right: 50), animated: true)
+                            }
+                        }
+                    }
+                    .catch { _ in }
+            }
+        }
         guard bookingWrapper.origin != nil else {
-            loadSearchCard()
+            state = .search
             return
         }
         DispatchQueue.main.async { [weak self]  in
@@ -187,6 +222,7 @@ class SearchMapController: UIViewController {
         // no need to reload the view if it is already the right one
         guard cardContainer.subviews.first as? ChooseOptionsView == nil else { return }
         guard let view: ChooseOptionsView = Bundle.module.loadNibNamed("ChooseOptionsView", owner: nil)?.first as? ChooseOptionsView else { return }
+        state = .bookingReady
         view.delegate = self
         view.vehicles = vehicles
         view.mode = mode
@@ -199,11 +235,11 @@ class SearchMapController: UIViewController {
     
     func configureTopView() {
         guard bookingWrapper.origin != nil else { return }
-        originLabel.set(text: bookingWrapper.origin?.name, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+        originLabel.set(text: bookingWrapper.origin?.name, for: .body, textColor: SearchMapController.configuration.palette.textOnPrimary)
         let noDestination = bookingWrapper.destination?.name?.isEmpty ?? true == true
         destinationLabel.set(text: bookingWrapper.destination?.name ?? "no destination".bundleLocale(),
                              for: .body,
-                             textColor: noDestination ? SearchMapController.configuration.palette.lightGray : SearchMapController.configuration.palette.secondaryTexts)
+                             textColor: noDestination ? SearchMapController.configuration.palette.inactive : SearchMapController.configuration.palette.textOnPrimary)
     }
     
     func loadSearchCard() {
@@ -317,13 +353,16 @@ extension SearchMapController: BookDelegate {
 
 extension SearchMapController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard mode != .driver,
-              let annotation = annotation as? UserAnnotation,
-              let view: UserAnnotationView = Bundle.module.loadNibNamed("UserAnnotationView", owner: nil)?.first as? UserAnnotationView else { return nil }
-        view.configure(annotation.placemark)
-        view.tintColor = SearchMapController.configuration.palette.primary
-        view.layoutIfNeeded()
-        view.centerOffset = CGPoint(x: 0, y: -view.bounds.midY)
+        guard let view = searchMapDelegate.view(for: annotation) else {
+            guard mode != .driver,
+                  let annotation = annotation as? UserAnnotation,
+                  let view: UserAnnotationView = Bundle.module.loadNibNamed("UserAnnotationView", owner: nil)?.first as? UserAnnotationView else { return nil }
+            view.configure(annotation.placemark)
+            view.tintColor = SearchMapController.configuration.palette.primary
+            view.layoutIfNeeded()
+            view.centerOffset = CGPoint(x: 0, y: -view.bounds.midY)
+            return view
+        }
         return view
     }
     
@@ -334,4 +373,6 @@ extension SearchMapController: MKMapViewDelegate {
         bookingWrapper.origin = view.placemark
         search()
     }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer { searchMapDelegate.renderer(for: overlay) }
 }

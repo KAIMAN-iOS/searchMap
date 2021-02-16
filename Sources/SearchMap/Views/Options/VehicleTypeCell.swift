@@ -11,6 +11,7 @@ import SnapKit
 
 class VehicleTypeCell: UICollectionViewCell {
     lazy var button: SelectableButton = SelectableButton()
+
     override var isSelected: Bool  {
         didSet {
             button.isSelected = isSelected
@@ -23,12 +24,14 @@ class VehicleTypeCell: UICollectionViewCell {
             button.snp.makeConstraints { make in
                 make.edges.equalToSuperview()
             }
+            button.selectedColor = SearchMapController.configuration.palette.textOnPrimary
+            button.unselectedColor = SearchMapController.configuration.palette.secondary
         }
-        button.setTitle(vehicleType.displayText, for: .normal)
+        button.setTitle(vehicleType.displayText.capitalized, for: .normal)
+        button.titleLabel?.font = .applicationFont(forTextStyle: .caption1)
         button.titleLabel?.minimumScaleFactor = 0.5
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.isSelected = isSelected
-        button.buttonCornerRadius = 5.0
         button.isUserInteractionEnabled = false
     }
 }

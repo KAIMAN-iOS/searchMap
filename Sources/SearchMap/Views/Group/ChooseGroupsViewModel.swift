@@ -58,7 +58,7 @@ class ChooseGroupsViewModel {
         let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(groups.count > 2 ? 0.95 : 1),
                                                                                         heightDimension: .fractionalHeight(1.0)),
                                                      subitem: fullItem,
-                                                     count: 2)
+                                                     count: 3)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging

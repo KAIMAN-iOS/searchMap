@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 import DateExtension
+import MapExtension
 
 public enum DateWrapper {
     case now, date(_: Date)
@@ -66,25 +67,46 @@ enum PlacemarkCellType: Hashable, Equatable {
 }
 
 public enum Option {
-    case numberOfPassenger, numberOfLuggages, vehicleType
+    case numberOfPassenger, numberOfLuggages, vehicleType, isMedical
 }
 
 public class BookingWrapper: NSObject {
     @objc dynamic public var origin: Placemark!
-    @objc dynamic public var destination: Placemark!
+    @objc dynamic public var destination: Placemark?
     public var message: String?
     public var options: [Option: Int] = [:]
     public var pickUpDate: DateWrapper = .now
+}
+
+public struct BookingDirection: Direction {
+    public var id: String
+    public var startLocation: CLLocationCoordinate2D
+    public var endLocation: CLLocationCoordinate2D
+}
+
+public struct BookingDirections: Directions {
+    public var id: String
+    public var directions: [Direction] = []
+    
+    public init?(_ wrapper: BookingWrapper) {
+        id = UUID().uuidString
+        guard let dest = wrapper.destination?.coordinates else {
+            return nil
+        }
+        directions.append(BookingDirection(id: UUID().uuidString,
+                                           startLocation: wrapper.origin.coordinates,
+                                           endLocation: dest))
+    }
 }
 
 public class Placemark: NSObject {
     public static func == (lhs: Placemark, rhs: Placemark) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
-    var name: String?
-    var address: String?
-    var coordinates: CLLocationCoordinate2D
-    var specialFavourite: FavouriteType?
+    public var name: String?
+    public var address: String?
+    public var coordinates: CLLocationCoordinate2D
+    public var specialFavourite: FavouriteType?
     
     public init(name: String?,
                 address: String?,

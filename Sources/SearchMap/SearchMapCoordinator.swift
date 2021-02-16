@@ -13,6 +13,7 @@ import IQKeyboardManagerSwift
 import ATAConfiguration
 import ATAGroup
 import PromiseKit
+import MapExtension
 
 public protocol VehicleTypeable {
     var rawValue: Int { get }
@@ -36,10 +37,18 @@ public enum DisplayMode {
     }
 }
 
-public protocol SearchMapDelegate: NSObjectProtocol {
+public protocol SearchRideDelegate: NSObjectProtocol {
     func book(_ booking: BookingWrapper) -> Promise<Bool>
     func save(_ booking: BookingWrapper)-> Promise<Bool>
     func share(_ booking: BookingWrapper, to groups: [Group])-> Promise<Bool>
+}
+
+public protocol SearchMapDelegate: NSObjectProtocol {
+    func view(for annotation: MKAnnotation) -> MKAnnotationView?
+    func renderer(for overlay: MKOverlay) -> MKPolylineRenderer
+    func annotations(for ride: BookingWrapper) -> [MKAnnotation]
+    func overlays(for route: MKRoute) -> [MKOverlay]
+    func loadRoutes(for ride: BookingWrapper) -> Promise<DirectionsAnswer>
 }
 
 public struct OptionConfiguration {
@@ -61,10 +70,11 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var reverseGeocodingMap: ReverseGeocodingMap!
     var favCoordinator: FavouriteCoordinator<DeepLink>!
     public var handleFavourites: Bool = false
-    public weak var delegate: SearchMapDelegate?
+    public weak var delegate: SearchRideDelegate?
     
     public init(router: RouterType?,
-                delegate: SearchMapDelegate,
+                delegate: SearchRideDelegate,
+                searchMapDelegate: SearchMapDelegate,
                 mode: DisplayMode = .driver,
                 conf: ATAConfiguration,
                 vehicleTypes: [VehicleTypeable],
@@ -80,6 +90,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self, conf: conf)
         searchMapController.coordinatorDelegate = self
         searchMapController.mode = mode
+        searchMapController.searchMapDelegate = searchMapDelegate
         searchMapController.vehicles = vehicleTypes
         searchMapController.groups = groups
         searchMapController.configurationOptions = configurationOptions

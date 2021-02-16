@@ -36,9 +36,9 @@ class ChooseGroupCell: UICollectionViewCell {
     
     func updateCheck() {
         check.layer.borderWidth = isSelected ? 0 : 2
-        check.layer.borderColor = SearchMapController.configuration.palette.mainTexts.cgColor
-        check.backgroundColor = isSelected ? SearchMapController.configuration.palette.mainTexts : .white
-        check.tintColor = isSelected ? .white : SearchMapController.configuration.palette.mainTexts
+        check.layer.borderColor = SearchMapController.configuration.palette.textOnPrimary.cgColor
+        check.backgroundColor = isSelected ? SearchMapController.configuration.palette.textOnPrimary : SearchMapController.configuration.palette.secondary
+        check.tintColor = isSelected ? SearchMapController.configuration.palette.secondary : SearchMapController.configuration.palette.textOnPrimary
         check.image =  isSelected ? UIImage(named: "ok") : nil
     }
     
@@ -48,7 +48,7 @@ class ChooseGroupCell: UICollectionViewCell {
         updateCheck()
         groupTypeContainer.backgroundColor = group.type.color
         groupType.set(text: group.type.name.uppercased(), for: .caption2, textColor: .white)
-        groupName.set(text: group.name, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
-        members.set(text: "\(group.activeMembers.count) \("members".bundleLocale())", for: .subheadline, textColor: SearchMapController.configuration.palette.inactive)
+        groupName.set(text: group.name, for: .body, textColor: SearchMapController.configuration.palette.textOnPrimary)
+        members.set(text: "\(group.activeMembers.count) \("members".bundleLocale())", for: .caption1, textColor: SearchMapController.configuration.palette.inactive)
     }
 }

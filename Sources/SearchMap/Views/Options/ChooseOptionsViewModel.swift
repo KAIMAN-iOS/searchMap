@@ -26,9 +26,15 @@ class ChooseOptionsViewModel {
         }
     }
     
+    struct MedicalType: VehicleTypeable {
+        var rawValue: Int = Int.max
+        var displayText: String { "medical".bundleLocale() }
+        var icon: UIImage? { nil }
+    }
     private(set) var vehicles: [VehicleTypeable]
     init(vehicles: [VehicleTypeable]) {
         self.vehicles = vehicles
+        self.vehicles.append(MedicalType())
     }
     
     // MARK: - DataSource Diffable
@@ -75,24 +81,18 @@ class ChooseOptionsViewModel {
     
     private func generateLayout(for section: Int, environnement: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
         let fullItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                                 heightDimension: .estimated(30)))
+                                                                                 heightDimension: .absolute(40)))
         fullItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0)
         
-        let vGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
-                                                                                        heightDimension: .fractionalHeight(1.0)),
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(vehicles.count > 4 ? 0.95 : 1),
+                                                                                        heightDimension: .absolute(40)),
                                                      subitem: fullItem,
-                                                     count: 2)
-        vGroup.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-        
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(vehicles.count > 4 ? 0.9 : 1),
-                                                                                        heightDimension: .fractionalHeight(1.0)),
-                                                     subitem: vGroup,
-                                                     count: 2)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0)
+                                                     count: 4)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 10)
         group.interItemSpacing = NSCollectionLayoutSpacing.fixed(10)
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior = .continuous
 //        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
         return section
     }
