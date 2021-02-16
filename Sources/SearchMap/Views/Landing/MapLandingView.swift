@@ -10,7 +10,7 @@ import FontExtension
 import LabelExtension
 
 protocol MapLandingViewDelegate: class {
-    func search()
+    func search(animated: Bool )
 }
 
 class MapLandingView: UIView {
@@ -45,6 +45,6 @@ class MapLandingView: UIView {
     weak var delegate: MapLandingViewDelegate?
     
     @IBAction func search() {
-        delegate?.search()
+        delegate?.search(animated: true)
     }
 }

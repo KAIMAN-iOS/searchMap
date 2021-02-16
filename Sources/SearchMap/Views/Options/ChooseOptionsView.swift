@@ -28,15 +28,16 @@ class ChooseOptionsView: UIView {
     public weak var searchMapDelegate: SearchRideDelegate?
     var mode: DisplayMode = .driver
     
-    enum OptionState: Int {
+    internal enum OptionState: Int {
         case taxi = 0, passenger
         var next: OptionState? { OptionState(rawValue: rawValue + 1) }
         var previous: OptionState? { OptionState(rawValue: rawValue - 1) }
     }
     
-    var state: OptionState! {
+    internal var state: OptionState! {
         willSet(newValue) {
-            let animator = UIViewPropertyAnimator(duration: 0.1, curve: .easeInOut) { [weak self] in
+            print("state == nil \(state == nil) -> \(newValue)")
+            let animator = UIViewPropertyAnimator(duration: state == nil ? 0 : 0.2, curve: .easeInOut) { [weak self] in
                 guard let self = self else { return }
                 switch newValue {
                 case .passenger:
@@ -159,7 +160,12 @@ class ChooseOptionsView: UIView {
             vehicleTypeCollectionView.delegate = self
         }
     }
-    @IBOutlet weak var taxiContainer: UIStackView!
+    @IBOutlet weak var taxiContainer: UIStackView!  {
+        didSet {
+            taxiContainer.isHidden = true
+        }
+    }
+
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var textView: GrowingTextView!  {
         didSet {
@@ -269,9 +275,11 @@ class ChooseOptionsView: UIView {
     
     var groups: [Group] = []
     var booking: BookingWrapper!
-    func configure(options configurationOptions: OptionConfiguration, booking: inout BookingWrapper) {
+    func configure(options configurationOptions: OptionConfiguration,
+                   booking: inout BookingWrapper,
+                   state: OptionState = .taxi) {
         self.booking = booking
-        state = .taxi
+        self.state = state
         nameTextfield.textfield.placeholder = "Passenger name".bundleLocale()
         let datasource = viewModel.dataSource(for: vehicleTypeCollectionView)
         vehicleTypeCollectionView.dataSource = datasource

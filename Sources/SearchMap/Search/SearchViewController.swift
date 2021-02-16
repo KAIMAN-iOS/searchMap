@@ -166,6 +166,7 @@ class SearchViewController: UIViewController {
     lazy var datasource = viewModel.dataSource(for: tableView)
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideBackButtonText = true
         handleValidateButton()
         handleObservers()
         handleKeyboard()

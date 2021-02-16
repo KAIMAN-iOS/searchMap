@@ -30,11 +30,12 @@ class SearchMapController: UIViewController {
     enum State {
         case search
         case bookingReady
+        case shareWithGroup
         
         var backgroudColor: UIColor {
             switch self {
             case .search: return .white
-            case .bookingReady: return SearchMapController.configuration.palette.secondary
+            case .bookingReady, .shareWithGroup: return SearchMapController.configuration.palette.secondary
             }
         }
     }
@@ -42,7 +43,7 @@ class SearchMapController: UIViewController {
         didSet {
             switch state {
             case .search: loadSearchCard()
-            case .bookingReady: ()
+            case .bookingReady, .shareWithGroup: ()
             }
             card.backgroundColor = state.backgroudColor
             cardContainer.backgroundColor = .clear
@@ -102,7 +103,7 @@ class SearchMapController: UIViewController {
     @IBOutlet weak var bookingTopView: UIView!  {
         didSet {
             bookingTopView.layer.cornerRadius = 25
-            bookingTopView.addShadow(roundCorners: false)
+            bookingTopView.addShadow(roundCorners: false, useMotionEffect: false)
             bookingTopView.backgroundColor = SearchMapController.configuration.palette.secondary
         }
     }
@@ -129,9 +130,8 @@ class SearchMapController: UIViewController {
         checkAuthorization()
         map.showsUserLocation = false
         map.tintColor = SearchMapController.configuration.palette.primary
-        
         if mode == .driver {
-            showSearchController()
+            search(animated: true)
         }
     }
     
@@ -220,21 +220,21 @@ class SearchMapController: UIViewController {
         }
     }
     
-    func loadBookingReadyCard() {
+    func loadBookingReadyCard(_ state: ChooseOptionsView.OptionState = .taxi) {
         defer {
             configureTopView()
         }
         // no need to reload the view if it is already the right one
         guard cardContainer.subviews.first as? ChooseOptionsView == nil else { return }
         guard let view: ChooseOptionsView = Bundle.module.loadNibNamed("ChooseOptionsView", owner: nil)?.first as? ChooseOptionsView else { return }
-        state = .bookingReady
+        self.state = .bookingReady
         view.delegate = self
         view.vehicles = vehicles
         view.mode = mode
         view.groups = groups
         view.searchMapDelegate = delegate
         addViewToCard(view)
-        view.configure(options: configurationOptions, booking: &bookingWrapper)
+        view.configure(options: configurationOptions, booking: &bookingWrapper, state: state)
         topViewTopContraint.constant = 0
     }
     
@@ -276,7 +276,7 @@ class SearchMapController: UIViewController {
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        card.round(corners: [.topLeft, .topRight], radius: 20.0)
+        card.round(corners: [.topLeft, .topRight], radius: 25.0)
         card.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
         bookingTopView.layer.cornerRadius = 10.0
         bookingTopView.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
@@ -291,7 +291,7 @@ class SearchMapController: UIViewController {
     }
     
     @IBAction func showSearchController() {
-        search()
+        search(animated: true)
     }
 }
 
@@ -321,8 +321,8 @@ class UserAnnotation: NSObject, MKAnnotation {
 }
 
 extension SearchMapController: MapLandingViewDelegate {
-    func search() {
-        coordinatorDelegate?.showSearch(&bookingWrapper)
+    func search(animated: Bool ) {
+        coordinatorDelegate?.showSearch(&bookingWrapper, animated: animated)
     }
 }
 
@@ -352,6 +352,7 @@ extension SearchMapController: BookDelegate {
     
     func share(_ booking: BookingWrapper) {
         let choose = ChooseGroupsView.create(booking: booking, groups: groups, delegate: delegate)
+        choose.navDelegate = self
         addViewToCard(choose)
     }
 }
@@ -376,8 +377,14 @@ extension SearchMapController: MKMapViewDelegate {
         // push the search view with departure selected
         map.deselectAnnotation(view.annotation, animated: false)
         bookingWrapper.origin = view.placemark
-        search()
+        search(animated: true)
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer { searchMapDelegate.renderer(for: overlay) }
+}
+
+extension SearchMapController: ChooseGroupNavigationDelegate {
+    func back() {
+        loadBookingReadyCard(.passenger)
+    }
 }

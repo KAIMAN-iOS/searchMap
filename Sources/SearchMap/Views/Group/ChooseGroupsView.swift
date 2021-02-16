@@ -10,7 +10,12 @@ import ATAGroup
 import ActionButton
 import PromiseKit
 
+protocol ChooseGroupNavigationDelegate: NSObjectProtocol {
+    func back()
+}
+
 class ChooseGroupsView: UIView {
+    weak var navDelegate: ChooseGroupNavigationDelegate!
     var booking: BookingWrapper!
     weak var delegate: SearchRideDelegate!
     static func create(booking: BookingWrapper, groups: [Group], delegate: SearchRideDelegate) -> ChooseGroupsView {
@@ -35,7 +40,7 @@ class ChooseGroupsView: UIView {
     }
 
     @IBAction func back() {
-        
+        navDelegate.back()
     }
     
     var viewModel: ChooseGroupsViewModel!

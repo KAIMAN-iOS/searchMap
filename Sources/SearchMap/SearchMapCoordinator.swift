@@ -22,7 +22,7 @@ public protocol VehicleTypeable {
 }
 
 protocol SearchMapCoordinatorDelegate: class {
-    func showSearch(_ booking: inout BookingWrapper)
+    func showSearch(_ booking: inout BookingWrapper, animated: Bool)
 }
 
 public enum DisplayMode {
@@ -99,6 +99,8 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         IQKeyboardManager.shared.enable = true
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().barTintColor = .clear
+        UINavigationBar.appearance().isTranslucent = true
     }
     
     deinit {
@@ -111,7 +113,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
 }
 
 extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
-    func showSearch(_ booking: inout BookingWrapper) {
+    func showSearch(_ booking: inout BookingWrapper, animated: Bool) {
         let ctrl = SearchViewController.create(booking: &booking, searchDelegate: self)
         ctrl.viewModel.favourtiteViewModel.coordinatorDelegate = favCoordinator
         ctrl.viewModel.handleFavourites = handleFavourites
@@ -123,7 +125,8 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
         searchNavigationController.modalTransitionStyle = .crossDissolve
         searchNavigationController.navigationBar.isTranslucent = true
         searchNavigationController.navigationBar.tintColor = SearchMapController.configuration.palette.mainTexts
-        router.present(searchNavigationController, animated: true)
+        searchNavigationController.navigationBar.barTintColor = .clear
+        (router.navigationController.topViewController ?? searchMapController).present(searchNavigationController, animated: animated)
     }
 }
 
