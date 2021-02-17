@@ -22,7 +22,7 @@ class ChooseGroupsViewModel {
     var selectedGroups: [Group] = []
     
     init(groups: [Group]) {
-        self.groups = groups
+        self.groups = groups.filter({ $0.type.isAlertGroup == false })
     }
     
     func dataSource(for collectionView: UICollectionView) -> DataSource {
