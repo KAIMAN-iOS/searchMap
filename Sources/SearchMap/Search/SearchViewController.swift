@@ -281,13 +281,17 @@ extension SearchViewController: RefreshFavouritesDelegate {
 
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        defer {
-            view.endEditing(true)
-        }
-        
         tableView.deselectRow(at: indexPath, animated: true)
         guard let place = viewModel.placemark(at: indexPath) else { return }
         updateBooking(place)
+        
+        if searchType == .origin && booking.destination == nil {
+            destinationTextField.becomeFirstResponder()
+            searchType = .destination
+            refresh()
+        } else {
+            view.endEditing(true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

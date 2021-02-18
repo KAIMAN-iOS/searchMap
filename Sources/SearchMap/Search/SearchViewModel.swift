@@ -201,6 +201,7 @@ public class SearchViewModel {
     }
     
     func contextMenuConfigurationForRow(at indexPath: IndexPath) -> UIContextMenuConfiguration? {
+        guard handleFavourites else { return nil }
         let section = sortedSections[indexPath.section]
         switch section {
         case .favourite, .specificFavourite:
@@ -219,6 +220,7 @@ public class SearchViewModel {
     }
     
     func swipeActionsConfigurationForRow(at indexPath: IndexPath, in tableView: UITableView) -> UISwipeActionsConfiguration? {
+        guard handleFavourites else { return nil }
         let section = sortedSections[indexPath.section]
         switch section {
         case .favourite, .specificFavourite:
@@ -241,6 +243,7 @@ public class SearchViewModel {
 
 extension SearchViewModel: Editable {
     func canEditRow(at indexPath: IndexPath) -> Bool {
+        guard handleFavourites else { return false }
         switch sortedSections[indexPath.section] {
         case .favourite:
             guard let place = placemark(at: indexPath) else { return false }

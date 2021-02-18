@@ -273,6 +273,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYy-xG-uZA" customClass="ActionButton" customModule="ActionButton">
                                                 <rect key="frame" x="16" y="8" width="382" height="48"/>
                                                 <color key="backgroundColor" name="backgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Sen-qd-M7r"/>
+                                                </constraints>
                                                 <inset key="contentEdgeInsets" minX="10" minY="15" maxX="10" maxY="15"/>
                                                 <state key="normal" title="Button">
                                                     <color key="titleColor" name="selectedButtonColor"/>
@@ -436,7 +439,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="close" width="33.5" height="33.5"/>
+        <image name="close" width="42" height="42"/>
         <image name="location" width="119" height="119"/>
         <namedColor name="Color">
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
@@ -451,7 +454,7 @@
             <color red="0.62400001287460327" green="0.65100002288818359" blue="0.70599997043609619" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondaryTexts">
-            <color red="0.51399999856948853" green="0.54500001668930054" blue="0.6119999885559082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.32800000905990601" green="0.32800000905990601" blue="0.32800000905990601" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="selectedButtonColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -460,7 +463,7 @@
             <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="textColor">
-            <color red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.16099999845027924" green="0.17599999904632568" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
