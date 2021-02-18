@@ -117,6 +117,7 @@ public class Placemark: NSObject, Codable {
         self.coordinates = coordinates
         self.specialFavourite = specialFavourite
     }
+    public var displayAddress: String { "\(name ?? ""), \(address ?? "")" }
 }
 
 extension CLPlacemark {

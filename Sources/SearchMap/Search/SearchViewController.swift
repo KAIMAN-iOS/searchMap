@@ -194,13 +194,13 @@ class SearchViewController: UIViewController {
         originObserver = booking.observe(\.origin, changeHandler: { [weak self] (booking, change) in
             self?.handleValidateButton()
             guard let origin = booking.origin else { return }
-            self?.originTextField.text = origin.address
+            self?.originTextField.text = origin.displayAddress
         })
         destinationObserver?.invalidate()
         destinationObserver = booking.observe(\.destination, changeHandler: { [weak self] (booking, change) in
             self?.handleValidateButton()
             guard let destination = booking.destination else { return }
-            self?.destinationTextField.text = destination.address
+            self?.destinationTextField.text = destination.displayAddress
         })
     }
     
@@ -234,6 +234,7 @@ class SearchViewController: UIViewController {
         isLoading = true
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = text
+        request.resultTypes = [.pointOfInterest, .pointOfInterest]
         if let coord = userCoordinates {
             request.region = MKCoordinateRegion(center: coord, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
         }
