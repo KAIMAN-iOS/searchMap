@@ -76,6 +76,7 @@ class SearchMapController: UIViewController {
     @IBOutlet weak var map: MKMapView!  {
         didSet {
             map.delegate = self
+            map.layoutMargins.bottom = 15
         }
     }
     @IBOutlet weak var dashView: DottedView!  {

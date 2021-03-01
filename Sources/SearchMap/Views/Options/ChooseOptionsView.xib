@@ -158,22 +158,8 @@
                                 </textView>
                             </subviews>
                         </stackView>
-                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4t-WL-YPR" customClass="ActionButton" customModule="ActionButton">
-                            <rect key="frame" x="0.0" y="679" width="414" height="48"/>
-                            <color key="backgroundColor" name="backgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Wze-xh-eyK"/>
-                            </constraints>
-                            <inset key="contentEdgeInsets" minX="10" minY="15" maxX="10" maxY="15"/>
-                            <state key="normal" title="Button">
-                                <color key="titleColor" name="selectedButtonColor"/>
-                            </state>
-                            <connections>
-                                <action selector="mainAction" destination="iN0-l3-epB" eventType="touchUpInside" id="7lJ-f1-oxh"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tde-jg-Oaj" customClass="ActionButton" customModule="ActionButton">
-                            <rect key="frame" x="0.0" y="739" width="414" height="48"/>
+                            <rect key="frame" x="0.0" y="679" width="414" height="48"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Ere-Pc-TM8"/>
@@ -184,6 +170,20 @@
                             </state>
                             <connections>
                                 <action selector="secondaryAction" destination="iN0-l3-epB" eventType="touchUpInside" id="9Ql-MF-Suh"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4t-WL-YPR" customClass="ActionButton" customModule="ActionButton">
+                            <rect key="frame" x="0.0" y="739" width="414" height="48"/>
+                            <color key="backgroundColor" name="backgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Wze-xh-eyK"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="10" minY="15" maxX="10" maxY="15"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" name="selectedButtonColor"/>
+                            </state>
+                            <connections>
+                                <action selector="mainAction" destination="iN0-l3-epB" eventType="touchUpInside" id="7lJ-f1-oxh"/>
                             </connections>
                         </button>
                     </subviews>
@@ -245,7 +245,7 @@
     <resources>
         <image name="back" width="18" height="32.5"/>
         <namedColor name="backgroundColor">
-            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="selectedButtonColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

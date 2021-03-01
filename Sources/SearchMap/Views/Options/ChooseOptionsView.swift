@@ -37,27 +37,23 @@ class ChooseOptionsView: UIView {
     internal var state: OptionState! {
         willSet(newValue) {
             print("state == nil \(state == nil) -> \(newValue)")
-            let animator = UIViewPropertyAnimator(duration: state == nil ? 0 : 0.2, curve: .easeInOut) { [weak self] in
-                guard let self = self else { return }
-                switch newValue {
-                case .passenger:
-                    self.backButton.isHidden = false
-                    self.taxiContainer.isHidden = true
-                    self.passengerContainer.isHidden = false
-                    self.secondaryButton.isHidden = self.mode != .driver && self.groups.isEmpty == false
-                    self.mainButton.setTitle(self.mode == .driver ? "save for me".bundleLocale() : "book".bundleLocale(), for: .normal)
-                    
-                case .taxi:
-                    self.backButton.isHidden = true
-                    self.taxiContainer.isHidden = false
-                    self.passengerContainer.isHidden = true
-                    self.secondaryButton.isHidden = true
-                    self.mainButton.setTitle("next".bundleLocale(), for: .normal)
-                    
-                default: ()
-                }
+            switch newValue {
+            case .passenger:
+                backButton.isHidden = false
+                taxiContainer.isHidden = true
+                passengerContainer.isHidden = false
+                secondaryButton.isHidden = self.mode != .driver && self.groups.isEmpty == false
+                mainButton.setTitle(self.mode == .driver ? "save for me".bundleLocale() : "book".bundleLocale(), for: .normal)
+                
+            case .taxi:
+                backButton.isHidden = true
+                taxiContainer.isHidden = false
+                passengerContainer.isHidden = true
+                secondaryButton.isHidden = true
+                mainButton.setTitle("next".bundleLocale(), for: .normal)
+                
+            default: ()
             }
-            animator.startAnimation()
         }
         
         didSet {
@@ -94,7 +90,7 @@ class ChooseOptionsView: UIView {
     }
     @IBOutlet weak var nameTextfield: BorderedTextField!  {
         didSet {
-            nameTextfield.textfield.attributedPlaceholder = "Passenger name".bundleLocale().asAttributedString(for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.lightGray)
+            nameTextfield.textfield.attributedPlaceholder = "Passenger name".bundleLocale().uppercased().asAttributedString(for: .footnote, textColor: SearchMapController.configuration.palette.lightGray)
             nameTextfield.borderColor = SearchMapController.configuration.palette.lightGray
             nameTextfield.textfield.textColor = SearchMapController.configuration.palette.textOnPrimary
             nameTextfield.configure(FieldType.name)
@@ -103,7 +99,7 @@ class ChooseOptionsView: UIView {
     }
     @IBOutlet weak var phoneTextfield: BorderedTextField!  {
         didSet {
-            phoneTextfield.textfield.attributedPlaceholder = "Passenger phone".bundleLocale().asAttributedString(for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.lightGray)
+            phoneTextfield.textfield.attributedPlaceholder = "Passenger phone".bundleLocale().uppercased().asAttributedString(for: .footnote, textColor: SearchMapController.configuration.palette.lightGray)
             phoneTextfield.borderColor = SearchMapController.configuration.palette.lightGray
             phoneTextfield.textfield.textColor = SearchMapController.configuration.palette.textOnPrimary
             phoneTextfield.configure(FieldType.phone)
@@ -170,9 +166,9 @@ class ChooseOptionsView: UIView {
     @IBOutlet weak var textView: GrowingTextView!  {
         didSet {
             textView.text = nil
-            textView.placeholder = "enter your message here".local()
+            textView.placeholder = "enter your message here".bundleLocale().uppercased()
             textView.placeholderColor = SearchMapController.configuration.palette.lightGray
-            textView.font = .applicationFont(forTextStyle: .callout)
+            textView.font = .applicationFont(forTextStyle: .footnote)
             textView.layer.borderColor = SearchMapController.configuration.palette.lightGray.cgColor
             textView.layer.borderWidth = 1
             textView.cornerRadius = 0
@@ -193,7 +189,7 @@ class ChooseOptionsView: UIView {
     @IBOutlet weak var secondaryButton: ActionButton!  {
         didSet {
             secondaryButton.setTitle("share to groups".bundleLocale(), for: .normal)
-            secondaryButton.actionButtonType = .secondary
+            secondaryButton.actionButtonType = .complementary
             secondaryButton.isHidden = true
         }
     }
@@ -213,7 +209,7 @@ class ChooseOptionsView: UIView {
             nowButton.isSelected = true
 //            nowButton.buttonCornerRadius = 5.0
             nowButton.addTarget(self, action: #selector(chooseDate(sender:)), for: .touchUpInside)
-            nowButton.contentInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+            nowButton.contentInsets = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
         }
     }
 
@@ -227,7 +223,7 @@ class ChooseOptionsView: UIView {
             laterButton.addTarget(self, action: #selector(chooseDate(sender:)), for: .touchUpInside)
             laterButton.titleLabel?.numberOfLines = 2
             laterButton.titleLabel?.textAlignment = .center
-            laterButton.contentInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+            laterButton.contentInsets = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
         }
     }
     
@@ -251,6 +247,8 @@ class ChooseOptionsView: UIView {
                                         \(DateFormatter.readableDateFormatter.string(from: date))
                                         \(DateFormatter.timeOnlyFormatter.string(from: date))
                                         """, for: .normal)
+                nowButton.contentInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+                laterButton.contentInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
             }
             laterButton.isSelected = !nowButton.isSelected
         }
@@ -280,7 +278,6 @@ class ChooseOptionsView: UIView {
                    state: OptionState = .taxi) {
         self.booking = booking
         self.state = state
-        nameTextfield.textfield.placeholder = "Passenger name".bundleLocale()
         let datasource = viewModel.dataSource(for: vehicleTypeCollectionView)
         vehicleTypeCollectionView.dataSource = datasource
         vehicleTypeCollectionView.collectionViewLayout = viewModel.layout()

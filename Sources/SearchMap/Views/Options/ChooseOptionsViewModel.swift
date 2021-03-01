@@ -61,7 +61,7 @@ class ChooseOptionsViewModel {
         snap.deleteAllItems()
         sections.removeAll()
         snap.appendSections([.main])
-        snap.appendItems(vehicles.compactMap({ CellType.vehicle($0, isSelected: $0.rawValue == self.selectedIndex) }), toSection: .main)
+        snap.appendItems(vehicles.compactMap({ CellType.vehicle($0, isSelected: $0.rawValue == self.selectedIndex + 1) }), toSection: .main)
         // add items here
         dataSource.apply(snap, animatingDifferences: animatingDifferences, completion: completion)
     }

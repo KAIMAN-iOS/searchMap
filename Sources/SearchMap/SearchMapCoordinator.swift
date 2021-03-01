@@ -97,14 +97,20 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.delegate = delegate
         SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().barTintColor = .clear
-        UINavigationBar.appearance().isTranslucent = true
+        self.router.navigationController.navigationBar.barTintColor = .clear
+        self.router.navigationController.navigationBar.isTranslucent = true
+        self.router.navigationController.navigationBar.shadowImage = UIImage()
+        self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        searchNavigationController.navigationBar.barTintColor = .white
+        searchNavigationController.navigationBar.isTranslucent = false
+        searchNavigationController.navigationBar.shadowImage = UIImage()
+        searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
     deinit {
         print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
+        router.navigationController.navigationBar.barTintColor = .white
+        router.navigationController.navigationBar.isTranslucent = false
     }
     
     public override func toPresentable() -> UIViewController {

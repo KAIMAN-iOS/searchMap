@@ -122,9 +122,9 @@
         "package": "KStorage",
         "repositoryURL": "https://github.com/jerometonnelier/KStorage",
         "state": {
-          "branch": null,
+          "branch": "master",
           "revision": "330de84d7b9601468a842c099c7627069ab92016",
-          "version": "1.0.0"
+          "version": null
         }
       },
       {
