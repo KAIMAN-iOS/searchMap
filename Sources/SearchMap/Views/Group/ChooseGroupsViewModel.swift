@@ -55,7 +55,7 @@ class ChooseGroupsViewModel {
         let fullItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                                                  heightDimension: .estimated(50)))
         
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(groups.count > 2 ? 0.95 : 1),
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(groups.count > 3 ? 0.95 : 1),
                                                                                         heightDimension: .fractionalHeight(1.0)),
                                                      subitem: fullItem,
                                                      count: 3)
