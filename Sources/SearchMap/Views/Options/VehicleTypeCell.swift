@@ -18,20 +18,34 @@ class VehicleTypeCell: UICollectionViewCell {
         }
     }
     
-    func configure(_ vehicleType: VehicleTypeable, isSelected: Bool) {
-        if button.superview == nil {
-            contentView.addSubview(button)
-            button.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-            button.selectedColor = SearchMapController.configuration.palette.textOnPrimary
-            button.unselectedColor = SearchMapController.configuration.palette.secondary
+    private func addButton() {
+        contentView.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        button.setTitle(vehicleType.displayText.capitalized, for: .normal)
+        button.selectedColor = SearchMapController.configuration.palette.textOnPrimary
+        button.unselectedColor = SearchMapController.configuration.palette.secondary
+        button.isUserInteractionEnabled = false
         button.titleLabel?.font = .applicationFont(forTextStyle: .caption1)
         button.titleLabel?.minimumScaleFactor = 0.5
         button.titleLabel?.adjustsFontSizeToFitWidth = true
+    }
+    
+    func configure(_ vehicleType: VehicleTypeable, isSelected: Bool) {
+        if button.superview == nil {
+            addButton()
+        }
+        button.setTitle(vehicleType.displayText.capitalized, for: .normal)
         button.isSelected = isSelected
-        button.isUserInteractionEnabled = false
+    }
+    
+    func configure(_ option: VehicleOptionnable, isSelected: Bool) {
+        if button.superview == nil {
+            addButton()
+        }
+        button.setTitle(option.displayText.capitalized, for: .normal)
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.textAlignment = .center
+        button.isSelected = isSelected
     }
 }

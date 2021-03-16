@@ -71,6 +71,7 @@ class SearchMapController: UIViewController {
     weak var searchMapDelegate: SearchMapDelegate!
     public weak var delegate: SearchRideDelegate!
     private var locationRequest: GPSLocationRequest?
+    var availableOptions: [VehicleOptionnable] = []
     
     let geocoder = CLGeocoder()
     @IBOutlet weak var map: MKMapView!  {
@@ -230,6 +231,7 @@ class SearchMapController: UIViewController {
         guard let view: ChooseOptionsView = Bundle.module.loadNibNamed("ChooseOptionsView", owner: nil)?.first as? ChooseOptionsView else { return }
         self.state = .bookingReady
         view.delegate = self
+        view.availableOptions = availableOptions
         view.vehicles = vehicles
         view.mode = mode
         view.groups = groups
@@ -335,6 +337,15 @@ extension SearchMapController: BookDelegate {
             }
         }
         return delegate.book(booking)
+    }
+    
+    func save(_ booking: BookingWrapper) -> Promise<Bool> {
+        guard let delegate = delegate else {
+            return Promise<Bool>.init { (resolver) in
+                resolver.fulfill(false)
+            }
+        }
+        return delegate.save(booking)
     }
     
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void)) {

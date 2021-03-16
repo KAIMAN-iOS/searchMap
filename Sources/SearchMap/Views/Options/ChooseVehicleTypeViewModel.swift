@@ -2,32 +2,32 @@
 //  File.swift
 //  
 //
-//  Created by GG on 16/03/2021.
+//  Created by GG on 11/02/2021.
 //
 
 import UIKit
 
-class ChooseOptionsViewModel {
+class ChooseVehicleTypeViewModel {
     enum Section: Int, Hashable {
         case main
     }
-    struct CellType: Hashable {
+    enum CellType: Hashable {
         static func == (lhs: CellType, rhs: CellType) -> Bool {
-            return lhs.option.rawValue == rhs.option.rawValue
+            return lhs.hashValue == rhs.hashValue
         }
-        var option: VehicleOptionnable
-        var isSelected: Bool
+        case vehicle(_: VehicleTypeable, isSelected: Bool)
         
         func hash(into hasher: inout Hasher) {
-            hasher.combine(isSelected)
-            hasher.combine(option.rawValue)
+            switch self {
+            case .vehicle(let vehicle, let selected):
+                hasher.combine(vehicle.rawValue)
+                hasher.combine(selected)
+            }
         }
     }
-    private(set) var options: [VehicleOptionnable]
-    private(set) var book: BookingWrapper
-    init(options: [VehicleOptionnable], book: inout BookingWrapper) {
-        self.options = options
-        self.book = book
+    private(set) var vehicles: [VehicleTypeable]
+    init(vehicles: [VehicleTypeable]) {
+        self.vehicles = vehicles
     }
     
     // MARK: - DataSource Diffable
@@ -41,21 +41,20 @@ class ChooseOptionsViewModel {
         // Handle cells
         dataSource = DataSource(collectionView: collectionView) { (collection, indexPath, model) -> UICollectionViewCell? in
             guard let cell: VehicleTypeCell = collectionView.automaticallyDequeueReusableCell(forIndexPath: indexPath) else { return nil }
-            cell.configure(model.option, isSelected: model.isSelected)
+            switch model {
+            case .vehicle(let vehicle, let selected): cell.configure(vehicle, isSelected: selected)
+            }
             return cell
         }
         return dataSource
     }
     
-    func applySnapshot(in dataSource: DataSource, animatingDifferences: Bool = false, completion: (() -> Void)? = nil) {
-        var snap = dataSource.snapshot()
+    func applySnapshot(in dataSource: DataSource, animatingDifferences: Bool = true, completion: (() -> Void)? = nil) {
+        var snap = SnapShot()
         snap.deleteAllItems()
         sections.removeAll()
         snap.appendSections([.main])
-        let cellOptions = options.compactMap { option -> CellType in
-            CellType(option: option, isSelected: book.vehicleOptions.contains(where: { $0.rawValue == option.rawValue }))
-        }
-        snap.appendItems(cellOptions, toSection: .main)
+        snap.appendItems(vehicles.compactMap({ CellType.vehicle($0, isSelected: $0.rawValue == self.selectedIndex + 1) }), toSection: .main)
         // add items here
         dataSource.apply(snap, animatingDifferences: animatingDifferences, completion: completion)
     }
@@ -69,13 +68,13 @@ class ChooseOptionsViewModel {
     }
     
     func select(at indexPath: IndexPath) {
-        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
-        if item.isSelected {
-            book.vehicleOptions.removeAll(where: { $0.rawValue == item.option.rawValue })
-        } else {
-            book.vehicleOptions.append(item.option)
-        }
+        selectedIndex = selectedIndex == indexPath.row ? -1 : indexPath.row
         applySnapshot(in: dataSource)
+    }
+    
+    func selectedType() -> VehicleTypeable? {
+        guard selectedIndex >= 0 else { return nil }
+        return vehicles[selectedIndex]
     }
     
     private func generateLayout(for section: Int, environnement: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
@@ -83,19 +82,16 @@ class ChooseOptionsViewModel {
                                                                                  heightDimension: .absolute(40)))
         fullItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0)
         
-        let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                                                        heightDimension: .fractionalHeight(1)),
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(vehicles.count > 4 ? 0.95 : 1),
+                                                                                        heightDimension: .absolute(40)),
                                                      subitem: fullItem,
-                                                     count: 2)
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(options.count > 4 ? 0.95 : 1),
-                                                                                        heightDimension: .fractionalHeight(1)),
-                                                     subitem: verticalGroup,
-                                                     count: 2)
+                                                     count: 4)
         group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 10)
         group.interItemSpacing = NSCollectionLayoutSpacing.fixed(10)
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
+//        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
         return section
     }
 }

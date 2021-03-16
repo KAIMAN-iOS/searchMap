@@ -61,7 +61,7 @@ class ChooseGroupsView: UIView {
     @IBAction func share() {
         shareRideButton.isLoading = true
         delegate
-            .share(booking, to: [])
+            .share(booking, to: viewModel.selectedGroups)
             .ensure { [weak self]  in
                 self?.shareRideButton.isLoading = false
             }

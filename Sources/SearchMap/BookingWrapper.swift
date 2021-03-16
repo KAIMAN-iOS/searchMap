@@ -67,7 +67,12 @@ enum PlacemarkCellType: Hashable, Equatable {
 }
 
 public enum Option {
-    case numberOfPassenger, numberOfLuggages, vehicleType, isMedical
+    case numberOfPassenger, numberOfLuggages, vehicleType
+}
+
+public protocol VehicleOptionnable {
+    var rawValue: Int { get }
+    var displayText: String { get }
 }
 
 public class BookingWrapper: NSObject {
@@ -75,7 +80,10 @@ public class BookingWrapper: NSObject {
     @objc dynamic public var destination: Placemark?
     public var message: String?
     public var options: [Option: Int] = [:]
+    public var vehicleOptions: [VehicleOptionnable] = []
     public var pickUpDate: DateWrapper = .now
+    public var passengerName: String?
+    public var passengerPhone: String?
 }
 
 public struct BookingDirection: Direction {

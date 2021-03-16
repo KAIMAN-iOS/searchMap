@@ -20,6 +20,7 @@ import PromiseKit
 
 protocol BookDelegate: class {
     func book(_ booking: BookingWrapper) -> Promise<Bool>
+    func save(_ booking: BookingWrapper) -> Promise<Bool>
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void))
     func share(_ booking: BookingWrapper)
 }
@@ -27,6 +28,7 @@ protocol BookDelegate: class {
 class ChooseOptionsView: UIView {
     public weak var searchMapDelegate: SearchRideDelegate?
     var mode: DisplayMode = .driver
+    var availableOptions: [VehicleOptionnable] = []
     
     internal enum OptionState: Int {
         case taxi = 0, passenger
@@ -115,6 +117,7 @@ class ChooseOptionsView: UIView {
     @IBOutlet weak var passengerStepper: ATAStepper!  {
         didSet {
 //            passengerStepper.largeComponent = false
+            passengerStepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
             passengerStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
             passengerStepper.cornerRadius = 10.0
             passengerStepper.stepperColor = .white
@@ -130,6 +133,7 @@ class ChooseOptionsView: UIView {
     @IBOutlet weak var luggagesStepper: ATAStepper!  {
         didSet {
 //            luggagesStepper.largeComponent = false
+            luggagesStepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
             luggagesStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
             luggagesStepper.cornerRadius = 10.0
             luggagesStepper.stepperColor = .white
@@ -139,14 +143,21 @@ class ChooseOptionsView: UIView {
 
     var vehicles: [VehicleTypeable] = []  {
         didSet {
-            viewModel = ChooseOptionsViewModel(vehicles: vehicles)
+            vehicleTypeViewModel = ChooseVehicleTypeViewModel(vehicles: vehicles)
         }
     }
-
-    var viewModel: ChooseOptionsViewModel!  {
+    
+    var vehicleTypeViewModel: ChooseVehicleTypeViewModel!  {
         didSet {
-            guard let datasource = vehicleTypeCollectionView?.dataSource as? ChooseOptionsViewModel.DataSource else { return }
-            viewModel.applySnapshot(in: datasource)
+            guard let datasource = vehicleTypeCollectionView?.dataSource as? ChooseVehicleTypeViewModel.DataSource else { return }
+            vehicleTypeViewModel.applySnapshot(in: datasource)
+        }
+    }
+    
+    var vehicleOptionsViewModel: ChooseOptionsViewModel!  {
+        didSet {
+            guard let datasource = vehicleOptionCollectionView?.dataSource as? ChooseOptionsViewModel.DataSource else { return }
+            vehicleOptionsViewModel.applySnapshot(in: datasource)
         }
     }
 
@@ -227,6 +238,21 @@ class ChooseOptionsView: UIView {
         }
     }
     
+    // vehicle options
+    @IBOutlet weak var vehicleOptionsContainer: UIStackView!
+    @IBOutlet weak var vehicleOptions: UILabel!  {
+        didSet {
+            vehicleOptions.set(text: "vehicle options".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.textOnPrimary)
+        }
+    }
+
+    @IBOutlet weak var vehicleOptionCollectionView: UICollectionView!  {
+        didSet {
+            vehicleOptionCollectionView.register(VehicleTypeCell.self, forCellWithReuseIdentifier: "VehicleTypeCell")
+            vehicleOptionCollectionView.delegate = self
+        }
+    }
+    
     @IBAction func back() {
         if let state = self.state.previous {
             self.state = state
@@ -273,15 +299,27 @@ class ChooseOptionsView: UIView {
     
     var groups: [Group] = []
     var booking: BookingWrapper!
+    fileprivate func handleVehicleType() {
+        let datasource = vehicleTypeViewModel.dataSource(for: vehicleTypeCollectionView)
+        vehicleTypeCollectionView.dataSource = datasource
+        vehicleTypeCollectionView.collectionViewLayout = vehicleTypeViewModel.layout()
+        vehicleTypeViewModel.applySnapshot(in: datasource)
+    }
+    fileprivate func handleVehicleOptions() {
+        vehicleOptionsViewModel = ChooseOptionsViewModel(options: availableOptions, book: &booking)
+        let datasource = vehicleOptionsViewModel.dataSource(for: vehicleOptionCollectionView)
+        vehicleOptionCollectionView.dataSource = datasource
+        vehicleOptionCollectionView.collectionViewLayout = vehicleOptionsViewModel.layout()
+        vehicleOptionsViewModel.applySnapshot(in: datasource)
+    }
+    
     func configure(options configurationOptions: OptionConfiguration,
                    booking: inout BookingWrapper,
                    state: OptionState = .taxi) {
         self.booking = booking
         self.state = state
-        let datasource = viewModel.dataSource(for: vehicleTypeCollectionView)
-        vehicleTypeCollectionView.dataSource = datasource
-        vehicleTypeCollectionView.collectionViewLayout = viewModel.layout()
-        viewModel.applySnapshot(in: datasource)
+        handleVehicleType()
+        handleVehicleOptions()
         nameTextfield.isHidden = mode == .passenger
         phoneTextfield.isHidden = mode == .passenger
         passengerStepper.minimumValue = Double(configurationOptions.passengerConfiguration.minValue)
@@ -318,7 +356,7 @@ class ChooseOptionsView: UIView {
             switch mode {
             case .driver:
                 delegate?
-                    .book(booking)
+                    .save(booking)
                     .ensure { [weak self] in
                         self?.mainButton.isLoading = false
                     }
@@ -354,16 +392,34 @@ class ChooseOptionsView: UIView {
     func updateBooking() {
         
     }
+    
+    @objc func stepperChanged(_ stepper: ATAStepper) {
+        if stepper === passengerStepper {
+            booking.options[.numberOfPassenger] = Int(stepper.value)
+        } else if stepper === luggagesStepper {
+            booking.options[.numberOfLuggages] = Int(stepper.value)
+        }
+    }
 }
 
 extension ChooseOptionsView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         enableNextButton()
+        if textField === nameTextfield.textfield {
+            booking.passengerName = textField.text
+        } else if textField === phoneTextfield.textfield {
+            booking.passengerPhone = textField.text
+        }
     }
 }
 
 extension ChooseOptionsView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.select(at: indexPath)
+        if collectionView === vehicleTypeCollectionView {
+            vehicleTypeViewModel.select(at: indexPath)
+            booking.options[.vehicleType] = vehicleTypeViewModel.selectedType()?.rawValue
+        } else if collectionView === vehicleOptionCollectionView {
+            vehicleOptionsViewModel.select(at: indexPath)
+        }
     }
 }
