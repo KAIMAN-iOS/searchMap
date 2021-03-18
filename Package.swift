@@ -16,6 +16,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/jerometonnelier/KExtensions", .branch("master")),
+        .package(url: "https://github.com/jerometonnelier/ATACommonObjects", .branch("master")),
         .package(url: "https://github.com/jerometonnelier/KCoordinatorKit", .branch("master")),
         .package(name: "IQKeyboardManagerSwift", url: "https://github.com/hackiftekhar/IQKeyboardManager.git", from: "6.5.0"),
         .package(url: "https://github.com/jerometonnelier/ActionButton", .branch("master")),
@@ -48,6 +49,7 @@ let package = Package(
                            "ATAGroup",
                            "SwiftDate",
                            "GrowingTextView",
-                           "KStorage"])
+                           "KStorage",
+                           "ATACommonObjects"])
     ]
 )

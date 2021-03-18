@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/jerometonnelier/ActionButton",
         "state": {
           "branch": "master",
-          "revision": "379ad87fa9895546ecb2eeb0bd2628467e992ac8",
+          "revision": "54fa3a54c2935e6562a2467d245ab65d7518bccc",
           "version": null
         }
       },
@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "ATACommonObjects",
+        "repositoryURL": "https://github.com/jerometonnelier/ATACommonObjects",
+        "state": {
+          "branch": "master",
+          "revision": "694c17e514101b64375a9bc36e40e365eef9a012",
+          "version": null
+        }
+      },
+      {
         "package": "ATAConfiguration",
         "repositoryURL": "https://github.com/jerometonnelier/ATAConfiguration",
         "state": {
@@ -51,7 +60,7 @@
         "repositoryURL": "https://github.com/jerometonnelier/ATAGroup",
         "state": {
           "branch": "master",
-          "revision": "c7bd11e6fef7593565758795bf280280c3fd887e",
+          "revision": "461b97714589b73435b5389040c7a11e147e3507",
           "version": null
         }
       },
@@ -60,7 +69,7 @@
         "repositoryURL": "https://github.com/jerometonnelier/ATAViews",
         "state": {
           "branch": "master",
-          "revision": "f6cde7da2f5addeb8ae1c570fb94821a705a2c96",
+          "revision": "a3302b99c456b3e01d1d1fed22c6537936160d67",
           "version": null
         }
       },
@@ -80,6 +89,15 @@
           "branch": null,
           "revision": "0cda2caf03bf6cb2ec6dc006873c3c865933be09",
           "version": "0.7.2"
+        }
+      },
+      {
+        "package": "Haptica",
+        "repositoryURL": "https://github.com/efremidze/Haptica",
+        "state": {
+          "branch": "master",
+          "revision": "4084702c85102c2d17d58e42ec5a750094944864",
+          "version": null
         }
       },
       {
@@ -114,7 +132,7 @@
         "repositoryURL": "https://github.com/jerometonnelier/KExtensions",
         "state": {
           "branch": "master",
-          "revision": "b0d5cd83adc01cae24ce17ce820091264b00f32a",
+          "revision": "9b61ccc0bca5430f020503e361daa5258ae37e9d",
           "version": null
         }
       },
@@ -141,8 +159,17 @@
         "repositoryURL": "https://github.com/kean/Nuke",
         "state": {
           "branch": null,
-          "revision": "ef122e4512e84020dca9d8f598408fdb38658946",
-          "version": "9.2.0"
+          "revision": "e2eb1b7b82983c6f6a2df496e850406a78cdef05",
+          "version": "9.3.0"
+        }
+      },
+      {
+        "package": "Peep",
+        "repositoryURL": "https://github.com/efremidze/Peep",
+        "state": {
+          "branch": null,
+          "revision": "6ba6217b6fa53d53e635f20ed225261398b32116",
+          "version": "3.0.0"
         }
       },
       {
@@ -159,7 +186,7 @@
         "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
         "state": {
           "branch": "master",
-          "revision": "22bc900a0555dbed6f48fd4182ae3e943a319ffc",
+          "revision": "07e1d7a13af175106f0e8a240747d39fbb06d200",
           "version": null
         }
       },

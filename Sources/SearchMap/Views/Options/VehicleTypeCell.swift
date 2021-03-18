@@ -8,6 +8,7 @@
 import UIKit
 import ATAViews
 import SnapKit
+import ATACommonObjects
 
 class VehicleTypeCell: UICollectionViewCell {
     lazy var button: SelectableButton = SelectableButton()
@@ -31,7 +32,7 @@ class VehicleTypeCell: UICollectionViewCell {
         button.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
-    func configure(_ vehicleType: VehicleTypeable, isSelected: Bool) {
+    func configure(_ vehicleType: VehicleType, isSelected: Bool) {
         if button.superview == nil {
             addButton()
         }
@@ -39,7 +40,7 @@ class VehicleTypeCell: UICollectionViewCell {
         button.isSelected = isSelected
     }
     
-    func configure(_ option: VehicleOptionnable, isSelected: Bool) {
+    func configure(_ option: VehicleOption, isSelected: Bool) {
         if button.superview == nil {
             addButton()
         }

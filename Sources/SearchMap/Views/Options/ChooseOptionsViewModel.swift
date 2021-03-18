@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ATACommonObjects
 
 class ChooseOptionsViewModel {
     enum Section: Int, Hashable {
@@ -15,7 +16,7 @@ class ChooseOptionsViewModel {
         static func == (lhs: CellType, rhs: CellType) -> Bool {
             return lhs.option.rawValue == rhs.option.rawValue
         }
-        var option: VehicleOptionnable
+        var option: VehicleOption
         var isSelected: Bool
         
         func hash(into hasher: inout Hasher) {
@@ -23,9 +24,9 @@ class ChooseOptionsViewModel {
             hasher.combine(option.rawValue)
         }
     }
-    private(set) var options: [VehicleOptionnable]
+    private(set) var options: [VehicleOption]
     private(set) var book: BookingWrapper
-    init(options: [VehicleOptionnable], book: inout BookingWrapper) {
+    init(options: [VehicleOption], book: inout BookingWrapper) {
         self.options = options
         self.book = book
     }

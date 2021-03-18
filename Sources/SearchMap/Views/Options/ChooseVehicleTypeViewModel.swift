@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ATACommonObjects
 
 class ChooseVehicleTypeViewModel {
     enum Section: Int, Hashable {
@@ -15,7 +16,7 @@ class ChooseVehicleTypeViewModel {
         static func == (lhs: CellType, rhs: CellType) -> Bool {
             return lhs.hashValue == rhs.hashValue
         }
-        case vehicle(_: VehicleTypeable, isSelected: Bool)
+        case vehicle(_: VehicleType, isSelected: Bool)
         
         func hash(into hasher: inout Hasher) {
             switch self {
@@ -25,8 +26,8 @@ class ChooseVehicleTypeViewModel {
             }
         }
     }
-    private(set) var vehicles: [VehicleTypeable]
-    init(vehicles: [VehicleTypeable]) {
+    private(set) var vehicles: [VehicleType]
+    init(vehicles: [VehicleType]) {
         self.vehicles = vehicles
     }
     
@@ -72,7 +73,7 @@ class ChooseVehicleTypeViewModel {
         applySnapshot(in: dataSource)
     }
     
-    func selectedType() -> VehicleTypeable? {
+    func selectedType() -> VehicleType? {
         guard selectedIndex >= 0 else { return nil }
         return vehicles[selectedIndex]
     }

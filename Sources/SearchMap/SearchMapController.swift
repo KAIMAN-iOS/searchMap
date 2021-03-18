@@ -18,6 +18,7 @@ import UIViewControllerExtension
 import SwiftDate
 import PromiseKit
 import ATAGroup
+import ATACommonObjects
 
 class SearchMapController: UIViewController {
     var mode: DisplayMode = .driver
@@ -49,7 +50,7 @@ class SearchMapController: UIViewController {
             cardContainer.backgroundColor = .clear
         }
     }
-    var vehicles: [VehicleTypeable] = []
+    var vehicles: [VehicleType] = []
     var groups: [Group] = []
     @IBOutlet weak var originLabel: UILabel!
     @IBOutlet weak var originIndicator: UIView!  {
@@ -71,7 +72,7 @@ class SearchMapController: UIViewController {
     weak var searchMapDelegate: SearchMapDelegate!
     public weak var delegate: SearchRideDelegate!
     private var locationRequest: GPSLocationRequest?
-    var availableOptions: [VehicleOptionnable] = []
+    var availableOptions: [VehicleOption] = []
     
     let geocoder = CLGeocoder()
     @IBOutlet weak var map: MKMapView!  {

@@ -14,12 +14,7 @@ import ATAConfiguration
 import ATAGroup
 import PromiseKit
 import MapExtension
-
-public protocol VehicleTypeable {
-    var rawValue: Int { get }
-    var displayText: String { get }
-    var icon: UIImage? { get }
-}
+import ATACommonObjects
 
 protocol SearchMapCoordinatorDelegate: class {
     func showSearch(_ booking: inout BookingWrapper, animated: Bool)
@@ -77,8 +72,8 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
                 searchMapDelegate: SearchMapDelegate,
                 mode: DisplayMode = .driver,
                 conf: ATAConfiguration,
-                vehicleTypes: [VehicleTypeable],
-                vehicleOptions: [VehicleOptionnable],
+                vehicleTypes: [VehicleType],
+                vehicleOptions: [VehicleOption],
                 groups: [Group] = [],
                 configurationOptions: OptionConfiguration = OptionConfiguration.default) {
         var moduleRouter = router

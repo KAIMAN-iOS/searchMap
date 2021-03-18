@@ -16,7 +16,7 @@ import GrowingTextView
 import SwiftDate
 import ATAGroup
 import PromiseKit
-
+import ATACommonObjects
 
 protocol BookDelegate: class {
     func book(_ booking: BookingWrapper) -> Promise<Bool>
@@ -28,7 +28,7 @@ protocol BookDelegate: class {
 class ChooseOptionsView: UIView {
     public weak var searchMapDelegate: SearchRideDelegate?
     var mode: DisplayMode = .driver
-    var availableOptions: [VehicleOptionnable] = []
+    var availableOptions: [VehicleOption] = []
     
     internal enum OptionState: Int {
         case taxi = 0, passenger
@@ -141,7 +141,7 @@ class ChooseOptionsView: UIView {
         }
     }
 
-    var vehicles: [VehicleTypeable] = []  {
+    var vehicles: [VehicleType] = []  {
         didSet {
             vehicleTypeViewModel = ChooseVehicleTypeViewModel(vehicles: vehicles)
         }
