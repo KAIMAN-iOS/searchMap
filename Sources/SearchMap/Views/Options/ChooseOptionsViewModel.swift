@@ -25,8 +25,8 @@ class ChooseOptionsViewModel {
         }
     }
     private(set) var options: [VehicleOption]
-    private(set) var book: BookingWrapper
-    init(options: [VehicleOption], book: inout BookingWrapper) {
+    private(set) var book: CreateRide
+    init(options: [VehicleOption], book: inout CreateRide) {
         self.options = options
         self.book = book
     }

@@ -17,7 +17,7 @@ import MapExtension
 import ATACommonObjects
 
 protocol SearchMapCoordinatorDelegate: class {
-    func showSearch(_ booking: inout BookingWrapper, animated: Bool)
+    func showSearch(_ booking: inout CreateRide, animated: Bool)
 }
 
 public enum DisplayMode {
@@ -33,17 +33,16 @@ public enum DisplayMode {
 }
 
 public protocol SearchRideDelegate: NSObjectProtocol {
-    func book(_ booking: BookingWrapper) -> Promise<Bool>
-    func save(_ booking: BookingWrapper)-> Promise<Bool>
-    func share(_ booking: BookingWrapper, to groups: [Group])-> Promise<Bool>
+    func book(_ booking: CreateRide) -> Promise<Bool>
+    func save(_ booking: CreateRide)-> Promise<Bool>
+    func share(_ booking: CreateRide, to groups: [Group])-> Promise<Bool>
 }
 
 public protocol SearchMapDelegate: NSObjectProtocol {
     func view(for annotation: MKAnnotation) -> MKAnnotationView?
     func renderer(for overlay: MKOverlay) -> MKPolylineRenderer
-    func annotations(for ride: BookingWrapper) -> [MKAnnotation]
+    func annotations(for ride: CreateRide) -> [MKAnnotation]
     func overlays(for route: MKRoute) -> [MKOverlay]
-    func loadRoutes(for ride: BookingWrapper) -> Promise<DirectionsAnswer>
 }
 
 public struct OptionConfiguration {
@@ -116,7 +115,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
 }
 
 extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
-    func showSearch(_ booking: inout BookingWrapper, animated: Bool) {
+    func showSearch(_ booking: inout CreateRide, animated: Bool) {
         let ctrl = SearchViewController.create(booking: &booking, searchDelegate: self)
         ctrl.viewModel.favourtiteViewModel.coordinatorDelegate = favCoordinator
         ctrl.viewModel.handleFavourites = handleFavourites

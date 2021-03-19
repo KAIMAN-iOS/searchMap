@@ -9,6 +9,7 @@ import UIKit
 import ATAGroup
 import ActionButton
 import PromiseKit
+import ATACommonObjects
 
 protocol ChooseGroupNavigationDelegate: NSObjectProtocol {
     func back()
@@ -16,9 +17,9 @@ protocol ChooseGroupNavigationDelegate: NSObjectProtocol {
 
 class ChooseGroupsView: UIView {
     weak var navDelegate: ChooseGroupNavigationDelegate!
-    var booking: BookingWrapper!
+    var booking: CreateRide!
     weak var delegate: SearchRideDelegate!
-    static func create(booking: BookingWrapper, groups: [Group], delegate: SearchRideDelegate) -> ChooseGroupsView {
+    static func create(booking: CreateRide, groups: [Group], delegate: SearchRideDelegate) -> ChooseGroupsView {
         let ctrl: ChooseGroupsView = Bundle.module.loadNibNamed("ChooseGroupsView", owner: nil)?.first as! ChooseGroupsView
         ctrl.booking = booking
         ctrl.delegate = delegate

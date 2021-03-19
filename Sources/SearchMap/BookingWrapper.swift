@@ -9,17 +9,7 @@ import Foundation
 import MapKit
 import DateExtension
 import MapExtension
-
-public enum DateWrapper {
-    case now, date(_: Date)
-    
-    var date: Date {
-        switch self {
-        case .now: return Date()
-        case .date(let date): return date
-        }
-    }
-}
+import ATACommonObjects
 
 enum BookingPlaceType {
     case origin, destination
@@ -66,73 +56,15 @@ enum PlacemarkCellType: Hashable, Equatable {
     }
 }
 
-public enum Option {
-    case numberOfPassenger, numberOfLuggages, vehicleType
-}
-
-public protocol VehicleOption {
-    var rawValue: Int { get }
-    var displayText: String { get }
-}
-
-public class BookingWrapper: NSObject {
-    @objc dynamic public var origin: Placemark!
-    @objc dynamic public var destination: Placemark?
-    public var message: String?
-    public var options: [Option: Int] = [:]
-    public var vehicleOptions: [VehicleOption] = []
-    public var pickUpDate: DateWrapper = .now
-    public var passengerName: String?
-    public var passengerPhone: String?
-}
-
-public struct BookingDirection: Direction {
-    public var id: String
-    public var startLocation: CLLocationCoordinate2D
-    public var endLocation: CLLocationCoordinate2D
-}
-
-public struct BookingDirections: Directions {
-    public var id: String
-    public var directions: [Direction] = []
-    
-    public init?(_ wrapper: BookingWrapper) {
-        id = UUID().uuidString
-        guard let dest = wrapper.destination?.coordinates else {
-            return nil
-        }
-        directions.append(BookingDirection(id: UUID().uuidString,
-                                           startLocation: wrapper.origin.coordinates,
-                                           endLocation: dest))
-    }
-}
-
-public class Placemark: NSObject, Codable {
-    public static func == (lhs: Placemark, rhs: Placemark) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-    public var name: String?
-    public var address: String?
-    public var coordinates: CLLocationCoordinate2D
+public class Placemark: Address {
     public var specialFavourite: FavouriteType?
-    
-    public init(name: String?,
-                address: String?,
-                coordinates: CLLocationCoordinate2D,
-                specialFavourite: FavouriteType? = nil) {
-        self.name = name
-        self.address = address
-        self.coordinates = coordinates
-        self.specialFavourite = specialFavourite
-    }
-    public var displayAddress: String { "\(name ?? ""), \(address ?? "")" }
 }
 
 extension CLPlacemark {
     var asPlacemark: Placemark {
         return Placemark(name: name,
                          address: formattedAddress,
-                         coordinates: location?.coordinate ?? kCLLocationCoordinate2DInvalid)
+                         coordinates: Coordinates(location: location?.coordinate ?? kCLLocationCoordinate2DInvalid))
     }
 }
 

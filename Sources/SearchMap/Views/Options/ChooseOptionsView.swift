@@ -19,10 +19,10 @@ import PromiseKit
 import ATACommonObjects
 
 protocol BookDelegate: class {
-    func book(_ booking: BookingWrapper) -> Promise<Bool>
-    func save(_ booking: BookingWrapper) -> Promise<Bool>
+    func book(_ booking: CreateRide) -> Promise<Bool>
+    func save(_ booking: CreateRide) -> Promise<Bool>
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void))
-    func share(_ booking: BookingWrapper)
+    func share(_ booking: CreateRide)
 }
 
 class ChooseOptionsView: UIView {
@@ -298,7 +298,7 @@ class ChooseOptionsView: UIView {
     }
     
     var groups: [Group] = []
-    var booking: BookingWrapper!
+    var booking: CreateRide!
     fileprivate func handleVehicleType() {
         let datasource = vehicleTypeViewModel.dataSource(for: vehicleTypeCollectionView)
         vehicleTypeCollectionView.dataSource = datasource
@@ -314,7 +314,7 @@ class ChooseOptionsView: UIView {
     }
     
     func configure(options configurationOptions: OptionConfiguration,
-                   booking: inout BookingWrapper,
+                   booking: inout CreateRide,
                    state: OptionState = .taxi) {
         self.booking = booking
         self.state = state
@@ -395,9 +395,9 @@ class ChooseOptionsView: UIView {
     
     @objc func stepperChanged(_ stepper: ATAStepper) {
         if stepper === passengerStepper {
-            booking.options[.numberOfPassenger] = Int(stepper.value)
+            booking.numberOfPassengers = Int(stepper.value)
         } else if stepper === luggagesStepper {
-            booking.options[.numberOfLuggages] = Int(stepper.value)
+            booking.numberOfLuggages = Int(stepper.value)
         }
     }
 }
@@ -405,11 +405,13 @@ class ChooseOptionsView: UIView {
 extension ChooseOptionsView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         enableNextButton()
+        var passenger: Passenger = booking.passenger ?? Passenger()
         if textField === nameTextfield.textfield {
-            booking.passengerName = textField.text
+            passenger.lastname = textField.text ?? ""
         } else if textField === phoneTextfield.textfield {
-            booking.passengerPhone = textField.text
+            passenger.phone = textField.text ?? ""
         }
+        booking.passenger = passenger
     }
 }
 
@@ -417,7 +419,7 @@ extension ChooseOptionsView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView === vehicleTypeCollectionView {
             vehicleTypeViewModel.select(at: indexPath)
-            booking.options[.vehicleType] = vehicleTypeViewModel.selectedType()?.rawValue
+            booking.vehicleType = vehicleTypeViewModel.selectedType()
         } else if collectionView === vehicleOptionCollectionView {
             vehicleOptionsViewModel.select(at: indexPath)
         }

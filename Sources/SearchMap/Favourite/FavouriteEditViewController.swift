@@ -59,7 +59,7 @@ class FavouriteEditViewController: UIViewController {
     
     @IBAction func showMap() {
         let map = ReverseGeocodingMap.create(delegate: self,
-                                             centerCoordinates: CLLocationCoordinate2DIsValid(placeMark.coordinates) ? placeMark.coordinates : nil,
+                                             centerCoordinates: CLLocationCoordinate2DIsValid(placeMark.asCoordinates2D) ? placeMark.asCoordinates2D : nil,
                                              conf: FavouriteListViewController.configuration)
         map.showSearchButton = false
         navigationController?.pushViewController(map, animated: true)
