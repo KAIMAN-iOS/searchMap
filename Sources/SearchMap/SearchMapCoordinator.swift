@@ -97,7 +97,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         self.router.navigationController.navigationBar.isTranslucent = true
         self.router.navigationController.navigationBar.shadowImage = UIImage()
         self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        searchNavigationController.navigationBar.barTintColor = .white
+        searchNavigationController.navigationBar.barTintColor = conf.palette.background
         searchNavigationController.navigationBar.isTranslucent = false
         searchNavigationController.navigationBar.shadowImage = UIImage()
         searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -105,7 +105,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     
     deinit {
         print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
-        router.navigationController.navigationBar.barTintColor = .white
+        router.navigationController.navigationBar.barTintColor = SearchMapController.configuration.palette.background
         router.navigationController.navigationBar.isTranslucent = false
     }
     

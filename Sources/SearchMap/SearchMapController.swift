@@ -35,7 +35,7 @@ class SearchMapController: UIViewController {
         
         var backgroudColor: UIColor {
             switch self {
-            case .search: return .white
+            case .search: return SearchMapController.configuration.palette.background
             case .bookingReady, .shareWithGroup: return SearchMapController.configuration.palette.secondary
             }
         }

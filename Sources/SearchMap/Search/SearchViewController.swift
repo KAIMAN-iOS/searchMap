@@ -167,6 +167,8 @@ class SearchViewController: UIViewController {
     lazy var datasource = viewModel.dataSource(for: tableView)
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = SearchMapController.configuration.palette.background
+        tableView.backgroundColor = SearchMapController.configuration.palette.background
         hideBackButtonText = true
         handleValidateButton()
         handleObservers()

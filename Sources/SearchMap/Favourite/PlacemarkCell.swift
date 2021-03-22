@@ -15,6 +15,7 @@ class PlacemarkCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         addDefaultSelectedBackground(FavouriteListViewController.configuration.palette.primary.withAlphaComponent(0.5))
+        contentView.backgroundColor = SearchMapController.configuration.palette.background
     }
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var name: UILabel!
