@@ -347,6 +347,7 @@ class ChooseOptionsView: UIView {
             
         default: mainButton.isEnabled = true
         }
+        secondaryButton.isEnabled = mainButton.isEnabled
     }
     
     @IBAction func mainAction() {

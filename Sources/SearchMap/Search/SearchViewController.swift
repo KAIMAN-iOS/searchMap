@@ -173,7 +173,7 @@ class SearchViewController: UIViewController {
         handleKeyboard()
         handleTableView()
         DispatchQueue.main.async { [weak self] in
-            if self?.booking.origin != nil {
+            if self?.booking.fromAddress != nil {
                 self?.destinationTextField.becomeFirstResponder()
             } else {
                 self?.originTextField.becomeFirstResponder()
