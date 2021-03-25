@@ -20,7 +20,7 @@ import PromiseKit
 import ATAGroup
 import ATACommonObjects
 
-class SearchMapController: UIViewController {
+public final class SearchMapController: UIViewController {
     var mode: DisplayMode = .driver
     var configurationOptions: OptionConfiguration!
     static var configuration: ATAConfiguration!
@@ -101,8 +101,8 @@ class SearchMapController: UIViewController {
             userButton.layer.borderWidth = 2.0
         }
     }
-    @IBOutlet weak var card: UIView!
-    @IBOutlet weak var cardContainer: UIView!
+    @IBOutlet public weak var card: UIView!
+    @IBOutlet public weak var cardContainer: UIView!
     @IBOutlet weak var bookingTopView: UIView!  {
         didSet {
             bookingTopView.layer.cornerRadius = 25
@@ -123,7 +123,7 @@ class SearchMapController: UIViewController {
         stopLocationUpdate()
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         hideBackButtonText = true
         userButton.isHidden = mode.hideUserIcon
@@ -370,7 +370,7 @@ extension SearchMapController: BookDelegate {
 }
 
 extension SearchMapController: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+    public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let view = searchMapDelegate.view(for: annotation) else {
             guard mode != .driver,
                   let annotation = annotation as? UserAnnotation,
@@ -384,7 +384,7 @@ extension SearchMapController: MKMapViewDelegate {
         return view
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let view = view as? UserAnnotationView, mode != .driver else { return }
         // push the search view with departure selected
         map.deselectAnnotation(view.annotation, animated: false)
@@ -392,7 +392,7 @@ extension SearchMapController: MKMapViewDelegate {
         search(animated: true)
     }
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer { searchMapDelegate.renderer(for: overlay) }
+    public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer { searchMapDelegate.renderer(for: overlay) }
 }
 
 extension SearchMapController: ChooseGroupNavigationDelegate {
