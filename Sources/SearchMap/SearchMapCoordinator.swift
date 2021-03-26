@@ -94,16 +94,15 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.delegate = delegate
         SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
-        if mode == .driver {
-            self.router.navigationController.navigationBar.barTintColor = .clear
-            self.router.navigationController.navigationBar.isTranslucent = true
-            self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        }
-        self.router.navigationController.navigationBar.shadowImage = UIImage()
-        searchNavigationController.navigationBar.barTintColor = conf.palette.background
-        searchNavigationController.navigationBar.isTranslucent = false
-        searchNavigationController.navigationBar.shadowImage = UIImage()
-        searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        if mode == .driver {
+//            self.router.navigationController.navigationBar.barTintColor = .clear
+//            self.router.navigationController.navigationBar.isTranslucent = true
+//            self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        }
+//        self.router.navigationController.navigationBar.shadowImage = UIImage()
+//        searchNavigationController.navigationBar.barTintColor = conf.palette.background
+//        searchNavigationController.navigationBar.isTranslucent = false
+//        searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
     deinit {
@@ -128,11 +127,12 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
         searchNavigationController.setViewControllers([ctrl], animated: false)
         searchNavigationController.modalPresentationStyle = .fullScreen
         searchNavigationController.modalTransitionStyle = .crossDissolve
-        searchNavigationController.navigationBar.isTranslucent = true
-        searchNavigationController.navigationBar.tintColor = SearchMapController.configuration.palette.mainTexts
-        if searchMapController.mode == .driver {
-            searchNavigationController.navigationBar.barTintColor = .clear
-        }
+        searchNavigationController.navigationBar.shadowImage = UIImage()
+//        searchNavigationController.navigationBar.isTranslucent = true
+//        searchNavigationController.navigationBar.tintColor = SearchMapController.configuration.palette.mainTexts
+//        if searchMapController.mode == .driver {
+//            searchNavigationController.navigationBar.barTintColor = .clear
+//        }
         (router.navigationController.topViewController ?? searchMapController).present(searchNavigationController, animated: animated)
     }
 }
