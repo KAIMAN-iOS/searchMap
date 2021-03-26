@@ -20,7 +20,7 @@ class PlacemarkCell: UITableViewCell {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var address: UILabel!
-    
+    @IBOutlet weak var favButton: FavoriteButton!
     
     func configure(_ model: PlacemarkCellType) {
         switch model {

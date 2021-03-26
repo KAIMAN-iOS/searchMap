@@ -36,6 +36,7 @@ public protocol SearchRideDelegate: NSObjectProtocol {
     func book(_ booking: CreateRide) -> Promise<Bool>
     func save(_ booking: CreateRide)-> Promise<Bool>
     func share(_ booking: CreateRide, to groups: [Group])-> Promise<Bool>
+    func showMenu()
 }
 
 public protocol SearchMapDelegate: NSObjectProtocol {
@@ -59,7 +60,7 @@ public struct OptionConfiguration {
 
 public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var standAloneMode: Bool = false
-    let searchMapController = SearchMapController.create()
+    public let searchMapController = SearchMapController.create()
     lazy var searchNavigationController = UINavigationController()
     var reverseGeocodingMap: ReverseGeocodingMap!
     var favCoordinator: FavouriteCoordinator<DeepLink>!
@@ -93,10 +94,12 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.delegate = delegate
         SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
-        self.router.navigationController.navigationBar.barTintColor = .clear
-        self.router.navigationController.navigationBar.isTranslucent = true
+        if mode == .driver {
+            self.router.navigationController.navigationBar.barTintColor = .clear
+            self.router.navigationController.navigationBar.isTranslucent = true
+            self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        }
         self.router.navigationController.navigationBar.shadowImage = UIImage()
-        self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         searchNavigationController.navigationBar.barTintColor = conf.palette.background
         searchNavigationController.navigationBar.isTranslucent = false
         searchNavigationController.navigationBar.shadowImage = UIImage()
@@ -127,7 +130,9 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
         searchNavigationController.modalTransitionStyle = .crossDissolve
         searchNavigationController.navigationBar.isTranslucent = true
         searchNavigationController.navigationBar.tintColor = SearchMapController.configuration.palette.mainTexts
-        searchNavigationController.navigationBar.barTintColor = .clear
+        if searchMapController.mode == .driver {
+            searchNavigationController.navigationBar.barTintColor = .clear
+        }
         (router.navigationController.topViewController ?? searchMapController).present(searchNavigationController, animated: animated)
     }
 }

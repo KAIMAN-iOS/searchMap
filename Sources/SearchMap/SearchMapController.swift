@@ -36,7 +36,7 @@ public final class SearchMapController: UIViewController {
         var backgroudColor: UIColor {
             switch self {
             case .search: return SearchMapController.configuration.palette.background
-            case .bookingReady, .shareWithGroup: return SearchMapController.configuration.palette.secondary
+            case .bookingReady, .shareWithGroup: return SearchMapController.configuration.palette.background
             }
         }
     }
@@ -50,6 +50,7 @@ public final class SearchMapController: UIViewController {
             cardContainer.backgroundColor = .clear
         }
     }
+    var optionState: OptionState = .default
     var vehicles: [VehicleType] = []
     var groups: [Group] = []
     @IBOutlet weak var originLabel: UILabel!
@@ -67,6 +68,13 @@ public final class SearchMapController: UIViewController {
             destinationIndicator.backgroundColor = SearchMapController.configuration.palette.primary
         }
     }
+    @IBOutlet weak var backOptionsButton: UIButton!  {
+        didSet {
+            backOptionsButton.roundedCorners = true
+            backOptionsButton.isHidden = true
+        }
+    }
+
     var bookingWrapper = CreateRide()
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
     weak var searchMapDelegate: SearchMapDelegate!
@@ -75,7 +83,7 @@ public final class SearchMapController: UIViewController {
     var availableOptions: [VehicleOption] = []
     
     let geocoder = CLGeocoder()
-    @IBOutlet weak var map: MKMapView!  {
+    @IBOutlet private(set) public weak var map: MKMapView!  {
         didSet {
             map.delegate = self
             map.layoutMargins.bottom = 15
@@ -107,11 +115,9 @@ public final class SearchMapController: UIViewController {
         didSet {
             bookingTopView.layer.cornerRadius = 25
             bookingTopView.addShadow(roundCorners: false, useMotionEffect: false)
-            bookingTopView.backgroundColor = SearchMapController.configuration.palette.secondary
+            bookingTopView.backgroundColor = SearchMapController.configuration.palette.background
         }
     }
-
-    @IBOutlet weak var topViewTopContraint: NSLayoutConstraint!
     
     var originObserver: NSKeyValueObservation?
     var destinationObserver: NSKeyValueObservation?
@@ -218,36 +224,75 @@ public final class SearchMapController: UIViewController {
             return
         }
         DispatchQueue.main.async { [weak self]  in
-            self?.loadBookingReadyCard()
+            self?.loadOptionsCard()
         }
     }
     
-    func loadBookingReadyCard(_ state: ChooseOptionsView.OptionState = .taxi) {
+    func loadOptionsCard() {
         defer {
             configureTopView()
         }
         // no need to reload the view if it is already the right one
         guard cardContainer.subviews.first as? ChooseOptionsView == nil else { return }
         guard let view: ChooseOptionsView = Bundle.module.loadNibNamed("ChooseOptionsView", owner: nil)?.first as? ChooseOptionsView else { return }
-        self.state = .bookingReady
+        state = .bookingReady
+        optionState = .default
+        backOptionsButton.isHidden = mode == .driver
         view.delegate = self
+        view.nextDelegate = self
+        view.availableOptions = availableOptions
+        view.mode = mode
+        view.searchMapDelegate = delegate
+        addViewToCard(view)
+        view.configure(options: configurationOptions, booking: &bookingWrapper)
+        bookingTopView.isHidden = false
+    }
+    
+    func loadVehicleOptionsCard() {
+        // no need to reload the view if it is already the right one
+        guard cardContainer.subviews.first as? ChooseVehicleOptionsView == nil else { return }
+        guard let view: ChooseVehicleOptionsView = Bundle.module.loadNibNamed("ChooseVehicleOptionsView", owner: nil)?.first as? ChooseVehicleOptionsView else { return }
+        optionState = .vehicleOptions
+        backOptionsButton.isHidden = false
+        view.delegate = self
+        view.nextDelegate = self
         view.availableOptions = availableOptions
         view.vehicles = vehicles
         view.mode = mode
         view.groups = groups
         view.searchMapDelegate = delegate
         addViewToCard(view)
-        view.configure(options: configurationOptions, booking: &bookingWrapper, state: state)
-        topViewTopContraint.constant = 0
+        view.configure(options: configurationOptions, booking: &bookingWrapper)
+    }
+    
+    func loadPassengerOptionsCard() {
+        // no need to reload the view if it is already the right one
+        guard cardContainer.subviews.first as? ChoosePassengerOptionsView == nil else { return }
+        guard let view: ChoosePassengerOptionsView = Bundle.module.loadNibNamed("ChoosePassengerOptionsView", owner: nil)?.first as? ChoosePassengerOptionsView else { return }
+        optionState = .passenger
+        view.delegate = self
+        view.availableOptions = availableOptions
+        view.mode = mode
+        view.searchMapDelegate = delegate
+        addViewToCard(view)
+        view.configure(options: configurationOptions, booking: &bookingWrapper)
+    }
+    
+    func loadCard(for state: OptionState) {
+        switch state {
+        case .default: loadOptionsCard()
+        case .vehicleOptions: loadVehicleOptionsCard()
+        case .passenger: loadPassengerOptionsCard()
+        }
     }
     
     func configureTopView() {
         guard bookingWrapper.fromAddress != nil else { return }
-        originLabel.set(text: bookingWrapper.fromAddress?.name, for: .body, textColor: SearchMapController.configuration.palette.textOnPrimary)
+        originLabel.set(text: bookingWrapper.fromAddress?.name, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
         let noDestination = bookingWrapper.toAddress?.name?.isEmpty ?? true == true
         destinationLabel.set(text: bookingWrapper.toAddress?.name ?? "no destination".bundleLocale(),
                              for: .body,
-                             textColor: noDestination ? SearchMapController.configuration.palette.inactive : SearchMapController.configuration.palette.textOnPrimary)
+                             textColor: noDestination ? SearchMapController.configuration.palette.inactive : SearchMapController.configuration.palette.mainTexts)
     }
     
     func loadSearchCard() {
@@ -255,8 +300,9 @@ public final class SearchMapController: UIViewController {
         guard cardContainer.subviews.first as? MapLandingView == nil else { return }
         guard let view: MapLandingView = Bundle.module.loadNibNamed("MapLandingView", owner: nil)?.first as? MapLandingView else { return }
         view.delegate = self
+        backOptionsButton.isHidden = true
         addViewToCard(view)
-        topViewTopContraint.constant = -200
+        bookingTopView.isHidden = true
     }
     
     func addViewToCard(_ view: UIView) {
@@ -296,6 +342,10 @@ public final class SearchMapController: UIViewController {
     @IBAction func showSearchController() {
         search(animated: true)
     }
+    
+    @IBAction func showMenu() {
+        delegate.showMenu()
+    }
 }
 
 extension SearchMapController: CLLocationManagerDelegate {
@@ -329,7 +379,7 @@ extension SearchMapController: MapLandingViewDelegate {
     }
 }
 
-extension SearchMapController: BookDelegate {
+extension SearchMapController: BookDelegate, ChooseDateDelegate {
     func book(_ booking: CreateRide) -> Promise<Bool> {
         guard let delegate = delegate else {
             return Promise<Bool>.init { (resolver) in
@@ -395,8 +445,23 @@ extension SearchMapController: MKMapViewDelegate {
     public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer { searchMapDelegate.renderer(for: overlay) }
 }
 
+extension SearchMapController: OptionViewDelegate {
+    func next() {
+        guard let state = optionState.next else {
+            return
+        }
+        loadCard(for: state)
+    }
+}
+
 extension SearchMapController: ChooseGroupNavigationDelegate {
-    func back() {
-        loadBookingReadyCard(.passenger)
+    @IBAction func back() {
+        guard let state = optionState.previous else {
+            if mode == .passenger {
+                loadSearchCard()
+            }
+            return
+        }
+        loadCard(for: state)
     }
 }

@@ -24,8 +24,8 @@ class VehicleTypeCell: UICollectionViewCell {
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        button.selectedColor = SearchMapController.configuration.palette.textOnPrimary
-        button.unselectedColor = SearchMapController.configuration.palette.secondary
+        button.selectedColor = SearchMapController.configuration.palette.secondary
+        button.unselectedColor = SearchMapController.configuration.palette.background
         button.isUserInteractionEnabled = false
         button.titleLabel?.font = .applicationFont(forTextStyle: .caption1)
         button.titleLabel?.minimumScaleFactor = 0.5
