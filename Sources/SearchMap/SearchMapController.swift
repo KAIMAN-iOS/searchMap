@@ -147,10 +147,10 @@ public final class SearchMapController: UIViewController {
     func updateUserBackButton() {
         switch mode {
         case .driver:
-            userButton.setImage(UIImage(named: "arrow", in: .module, compatibleWith: nil), for: .normal)
+            userButton.setImage(UIImage(named: "back", in: .module, compatibleWith: nil), for: .normal)
             userButton.backgroundColor = .clear
             userButton.layer.borderWidth = 0
-            userButton.removeTarget(nil, action: nil, for: .touchUpInside)
+            userButton.removeTarget(nil, action: nil, for: .allTouchEvents)
             userButton.addTarget(delegate, action: #selector(back), for: .touchUpInside)
             
         default: ()
