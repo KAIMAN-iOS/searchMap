@@ -37,6 +37,7 @@ public protocol SearchRideDelegate: NSObjectProtocol {
     func save(_ booking: CreateRide)-> Promise<Bool>
     func share(_ booking: CreateRide, to groups: [Group])-> Promise<Bool>
     func showMenu()
+    func back()
 }
 
 public protocol SearchMapDelegate: NSObjectProtocol {

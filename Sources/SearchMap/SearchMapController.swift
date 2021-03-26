@@ -131,6 +131,7 @@ public final class SearchMapController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        updateUserBackButton()
         hideBackButtonText = true
         userButton.isHidden = mode.hideUserIcon
         startLocationUpdates()
@@ -141,6 +142,19 @@ public final class SearchMapController: UIViewController {
         map.tintColor = SearchMapController.configuration.palette.primary
         if mode == .driver {
             search(animated: true)
+        }
+    }
+    
+    func updateUserBackButton() {
+        switch mode {
+        case .driver:
+            userButton.setImage(UIImage(named: "arrow", in: .module, compatibleWith: nil), for: .normal)
+            userButton.backgroundColor = .clear
+            userButton.layer.borderWidth = 0
+            userButton.removeTarget(nil, action: nil, for: .touchUpInside)
+            userButton.addTarget(delegate, action: #selector(back), for: .touchUpInside)
+            
+        default: ()
         }
     }
     
