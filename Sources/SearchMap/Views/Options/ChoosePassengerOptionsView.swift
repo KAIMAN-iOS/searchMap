@@ -106,6 +106,9 @@ class ChoosePassengerOptionsView: UIView {
     func configure(options configurationOptions: OptionConfiguration,
                    booking: inout CreateRide) {
         self.booking = booking
+        secondaryButton.isHidden = mode == .passenger
+        enableNextButton()
+        mainButton.setTitle((mode == .driver ? "save for me" : "book").bundleLocale(), for: .normal)
     }
     
     func enableNextButton() {

@@ -144,14 +144,19 @@ public final class SearchMapController: UIViewController {
         }
     }
     
+    @objc func navigationBack() {
+        delegate.back()
+    }
+    
     func updateUserBackButton() {
         switch mode {
         case .driver:
-            userButton.setImage(UIImage(named: "back", in: .module, compatibleWith: nil), for: .normal)
+            userButton.setImage(UIImage(named: "back", in: .module, compatibleWith: nil)?.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -25, bottom: 0, right: 0)), for: .normal)
             userButton.backgroundColor = .clear
             userButton.layer.borderWidth = 0
             userButton.removeTarget(nil, action: nil, for: .allTouchEvents)
-            userButton.addTarget(delegate, action: #selector(back), for: .touchUpInside)
+            userButton.tintColor = SearchMapController.configuration.palette.mainTexts
+            userButton.addTarget(self, action: #selector(navigationBack), for: .touchUpInside)
             
         default: ()
         }

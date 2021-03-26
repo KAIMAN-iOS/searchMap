@@ -29,7 +29,7 @@ class ChooseGroupsView: UIView {
     }
     @IBOutlet weak var title: UILabel!  {
         didSet {
-            title.set(text: "Share with groups".bundleLocale().uppercased(), for: .title3, textColor: SearchMapController.configuration.palette.textOnPrimary)
+            title.set(text: "Share with groups".bundleLocale().uppercased(), for: .title3, textColor: SearchMapController.configuration.palette.mainTexts)
         }
     }
     @IBOutlet weak var shareRideButton: ActionButton!  {
