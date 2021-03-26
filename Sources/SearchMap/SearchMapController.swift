@@ -133,7 +133,6 @@ public final class SearchMapController: UIViewController {
         super.viewDidLoad()
         updateUserBackButton()
         hideBackButtonText = true
-        userButton.isHidden = mode.hideUserIcon
         startLocationUpdates()
         state = .search
         handleObservers()

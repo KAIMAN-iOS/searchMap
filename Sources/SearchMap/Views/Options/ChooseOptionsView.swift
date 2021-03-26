@@ -68,7 +68,7 @@ class ChooseOptionsView: UIView {
     }
     @IBOutlet weak var luggagesLabel: UILabel!  {
         didSet {
-            luggagesLabel.set(text: "nb luggages".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.textOnPrimary)
+            luggagesLabel.set(text: "nb luggages".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.secondaryTexts)
         }
     }
 
