@@ -148,6 +148,11 @@ public final class SearchMapController: UIViewController {
         delegate.back()
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     func updateUserBackButton() {
         switch mode {
         case .driver:

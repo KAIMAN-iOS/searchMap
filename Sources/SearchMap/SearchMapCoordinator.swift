@@ -95,6 +95,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.delegate = delegate
         SearchMapController.configuration = conf
         IQKeyboardManager.shared.enable = true
+        router?.navigationController.setNavigationBarHidden(true, animated: false)
 //        if mode == .driver {
 //            self.router.navigationController.navigationBar.barTintColor = .clear
 //            self.router.navigationController.navigationBar.isTranslucent = true
