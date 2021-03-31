@@ -53,6 +53,7 @@ class SearchViewController: UIViewController {
         didSet {
             originTextField.placeholder = "Enter origin".bundleLocale()
             originTextField.delegate = self
+            originTextField.tintColor = SearchMapController.configuration.palette.primary
         }
     }
     @IBOutlet weak var originIndicator: UIView!  {
@@ -66,6 +67,7 @@ class SearchViewController: UIViewController {
         didSet {
             destinationTextField.placeholder = "Enter destination".bundleLocale()
             destinationTextField.delegate = self
+            destinationTextField.tintColor = SearchMapController.configuration.palette.primary
         }
     }
     @IBOutlet weak var destinationIndicator: UIView! {

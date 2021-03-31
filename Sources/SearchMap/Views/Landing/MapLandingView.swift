@@ -41,7 +41,12 @@ class MapLandingView: UIView {
         }
     }
 
-    @IBOutlet weak var searchImage: UIImageView!
+    @IBOutlet weak var searchImage: UIImageView!  {
+        didSet {
+            searchImage.tintColor = SearchMapController.configuration.palette.primary
+        }
+    }
+
     weak var delegate: MapLandingViewDelegate?
     
     @IBAction func search() {

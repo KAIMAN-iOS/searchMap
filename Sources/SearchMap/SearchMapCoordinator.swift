@@ -102,9 +102,9 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
 //            self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
 //        }
 //        self.router.navigationController.navigationBar.shadowImage = UIImage()
-//        searchNavigationController.navigationBar.barTintColor = conf.palette.background
-//        searchNavigationController.navigationBar.isTranslucent = false
-//        searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        searchNavigationController.navigationBar.barTintColor = conf.palette.background
+        searchNavigationController.navigationBar.isTranslucent = false
+        searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
     deinit {
