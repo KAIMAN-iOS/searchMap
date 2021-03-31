@@ -18,7 +18,8 @@ protocol SearchViewControllerDelegate: class {
 }
 
 class SearchViewController: UIViewController {
-    static func create(booking: inout CreateRide, searchDelegate: SearchViewControllerDelegate) -> SearchViewController {
+    static func create(booking: inout CreateRide,
+                       searchDelegate: SearchViewControllerDelegate) -> SearchViewController {
         let ctrl: SearchViewController =  UIStoryboard(name: "Map", bundle: .module).instantiateViewController(identifier: "SearchViewController") as! SearchViewController
         ctrl.booking = booking
         ctrl.searchDelegate = searchDelegate

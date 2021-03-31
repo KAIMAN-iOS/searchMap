@@ -8,9 +8,11 @@
 import UIKit
 import FontExtension
 import LabelExtension
+import ActionButton
+import CoreLocation.CLPlacemark
 
-protocol MapLandingViewDelegate: class {
-    func search(animated: Bool )
+protocol MapLandingViewDelegate: NSObjectProtocol {
+    func search(animated: Bool)
 }
 
 class MapLandingView: UIView {
@@ -46,8 +48,17 @@ class MapLandingView: UIView {
             searchImage.tintColor = SearchMapController.configuration.palette.primary
         }
     }
-
+    @IBOutlet weak var confirmButton: ActionButton!  {
+        didSet {
+            confirmButton.actionButtonType = .confirmation
+            confirmButton.setTitle("confirm".bundleLocale(), for: .normal)
+        }
+    }
     weak var delegate: MapLandingViewDelegate?
+    
+    func updateAddress(with placemark: CLPlacemark) {
+        selectDestinationLabel.set(text: placemark.formattedAddress, for: .body, textColor: SearchMapController.configuration.palette.secondaryTexts)
+    }
     
     @IBAction func search() {
         delegate?.search(animated: true)

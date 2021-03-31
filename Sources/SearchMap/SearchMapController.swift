@@ -167,6 +167,7 @@ public final class SearchMapController: UIViewController {
         }
     }
     
+    var userAddress: Address?
     func startLocationUpdates() {
         let serviceOptions = GPSLocationOptions()
         serviceOptions.subscription = .continous // continous updated until you stop it
@@ -182,12 +183,12 @@ public final class SearchMapController: UIViewController {
                 case .success(let newData):
                     self.geocoder.cancelGeocode()
                     self.geocoder.reverseGeocodeLocation(newData.coordinate.asLocation) { [weak self] (placemarks, error) in
-                        guard let self = self, let placemark = placemarks?.first else { return }
-                        if let userAnno = self.map.annotations.compactMap({ $0 as? UserAnnotation }).first {
-                            userAnno.coordinate = newData.coordinate
-                        } else {
-                            self.map.addAnnotation(UserAnnotation(placemark: placemark))
-                            self.map.setCenter(newData.coordinate, animated: true)
+                        guard let self = self,
+                              let placemark = placemarks?.first,
+                              let landing = self.cardContainer.subViews(type: MapLandingView.self).first else { return }
+                        landing.updateAddress(with: placemark)
+                        if let coord = placemark.location?.coordinate {
+                            self.userAddress = Address(name: placemark.name, address: placemark.formattedAddress, coordinates: coord)
                         }
                     }
                     
@@ -323,6 +324,7 @@ public final class SearchMapController: UIViewController {
         guard cardContainer.subviews.first as? MapLandingView == nil else { return }
         guard let view: MapLandingView = Bundle.module.loadNibNamed("MapLandingView", owner: nil)?.first as? MapLandingView else { return }
         view.delegate = self
+        view.confirmButton.isHidden = mode == .driver
         backOptionsButton.isHidden = true
         addViewToCard(view)
         bookingTopView.isHidden = true
@@ -363,7 +365,7 @@ public final class SearchMapController: UIViewController {
     }
     
     @IBAction func showSearchController() {
-        search(animated: true)
+        coordinatorDelegate?.showSearch(&bookingWrapper, animated: true)
     }
     
     @IBAction func showMenu() {
@@ -398,6 +400,9 @@ class UserAnnotation: NSObject, MKAnnotation {
 
 extension SearchMapController: MapLandingViewDelegate {
     func search(animated: Bool ) {
+        if let adr = userAddress {
+            bookingWrapper.fromAddress = adr
+        }
         coordinatorDelegate?.showSearch(&bookingWrapper, animated: animated)
     }
 }
