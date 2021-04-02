@@ -165,11 +165,11 @@ class ChoosePassengerOptionsView: UIView {
 extension ChoosePassengerOptionsView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         enableNextButton()
-        var passenger: Passenger = booking.passenger ?? Passenger()
+        let passenger: BasePassenger = booking.passenger ?? BasePassenger.default
         if textField === nameTextfield.textfield {
             passenger.lastname = textField.text ?? ""
         } else if textField === phoneTextfield.textfield {
-            passenger.phone = textField.text ?? ""
+            passenger.phoneNumber = textField.text ?? ""
         }
         booking.passenger = passenger
     }

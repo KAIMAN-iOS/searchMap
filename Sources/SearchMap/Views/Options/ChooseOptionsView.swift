@@ -177,9 +177,9 @@ class ChooseOptionsView: UIView {
     
     @objc func stepperChanged(_ stepper: ATAStepper) {
         if stepper === passengerStepper {
-            booking.numberOfPassengers = Int(stepper.value)
+            booking.ride.numberOfPassengers = Int(stepper.value)
         } else if stepper === luggagesStepper {
-            booking.numberOfLuggages = Int(stepper.value)
+            booking.ride.numberOfLuggages = Int(stepper.value)
         }
     }
 }

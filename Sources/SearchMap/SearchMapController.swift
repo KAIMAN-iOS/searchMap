@@ -28,15 +28,25 @@ public final class SearchMapController: UIViewController {
         return UIStoryboard(name: "Map", bundle: .module).instantiateInitialViewController() as! SearchMapController
     }
     
-    enum State {
+    public enum State {
         case search
         case bookingReady
         case shareWithGroup
+        case lookingForDriver
+        case rideStarted
+        case rideEnded
         
         var backgroudColor: UIColor {
             switch self {
             case .search: return SearchMapController.configuration.palette.background
-            case .bookingReady, .shareWithGroup: return SearchMapController.configuration.palette.background
+            default: return SearchMapController.configuration.palette.background
+            }
+        }
+        
+        var showBackButton: Bool {
+            switch self {
+            case .bookingReady, .shareWithGroup: return true
+            default: return false
             }
         }
     }
@@ -44,7 +54,7 @@ public final class SearchMapController: UIViewController {
         didSet {
             switch state {
             case .search: loadSearchCard()
-            case .bookingReady, .shareWithGroup: ()
+            default: ()
             }
             card.backgroundColor = state.backgroudColor
             cardContainer.backgroundColor = .clear
@@ -205,21 +215,21 @@ public final class SearchMapController: UIViewController {
     
     func handleObservers() {        
         originObserver?.invalidate()
-        originObserver = bookingWrapper.observe(\.fromAddress, changeHandler: { [weak self] (booking, change) in
+        originObserver = bookingWrapper.ride.observe(\.fromAddress, changeHandler: { [weak self] (booking, change) in
             self?.handleBookingCard()
         })
         destinationObserver?.invalidate()
-        destinationObserver = bookingWrapper.observe(\.toAddress, changeHandler: { [weak self] (booking, change) in
+        destinationObserver = bookingWrapper.ride.observe(\.toAddress, changeHandler: { [weak self] (booking, change) in
             self?.handleBookingCard()
         })
     }
     
     func handleBookingCard() {
         defer {
-            if bookingWrapper.fromAddress != nil && bookingWrapper.toAddress != nil {
+            if bookingWrapper.ride.fromAddress != nil && bookingWrapper.ride.toAddress != nil {
                 RideDirectionManager
                     .shared
-                    .loadDirections(for: bookingWrapper) { [weak self] ride, routes in
+                    .loadDirections(for: bookingWrapper.ride) { [weak self] ride, routes in
                         guard let self = self else { return }
                         let anno = self.searchMapDelegate.annotations(for: self.bookingWrapper)
                         if anno.count > 0 {
@@ -233,7 +243,7 @@ public final class SearchMapController: UIViewController {
                                 self.map.removeOverlays(self.map.overlays)
                                 self.map.addOverlay(overlay)
                                 self.map.setVisibleMapRect(route.polyline.boundingMapRect,
-                                                           edgePadding: UIEdgeInsets(top: self.bookingTopView.frame.maxY + 30,
+                                                           edgePadding: UIEdgeInsets(top: self.bookingTopView.frame.maxY,
                                                                                      left: self.locatioButton.frame.width + 20,
                                                                                      bottom: self.locatioButton.frame.height + 30,
                                                                                      right: 50),
@@ -243,7 +253,7 @@ public final class SearchMapController: UIViewController {
                     }
             }
         }
-        guard bookingWrapper.fromAddress != nil else {
+        guard bookingWrapper.ride.fromAddress != nil else {
             state = .search
             return
         }
@@ -311,10 +321,10 @@ public final class SearchMapController: UIViewController {
     }
     
     func configureTopView() {
-        guard bookingWrapper.fromAddress != nil else { return }
-        originLabel.set(text: bookingWrapper.fromAddress?.name, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
-        let noDestination = bookingWrapper.toAddress?.name?.isEmpty ?? true == true
-        destinationLabel.set(text: bookingWrapper.toAddress?.name ?? "no destination".bundleLocale(),
+        guard bookingWrapper.ride.fromAddress != nil else { return }
+        originLabel.set(text: bookingWrapper.ride.fromAddress?.name, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+        let noDestination = bookingWrapper.ride.toAddress?.name?.isEmpty ?? true == true
+        destinationLabel.set(text: bookingWrapper.ride.toAddress?.name ?? "no destination".bundleLocale(),
                              for: .body,
                              textColor: noDestination ? SearchMapController.configuration.palette.inactive : SearchMapController.configuration.palette.mainTexts)
     }
@@ -336,6 +346,19 @@ public final class SearchMapController: UIViewController {
         view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    // for passenger purposes...
+    public func update(state: State, with card: UIView) {
+        self.state = state
+        addViewToCard(card)
+        backOptionsButton.isHidden = !state.showBackButton
+        bookingTopView.isHidden = true
+    }
+    // when ride is done
+    public func resetState() {
+        state = .search
+        loadSearchCard()
     }
     
     let locationManager = CLLocationManager()
@@ -401,7 +424,7 @@ class UserAnnotation: NSObject, MKAnnotation {
 extension SearchMapController: MapLandingViewDelegate {
     func search(animated: Bool ) {
         if let adr = userAddress {
-            bookingWrapper.fromAddress = adr
+            bookingWrapper.ride.fromAddress = adr
         }
         coordinatorDelegate?.showSearch(&bookingWrapper, animated: animated)
     }
@@ -466,7 +489,7 @@ extension SearchMapController: MKMapViewDelegate {
         guard let view = view as? UserAnnotationView, mode != .driver else { return }
         // push the search view with departure selected
         map.deselectAnnotation(view.annotation, animated: false)
-        bookingWrapper.fromAddress = view.placemark
+        bookingWrapper.ride.fromAddress = view.placemark
         search(animated: true)
     }
     

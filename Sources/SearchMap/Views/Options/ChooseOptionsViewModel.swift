@@ -54,7 +54,7 @@ class ChooseOptionsViewModel {
         sections.removeAll()
         snap.appendSections([.main])
         let cellOptions = options.compactMap { option -> CellType in
-            CellType(option: option, isSelected: book.vehicleOptions.contains(where: { $0.rawValue == option.rawValue }))
+            CellType(option: option, isSelected: book.options.vehicleOptions.contains(where: { $0.rawValue == option.rawValue }))
         }
         snap.appendItems(cellOptions, toSection: .main)
         // add items here
@@ -72,9 +72,9 @@ class ChooseOptionsViewModel {
     func select(at indexPath: IndexPath) {
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
         if item.isSelected {
-            book.vehicleOptions.removeAll(where: { $0.rawValue == item.option.rawValue })
+            book.options.vehicleOptions.removeAll(where: { $0.rawValue == item.option.rawValue })
         } else {
-            book.vehicleOptions.append(item.option)
+            book.options.vehicleOptions.append(item.option)
         }
         applySnapshot(in: dataSource)
     }

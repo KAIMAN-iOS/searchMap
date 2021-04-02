@@ -122,7 +122,7 @@ extension ChooseVehicleOptionsView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView === vehicleTypeCollectionView {
             vehicleTypeViewModel.select(at: indexPath)
-            booking.vehicleType = vehicleTypeViewModel.selectedType()
+            booking.options.vehicleType = vehicleTypeViewModel.selectedType()
         } else if collectionView === vehicleOptionCollectionView {
             vehicleOptionsViewModel.select(at: indexPath)
         }

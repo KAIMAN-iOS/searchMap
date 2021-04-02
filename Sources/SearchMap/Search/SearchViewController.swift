@@ -156,14 +156,15 @@ class SearchViewController: UIViewController {
     
     @IBAction func showMap() {
         guard let searchType = searchType else { return }
-        searchDelegate?.showMapPicker(for: searchType, coordinates: searchType == .origin ? booking.fromAddress?.asCoordinates2D : booking.toAddress?.asCoordinates2D)
+        searchDelegate?.showMapPicker(for: searchType,
+                                      coordinates: searchType == .origin ? booking.ride.fromAddress?.asCoordinates2D : booking.ride.toAddress?.asCoordinates2D)
     }
     
     func didChoose(_ placemark: CLPlacemark) {
         guard let searchType = searchType else { return }
         switch searchType {
-        case .origin: booking.fromAddress = placemark.asPlacemark
-        case .destination: booking.toAddress = placemark.asPlacemark
+        case .origin: booking.ride.fromAddress = placemark.asPlacemark
+        case .destination: booking.ride.toAddress = placemark.asPlacemark
         }
     }
     
@@ -178,7 +179,7 @@ class SearchViewController: UIViewController {
         handleKeyboard()
         handleTableView()
         DispatchQueue.main.async { [weak self] in
-            if self?.booking.fromAddress != nil {
+            if self?.booking.ride.fromAddress != nil {
                 self?.destinationTextField.becomeFirstResponder()
             } else {
                 self?.originTextField.becomeFirstResponder()
@@ -193,17 +194,17 @@ class SearchViewController: UIViewController {
     }
     
     func handleObservers() {
-        originTextField.text = booking.fromAddress?.address
-        destinationTextField.text = booking.toAddress?.address
+        originTextField.text = booking.ride.fromAddress?.address
+        destinationTextField.text = booking.ride.toAddress?.address
         
         originObserver?.invalidate()
-        originObserver = booking.observe(\.fromAddress, changeHandler: { [weak self] (booking, change) in
+        originObserver = booking.ride.observe(\.fromAddress, changeHandler: { [weak self] (booking, change) in
             self?.handleValidateButton()
             guard let origin = booking.fromAddress else { return }
             self?.originTextField.text = origin.address
         })
         destinationObserver?.invalidate()
-        destinationObserver = booking.observe(\.toAddress, changeHandler: { [weak self] (booking, change) in
+        destinationObserver = booking.ride.observe(\.toAddress, changeHandler: { [weak self] (booking, change) in
             self?.handleValidateButton()
             guard let destination = booking.toAddress else { return }
             self?.destinationTextField.text = destination.address
@@ -223,7 +224,7 @@ class SearchViewController: UIViewController {
     }
     
     func handleValidateButton() {
-        validateContainer.isHidden = booking.fromAddress == nil
+        validateContainer.isHidden = booking.ride.fromAddress == nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -263,16 +264,16 @@ class SearchViewController: UIViewController {
     func clearBooking() {
         guard let searchType = searchType else { return }
         switch searchType {
-        case .origin: booking.fromAddress = nil
-        case .destination: booking.toAddress = nil
+        case .origin: booking.ride.fromAddress = nil
+        case .destination: booking.ride.toAddress = nil
         }
     }
     
     func updateBooking(_ place: Placemark) {
         guard let searchType = searchType else { return }
         switch searchType {
-        case .origin: booking.fromAddress = place
-        case .destination: booking.toAddress = place
+        case .origin: booking.ride.fromAddress = place
+        case .destination: booking.ride.toAddress = place
         }
     }
 }
@@ -292,7 +293,7 @@ extension SearchViewController: UITableViewDelegate {
         guard let place = viewModel.placemark(at: indexPath) else { return }
         updateBooking(place)
         
-        if searchType == .origin && booking.toAddress == nil {
+        if searchType == .origin && booking.ride.toAddress == nil {
             destinationTextField.becomeFirstResponder()
             searchType = .destination
             refresh()
