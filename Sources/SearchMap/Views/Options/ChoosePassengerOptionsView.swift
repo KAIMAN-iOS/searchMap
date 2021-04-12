@@ -104,11 +104,16 @@ class ChoosePassengerOptionsView: UIView {
     var booking: CreateRide!
     
     func configure(options configurationOptions: OptionConfiguration,
-                   booking: inout CreateRide) {
+                   booking: inout CreateRide,
+                   passenger: BasePassenger? = nil) {
         self.booking = booking
         secondaryButton.isHidden = mode == .passenger
         enableNextButton()
         mainButton.setTitle((mode == .driver ? "save for me" : "book").bundleLocale(), for: .normal)
+        if let passenger = passenger {
+            nameTextfield.textfield.set(text: passenger.fullname, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+            phoneTextfield.textfield.set(text: passenger.phoneNumber, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+        }
     }
     
     func enableNextButton() {

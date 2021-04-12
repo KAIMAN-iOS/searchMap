@@ -76,6 +76,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
                 vehicleTypes: [VehicleType],
                 vehicleOptions: [VehicleOption],
                 groups: [Group] = [],
+                passenger: BasePassenger? = nil,
                 configurationOptions: OptionConfiguration = OptionConfiguration.default) {
         var moduleRouter = router
         if moduleRouter == nil {
@@ -87,6 +88,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self, conf: conf)
         searchMapController.coordinatorDelegate = self
         searchMapController.mode = mode
+        searchMapController.passenger = passenger
         searchMapController.availableOptions = vehicleOptions
         searchMapController.searchMapDelegate = searchMapDelegate
         searchMapController.vehicles = vehicleTypes

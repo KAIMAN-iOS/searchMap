@@ -21,6 +21,7 @@ import ATAGroup
 import ATACommonObjects
 
 public final class SearchMapController: UIViewController {
+    var passenger: BasePassenger?
     var mode: DisplayMode = .driver
     var configurationOptions: OptionConfiguration!
     static var configuration: ATAConfiguration!
@@ -309,7 +310,7 @@ public final class SearchMapController: UIViewController {
         view.mode = mode
         view.searchMapDelegate = delegate
         addViewToCard(view)
-        view.configure(options: configurationOptions, booking: &bookingWrapper)
+        view.configure(options: configurationOptions, booking: &bookingWrapper, passenger: passenger)
     }
     
     func loadCard(for state: OptionState) {
