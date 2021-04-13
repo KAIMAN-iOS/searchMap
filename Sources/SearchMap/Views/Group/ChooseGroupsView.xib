@@ -16,13 +16,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="UoS-h0-PZu">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="355"/>
+                    <rect key="frame" x="22" y="14" width="370" height="341"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZp-bl-vmj">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="33.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="370" height="25"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOW-XX-fmE">
-                                    <rect key="frame" x="0.0" y="0.0" width="28" height="33.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="28" height="25"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
@@ -32,7 +32,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" text="Choose your options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXX-FV-lt6">
-                                    <rect key="frame" x="28" y="0.0" width="386" height="33.5"/>
+                                    <rect key="frame" x="28" y="0.0" width="342" height="25"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
                             </subviews>
                         </stackView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="pWN-fs-lE7">
-                            <rect key="frame" x="0.0" y="42.5" width="414" height="250"/>
+                            <rect key="frame" x="0.0" y="34" width="370" height="250"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="250" id="bhW-0g-7j6"/>
@@ -53,7 +53,7 @@
                             </collectionViewFlowLayout>
                         </collectionView>
                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oub-zI-fc0" customClass="ActionButton" customModule="ActionButton">
-                            <rect key="frame" x="0.0" y="301.5" width="414" height="53.5"/>
+                            <rect key="frame" x="0.0" y="293" width="370" height="48"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="1YA-Rc-gbY"/>
@@ -72,9 +72,9 @@
             <viewLayoutGuide key="safeArea" id="sa1-Ic-veC"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="UoS-h0-PZu" firstAttribute="trailing" secondItem="sa1-Ic-veC" secondAttribute="trailing" id="ad0-6m-gZK"/>
-                <constraint firstItem="UoS-h0-PZu" firstAttribute="top" secondItem="iA7-gd-VWi" secondAttribute="top" id="af6-fN-Yzh"/>
-                <constraint firstItem="UoS-h0-PZu" firstAttribute="leading" secondItem="sa1-Ic-veC" secondAttribute="leading" id="ck3-P0-xJf"/>
+                <constraint firstItem="UoS-h0-PZu" firstAttribute="trailing" secondItem="sa1-Ic-veC" secondAttribute="trailing" constant="-22" id="ad0-6m-gZK"/>
+                <constraint firstItem="UoS-h0-PZu" firstAttribute="top" secondItem="iA7-gd-VWi" secondAttribute="top" constant="14" id="af6-fN-Yzh"/>
+                <constraint firstItem="UoS-h0-PZu" firstAttribute="leading" secondItem="sa1-Ic-veC" secondAttribute="leading" constant="22" id="ck3-P0-xJf"/>
                 <constraint firstItem="sa1-Ic-veC" firstAttribute="bottom" secondItem="UoS-h0-PZu" secondAttribute="bottom" id="ezb-yd-OmT"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -94,7 +94,7 @@
     <resources>
         <image name="back" width="18" height="32.5"/>
         <namedColor name="backgroundColor">
-            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="selectedButtonColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

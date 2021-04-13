@@ -17,33 +17,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="5fx-Ou-rWA">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="383"/>
+                    <rect key="frame" x="22" y="14" width="370" height="369"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" text="Choose your options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yv0-Ll-dGj">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="33.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="370" height="33.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Gww-9P-A7x">
-                            <rect key="frame" x="0.0" y="45.5" width="414" height="217.5"/>
+                            <rect key="frame" x="0.0" y="45.5" width="370" height="203.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Info passager" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cf0-1T-A8x">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="13.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="370" height="0.0"/>
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" ambiguous="YES" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="jlR-ec-iB0" customClass="BorderedTextField" customModule="ATAViews">
-                                    <rect key="frame" x="0.0" y="21.5" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="8" width="370" height="49.5"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <view contentMode="scaleToFill" ambiguous="YES" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="nD7-n1-rqN" customClass="BorderedTextField" customModule="ATAViews">
-                                    <rect key="frame" x="0.0" y="79.5" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="65.5" width="370" height="50"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xC4-oW-j1u" customClass="GrowingTextView" customModule="GrowingTextView">
-                                    <rect key="frame" x="0.0" y="137.5" width="414" height="80"/>
+                                    <rect key="frame" x="0.0" y="123.5" width="370" height="80"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="80" id="LAg-RJ-1Ml"/>
@@ -56,7 +56,7 @@
                             </subviews>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tde-jg-Oaj" customClass="ActionButton" customModule="ActionButton">
-                            <rect key="frame" x="0.0" y="275" width="414" height="48"/>
+                            <rect key="frame" x="0.0" y="261" width="370" height="48"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Ere-Pc-TM8"/>
@@ -70,7 +70,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4t-WL-YPR" customClass="ActionButton" customModule="ActionButton">
-                            <rect key="frame" x="0.0" y="335" width="414" height="48"/>
+                            <rect key="frame" x="0.0" y="321" width="370" height="48"/>
                             <color key="backgroundColor" name="backgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="Wze-xh-eyK"/>
@@ -89,9 +89,9 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5fx-Ou-rWA" secondAttribute="trailing" id="0vn-ZV-cWd"/>
-                <constraint firstItem="5fx-Ou-rWA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="okh-rL-Yau"/>
-                <constraint firstItem="5fx-Ou-rWA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qaa-Tn-Vm9"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="5fx-Ou-rWA" secondAttribute="trailing" constant="22" id="0vn-ZV-cWd"/>
+                <constraint firstItem="5fx-Ou-rWA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="okh-rL-Yau"/>
+                <constraint firstItem="5fx-Ou-rWA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="22" id="qaa-Tn-Vm9"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="5fx-Ou-rWA" secondAttribute="bottom" id="zm8-s3-Sze"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -124,7 +124,7 @@
     </designables>
     <resources>
         <namedColor name="backgroundColor">
-            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="selectedButtonColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
