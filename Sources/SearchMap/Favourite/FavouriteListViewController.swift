@@ -9,10 +9,17 @@ import UIKit
 import ATAConfiguration
 
 class FavouriteListViewController: UIViewController {
+    var mode: DisplayMode = .driver
+    weak var favDelegate: FavouriteDelegate!  {
+        didSet {
+            viewModel.favDelegate = favDelegate
+        }
+    }
     static var configuration: ATAConfiguration!
-    static func create(conf: ATAConfiguration) -> FavouriteListViewController {
+    static func create(conf: ATAConfiguration, favDelegate: FavouriteDelegate) -> FavouriteListViewController {
         FavouriteListViewController.configuration = conf
         let ctrl: FavouriteListViewController =  UIStoryboard(name: "Favourite", bundle: .module).instantiateViewController(identifier: "FavouriteListViewController") as! FavouriteListViewController
+        ctrl.favDelegate = favDelegate
         return ctrl
     }
     @IBOutlet weak var tableView: UITableView!  {
@@ -30,20 +37,17 @@ class FavouriteListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewDidLoad() {
+        hideBackButtonText = true
         super.viewDidLoad()
-        view.backgroundColor = .white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewFavourite))
+//        navigationController?.navigationBar.prefersLargeTitles = true
+        viewModel.displayMode = mode
+//        view.backgroundColor = .white
         title = "My Favourites".bundleLocale()
-        navigationController?.navigationBar.prefersLargeTitles = true
         handleTableView()
-        if #available(iOS 14.0, *) {
-            self.navigationItem.backButtonDisplayMode = .minimal
-        } else {
-            navigationItem.backButtonTitle = ""
-        }
     }
     
     lazy var datasource = viewModel.dataSource(for: tableView)
@@ -51,12 +55,12 @@ class FavouriteListViewController: UIViewController {
         tableView.dataSource = datasource
         tableView.delegate = self
         FavouriteViewModel.shared.refreshDelegate = self
-        viewModel.applySnapshot(in: datasource)
+        viewModel.applySnapshot(in: datasource, animatingDifferences: false)
     }
 }
 
 extension FavouriteListViewController: RefreshFavouritesDelegate {
-    func refresh() {
+    func refresh(force: Bool) {
         viewModel.applySnapshot(in: datasource)
     }
 }

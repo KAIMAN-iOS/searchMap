@@ -20,26 +20,64 @@ class PlacemarkCell: UITableViewCell {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var address: UILabel!
-    @IBOutlet weak var favButton: FavoriteButton!
+    @IBOutlet weak var favButton: FavoriteButton!  {
+        didSet {
+            favButton.addTarget(self, action: #selector(favStateChanged), for: .touchUpInside)
+        }
+    }
+    weak var refreshDelegate: RefreshFavouritesDelegate?
+    weak var favDelegate: FavouriteDelegate!
+    @objc func favStateChanged() {
+        guard let placemark = placemark.placemark else { return }
+        var forceSearch = true
+        if case PlacemarkCellType.search(placemark) = self.placemark! {
+            forceSearch = false
+        }
+        if favButton.isSelected {
+            favDelegate
+                .didDeleteFavourite(placemark)
+                .done { [weak self] success in
+                    if success {
+                        self?.favButton.handleState()
+                        self?.refreshDelegate?.refresh(force: forceSearch)
+                    }
+                }
+                .catch({ _ in })
+        } else {
+            favDelegate
+                .didAddFavourite(placemark)
+                .done { [weak self] success in
+                    if success {
+                        self?.favButton.handleState()
+                        self?.refreshDelegate?.refresh(force: forceSearch)
+                    }
+                }
+                .catch({ _ in })
+        }
+    }
     
-    func configure(_ model: PlacemarkCellType) {
+    var placemark: PlacemarkCellType!
+    func configure(_ model: PlacemarkCellType, displayMode: DisplayMode) {
+        favButton.isHidden = displayMode != .passenger
+        placemark = model
         switch model {
         case .specificFavourite(let type, let place): configure(type, place: place)
-        case .favourite(let place): configure(place)
+        case .favourite(let place): configure(place, favButtonSelected: true)
         case .history(let place): configure(place, iconTintColor: FavouriteListViewController.configuration.palette.inactive)
         case .search(let place): configure(place)
         }
     }
     
-    
     func configure(_ favType: FavouriteType, place placemark: Placemark?) {
+        favButton.isSelected = true
         icon.backgroundColor = #colorLiteral(red: 0.889537096, green: 0.9146017432, blue: 0.9526402354, alpha: 1)
         address.isHidden = true
         name.set(text: placemark?.name ?? favType.name, for: .body, textColor: placemark == nil ? FavouriteListViewController.configuration.palette.inactive : FavouriteListViewController.configuration.palette.mainTexts)
         icon.image = favType.icon
     }
     
-    func configure(_ placemark: Placemark, iconTintColor: UIColor = FavouriteListViewController.configuration.palette.primary) {
+    func configure(_ placemark: Placemark, favButtonSelected: Bool = false, iconTintColor: UIColor = FavouriteListViewController.configuration.palette.primary) {
+        favButton.isSelected = favButtonSelected
         icon.backgroundColor = .clear
         icon.tintColor = iconTintColor
         icon.image = UIImage(named: "historyItem", in: .module, with: nil)

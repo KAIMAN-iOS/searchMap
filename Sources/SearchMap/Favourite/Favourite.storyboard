@@ -16,12 +16,12 @@
             <objects>
                 <viewController storyboardIdentifier="FavouriteListViewController" id="GD6-8O-6S2" customClass="FavouriteListViewController" customModule="SearchMap" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MCu-ud-SGX">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="x4u-bd-gJY">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
-                                <color key="backgroundColor" name="lightGrayColor"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" name="background"/>
                                 <color key="separatorColor" name="lightGrayColor"/>
                                 <inset key="separatorInset" minX="63" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
@@ -32,19 +32,17 @@
                             <constraint firstAttribute="bottom" secondItem="x4u-bd-gJY" secondAttribute="bottom" id="Yn8-b2-hHu"/>
                             <constraint firstItem="x4u-bd-gJY" firstAttribute="trailing" secondItem="Tb5-2W-Tjc" secondAttribute="trailing" id="luf-1q-5A6"/>
                             <constraint firstItem="x4u-bd-gJY" firstAttribute="leading" secondItem="Tb5-2W-Tjc" secondAttribute="leading" id="swu-XN-5Lk"/>
-                            <constraint firstItem="x4u-bd-gJY" firstAttribute="top" secondItem="Tb5-2W-Tjc" secondAttribute="top" id="xxx-al-Jw2"/>
+                            <constraint firstItem="x4u-bd-gJY" firstAttribute="top" secondItem="MCu-ud-SGX" secondAttribute="top" id="xxx-al-Jw2"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="TXZ-DW-Ubi">
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="TXZ-DW-Ubi">
                         <barButtonItem key="rightBarButtonItem" title="add" image="plus" catalog="system" id="OUC-aV-Xv3">
-                            <color key="tintColor" name="selectedTitleColor"/>
                             <connections>
                                 <action selector="addNewFavourite" destination="GD6-8O-6S2" id="aFm-qZ-6IX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="x4u-bd-gJY" id="nzN-PT-OSF"/>
@@ -59,62 +57,71 @@
             <objects>
                 <viewController storyboardIdentifier="FavouriteEditViewController" id="3Qx-CS-v5O" customClass="FavouriteEditViewController" customModule="SearchMap" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7IY-Ub-G4F">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDa-8O-7Yr">
-                                <rect key="frame" x="0.0" y="8" width="414" height="329"/>
+                                <rect key="frame" x="0.0" y="52" width="414" height="265"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="398" placeholderIntrinsicHeight="50" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BOH-5F-E4g">
                                         <rect key="frame" x="20" y="8" width="374" height="50"/>
                                     </stackView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3gX-I4-dos" customClass="AkiraTextField" customModule="TextFieldEffects">
-                                        <rect key="frame" x="20" y="78" width="374" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="ged-ZH-b7b"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1OY-8L-BdH" customClass="AkiraTextField" customModule="TextFieldEffects">
-                                        <rect key="frame" x="20" y="174" width="374" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="8FT-8w-MYo"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Say-qx-Idd" customClass="ActionButton" customModule="ActionButton">
-                                        <rect key="frame" x="20" y="257" width="197" height="52"/>
-                                        <color key="backgroundColor" name="backgroundColor"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="contentEdgeInsets" minX="30" minY="15" maxX="30" maxY="15"/>
-                                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="PICK ON MAP" image="map"/>
-                                        <connections>
-                                            <action selector="showMap" destination="3Qx-CS-v5O" eventType="touchUpInside" id="ssh-5V-N8j"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="MW6-wI-7Bz">
+                                        <rect key="frame" x="20" y="78" width="374" height="166"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="5Zm-df-sD5" customClass="ATATextField" customModule="ATAViews">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="50" translatesAutoresizingMaskIntoConstraints="NO" id="xHr-kf-V6l" customClass="ATATextField" customModule="ATAViews">
+                                                <rect key="frame" x="0.0" y="58" width="374" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X1e-58-kjt">
+                                                <rect key="frame" x="0.0" y="116" width="374" height="50"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Say-qx-Idd" customClass="ActionButton" customModule="ActionButton">
+                                                        <rect key="frame" x="0.0" y="0.0" width="196.5" height="50"/>
+                                                        <color key="backgroundColor" name="backgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="hfG-6m-OZI"/>
+                                                        </constraints>
+                                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <inset key="contentEdgeInsets" minX="30" minY="15" maxX="30" maxY="15"/>
+                                                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="PICK ON MAP" image="map"/>
+                                                        <connections>
+                                                            <action selector="showMap" destination="3Qx-CS-v5O" eventType="touchUpInside" id="ssh-5V-N8j"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="Say-qx-Idd" secondAttribute="bottom" id="9Cb-sC-Ngf"/>
+                                                    <constraint firstItem="Say-qx-Idd" firstAttribute="leading" secondItem="X1e-58-kjt" secondAttribute="leading" id="SeP-le-1vd"/>
+                                                    <constraint firstItem="Say-qx-Idd" firstAttribute="top" secondItem="X1e-58-kjt" secondAttribute="top" id="jRP-Wq-w4n"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="1OY-8L-BdH" firstAttribute="leading" secondItem="3gX-I4-dos" secondAttribute="leading" id="5uT-yH-B55"/>
-                                    <constraint firstItem="3gX-I4-dos" firstAttribute="leading" secondItem="BOH-5F-E4g" secondAttribute="leading" id="Abf-Qk-58V"/>
-                                    <constraint firstItem="3gX-I4-dos" firstAttribute="top" secondItem="BOH-5F-E4g" secondAttribute="bottom" constant="20" id="Aix-25-zVD"/>
                                     <constraint firstItem="BOH-5F-E4g" firstAttribute="top" secondItem="mDa-8O-7Yr" secondAttribute="top" constant="8" id="G36-T6-hUB"/>
-                                    <constraint firstItem="1OY-8L-BdH" firstAttribute="trailing" secondItem="3gX-I4-dos" secondAttribute="trailing" id="Jbq-ya-Ow2"/>
-                                    <constraint firstItem="Say-qx-Idd" firstAttribute="leading" secondItem="1OY-8L-BdH" secondAttribute="leading" id="TMl-UY-Uwt"/>
-                                    <constraint firstAttribute="bottom" secondItem="Say-qx-Idd" secondAttribute="bottom" constant="20" symbolic="YES" id="Vp9-Rj-aPo"/>
+                                    <constraint firstItem="MW6-wI-7Bz" firstAttribute="top" secondItem="BOH-5F-E4g" secondAttribute="bottom" constant="20" id="JFa-Ou-q4L"/>
+                                    <constraint firstAttribute="bottom" secondItem="MW6-wI-7Bz" secondAttribute="bottom" constant="21" id="Rcg-8p-hZK"/>
                                     <constraint firstItem="BOH-5F-E4g" firstAttribute="leading" secondItem="mDa-8O-7Yr" secondAttribute="leading" constant="20" id="ZCG-sJ-Xw1"/>
                                     <constraint firstAttribute="trailing" secondItem="BOH-5F-E4g" secondAttribute="trailing" constant="20" id="ag5-HO-dPj"/>
-                                    <constraint firstItem="3gX-I4-dos" firstAttribute="trailing" secondItem="BOH-5F-E4g" secondAttribute="trailing" id="fRs-uE-XU6"/>
-                                    <constraint firstItem="Say-qx-Idd" firstAttribute="top" secondItem="1OY-8L-BdH" secondAttribute="bottom" constant="23" id="gJC-5T-w89"/>
-                                    <constraint firstItem="1OY-8L-BdH" firstAttribute="top" secondItem="3gX-I4-dos" secondAttribute="bottom" constant="36" id="gcR-EJ-6TT"/>
+                                    <constraint firstAttribute="trailing" secondItem="MW6-wI-7Bz" secondAttribute="trailing" constant="20" symbolic="YES" id="bHb-sw-oIM"/>
+                                    <constraint firstItem="MW6-wI-7Bz" firstAttribute="leading" secondItem="mDa-8O-7Yr" secondAttribute="leading" constant="20" symbolic="YES" id="iOa-Qx-D71"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ycd-Xq-s10" customClass="ActionButton" customModule="ActionButton">
-                                <rect key="frame" x="20" y="722" width="374" height="52"/>
+                                <rect key="frame" x="20" y="810" width="374" height="52"/>
                                 <color key="backgroundColor" name="backgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="52" id="1n9-Ks-xmk"/>
+                                </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="contentEdgeInsets" minX="30" minY="15" maxX="30" maxY="15"/>
                                 <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -125,7 +132,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5M6-vd-PNA"/>
-                        <color key="backgroundColor" name="lightGrayColor"/>
+                        <color key="backgroundColor" name="background"/>
                         <constraints>
                             <constraint firstItem="mDa-8O-7Yr" firstAttribute="top" secondItem="5M6-vd-PNA" secondAttribute="top" constant="8" id="28t-jR-W7N"/>
                             <constraint firstItem="mDa-8O-7Yr" firstAttribute="trailing" secondItem="5M6-vd-PNA" secondAttribute="trailing" id="DTN-G0-Kmu"/>
@@ -135,10 +142,9 @@
                             <constraint firstItem="Ycd-Xq-s10" firstAttribute="bottom" secondItem="5M6-vd-PNA" secondAttribute="bottom" id="aR2-rM-EQg"/>
                         </constraints>
                     </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
-                        <outlet property="address" destination="1OY-8L-BdH" id="fJQ-E3-Ucv"/>
-                        <outlet property="name" destination="3gX-I4-dos" id="vzK-6W-Lej"/>
+                        <outlet property="address" destination="xHr-kf-V6l" id="b5s-tc-Ztj"/>
+                        <outlet property="name" destination="5Zm-df-sD5" id="nQk-a6-Qep"/>
                         <outlet property="pickMapButton" destination="Say-qx-Idd" id="xQO-Q4-4bZ"/>
                         <outlet property="saveButton" destination="Ycd-Xq-s10" id="wNa-Cw-4wH"/>
                         <outlet property="typeStackView" destination="BOH-5F-E4g" id="2DH-19-wxJ"/>
@@ -150,11 +156,8 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="1OY-8L-BdH">
-            <size key="intrinsicContentSize" width="5" height="22"/>
-        </designable>
-        <designable name="3gX-I4-dos">
-            <size key="intrinsicContentSize" width="5" height="22"/>
+        <designable name="5Zm-df-sD5">
+            <size key="intrinsicContentSize" width="374" height="50"/>
         </designable>
         <designable name="Say-qx-Idd">
             <size key="intrinsicContentSize" width="196.5" height="52"/>
@@ -162,18 +165,21 @@
         <designable name="Ycd-Xq-s10">
             <size key="intrinsicContentSize" width="163" height="52"/>
         </designable>
+        <designable name="xHr-kf-V6l">
+            <size key="intrinsicContentSize" width="374" height="50"/>
+        </designable>
     </designables>
     <resources>
         <image name="map" width="23.5" height="19.5"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <namedColor name="background">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="backgroundColor">
-            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightGrayColor">
             <color red="0.96899998188018799" green="0.97600001096725464" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="selectedTitleColor">
-            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

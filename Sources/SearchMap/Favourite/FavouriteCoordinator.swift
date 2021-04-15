@@ -8,11 +8,12 @@
 import UIKit
 import KCoordinatorKit
 import ATAConfiguration
+import PromiseKit
 
 public protocol FavouriteDelegate: class {
     func loadFavourites(completion: @escaping (([PlacemarkSection: [Placemark]]) -> Void))
-    func didAddFavourite(_: Placemark)
-    func didDeleteFavourite(_: Placemark)
+    func didAddFavourite(_: Placemark) -> Promise<Bool>
+    func didDeleteFavourite(_: Placemark) -> Promise<Bool>
 }
 
 public protocol FavouriteCoordinatorDelegate: class {
@@ -26,17 +27,15 @@ public class FavouriteCoordinator<DeepLink>: Coordinator<DeepLink> {
     var favouriteViewModel: FavouriteViewModel = FavouriteViewModel.shared
     var favListController: FavouriteListViewController
     public init(router: RouterType,
-                favDelegate: FavouriteDelegate? = nil,
+                favDelegate: FavouriteDelegate,
+                mode: DisplayMode = .driver,
                 coordinatorDelegate: FavouriteCoordinatorDelegate? = nil,
                 conf: ATAConfiguration) {
-        favListController = FavouriteListViewController.create(conf: conf)
+        favListController = FavouriteListViewController.create(conf: conf, favDelegate: favDelegate)
+        favListController.mode = mode
         super.init(router: router)
-        if let delegate = favDelegate  {
-            self.favouriteViewModel.favDelegate = delegate
-        } else if FavouriteViewModel.shared.favDelegate == nil {
-//            fatalError("FavouriteViewModel.shared.favDelegate has to be set in order to use FavouriteCoordinator")
-        }
-        self.favouriteViewModel.coordinatorDelegate = coordinatorDelegate ?? self
+        favouriteViewModel.favDelegate = favDelegate
+        favouriteViewModel.coordinatorDelegate = coordinatorDelegate ?? self
     }
     
     public override func toPresentable() -> UIViewController {

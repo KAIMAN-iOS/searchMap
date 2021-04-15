@@ -18,6 +18,13 @@ protocol SearchViewControllerDelegate: class {
 }
 
 class SearchViewController: UIViewController {
+    var mode: DisplayMode = .driver
+    weak var favDelegate: FavouriteDelegate?  {
+        didSet {
+            viewModel.favDelegate = favDelegate
+        }
+    }
+
     static func create(booking: inout CreateRide,
                        searchDelegate: SearchViewControllerDelegate) -> SearchViewController {
         let ctrl: SearchViewController =  UIStoryboard(name: "Map", bundle: .module).instantiateViewController(identifier: "SearchViewController") as! SearchViewController
@@ -137,6 +144,13 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
+        DispatchQueue.main.async { [weak self] in
+            if self?.booking.ride.fromAddress != nil {
+                self?.destinationTextField.becomeFirstResponder()
+            } else {
+                self?.originTextField.becomeFirstResponder()
+            }
+        }
     }
     
     var textFieldHasFocus: Bool = false  {
@@ -146,9 +160,9 @@ class SearchViewController: UIViewController {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(customView: mapButton)
                 
             case false:
-                if viewModel.items[.search] == nil {
-                    viewModel.clear(dataSource: datasource)
-                }
+//                if viewModel.items[.search] == nil {
+//                    viewModel.clear(dataSource: datasource)
+//                }
                 navigationItem.rightBarButtonItem = nil
             }
         }
@@ -171,6 +185,7 @@ class SearchViewController: UIViewController {
     lazy var datasource = viewModel.dataSource(for: tableView)
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.displayMode = mode
         view.backgroundColor = SearchMapController.configuration.palette.background
         tableView.backgroundColor = SearchMapController.configuration.palette.background
         hideBackButtonText = true
@@ -178,13 +193,6 @@ class SearchViewController: UIViewController {
         handleObservers()
         handleKeyboard()
         handleTableView()
-        DispatchQueue.main.async { [weak self] in
-            if self?.booking.ride.fromAddress != nil {
-                self?.destinationTextField.becomeFirstResponder()
-            } else {
-                self?.originTextField.becomeFirstResponder()
-            }
-        }
     }
     
     func handleTableView() {
@@ -233,6 +241,7 @@ class SearchViewController: UIViewController {
         card.addShadow(roundCorners: false, shadowColor: SearchMapController.configuration.palette.mainTexts.cgColor, shadowOffset: CGSize(width: 5, height: 5), shadowRadius: 5, shadowOpacity: 0.2, useMotionEffect: true)
     }
     
+    var search: MKLocalSearch!
     func performSearch() {
         guard let text = searchType == .origin ? originTextField.text : destinationTextField.text else {
             // clear TV
@@ -241,11 +250,11 @@ class SearchViewController: UIViewController {
         isLoading = true
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = text
-        request.resultTypes = [.pointOfInterest, .pointOfInterest]
+        request.resultTypes = [.pointOfInterest, .address]
         if let coord = userCoordinates {
             request.region = MKCoordinateRegion(center: coord, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
         }
-        let search = MKLocalSearch(request: request)
+        search = MKLocalSearch(request: request)
         search.start { response, _ in
             var items: [Placemark] = []
             defer {
@@ -279,11 +288,16 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: RefreshFavouritesDelegate {
-    func refresh() {
+    func refresh(force: Bool) {
         // reload only if there are no search
-        if viewModel.items[.search] == nil && textFieldHasFocus {
-            viewModel.applyPendingSnapshot(in: datasource)
+        if (viewModel.items[.search] == nil && textFieldHasFocus) || force {
+            reload()
         }
+    }
+    
+    func reload() {
+        viewModel.reload()
+        viewModel.applyPendingSnapshot(in: datasource)
     }
 }
 
@@ -296,7 +310,7 @@ extension SearchViewController: UITableViewDelegate {
         if searchType == .origin && booking.ride.toAddress == nil {
             destinationTextField.becomeFirstResponder()
             searchType = .destination
-            refresh()
+            refresh(force: false)
         } else {
             view.endEditing(true)
         }
@@ -319,14 +333,23 @@ extension SearchViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // reset booking since user typed
         clearBooking()
-        lastTypeDate = Date()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: dispatchItem)
+        search?.cancel()
+        // reload history if no search
+        if let text = textField.text,
+              let textRange = Range(range, in: text),
+              text.replacingCharacters(in: textRange, with: string).isEmpty {
+            reload()
+        } else {
+            lastTypeDate = Date()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: dispatchItem)
+        }
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         clearBooking()
-        viewModel.applyPendingSnapshot(in: datasource)
+        search?.cancel()
+        reload()
         return true
     }
     
@@ -342,7 +365,7 @@ extension SearchViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.searchType = textField === originTextField ? .origin : .destination
         if textField.text?.isEmpty ?? true == true {
-            viewModel.applyPendingSnapshot(in: datasource)
+            reload()
         }
     }
 }

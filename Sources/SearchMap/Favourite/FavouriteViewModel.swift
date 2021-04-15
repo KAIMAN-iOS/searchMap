@@ -104,7 +104,7 @@ public class FavouriteViewModel {
     func loadFavourites(completion: @escaping (([PlacemarkSection: [Placemark]]) -> Void)) {
         favDelegate?.loadFavourites(completion: { [weak self] favs in
             self?.favourites = favs
-            self?.refreshDelegate?.refresh()
+            self?.refreshDelegate?.refresh(force: true)
             completion(favs)
         })
     }

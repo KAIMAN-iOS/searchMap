@@ -28,11 +28,11 @@ class FavoriteButton: DOFavoriteButton {
     }
     
     private func commonInit() {
-        image = UIImage(named: "heart", in: .module, compatibleWith: nil)
-        imageColorOn = SearchMapController.configuration.palette.primary
-        circleColor = SearchMapController.configuration.palette.alert
-        lineColor = SearchMapController.configuration.palette.alert
-        addTarget(self, action: #selector(handleState), for: .touchUpInside)
+//        image = UIImage(named: "heart", in: .module, compatibleWith: nil)
+//        imageColorOn = .green // SearchMapController.configuration.palette.alert
+//        circleColor = SearchMapController.configuration.palette.alert
+//        lineColor = SearchMapController.configuration.palette.alert
+        tintColor = .clear
     }
     
     @objc func handleState() {

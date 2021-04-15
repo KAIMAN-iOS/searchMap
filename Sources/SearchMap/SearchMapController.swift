@@ -76,7 +76,7 @@ public final class SearchMapController: UIViewController {
     @IBOutlet weak var destinationIndicator: UIView! {
         didSet {
             destinationIndicator.roundedCorners = true
-            destinationIndicator.backgroundColor = SearchMapController.configuration.palette.primary
+            destinationIndicator.backgroundColor = SearchMapController.configuration.palette.map.destination
         }
     }
     @IBOutlet weak var backOptionsButton: UIButton!  {

@@ -9,7 +9,6 @@ import KCoordinatorKit
 import UIKit
 import ReverseGeocodingMap
 import MapKit
-import IQKeyboardManagerSwift
 import ATAConfiguration
 import ATAGroup
 import PromiseKit
@@ -67,10 +66,13 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     var favCoordinator: FavouriteCoordinator<DeepLink>!
     public var handleFavourites: Bool = false
     public weak var delegate: SearchRideDelegate?
+    var mode: DisplayMode = .driver
+    var favDelegate: FavouriteDelegate!
     
     public init(router: RouterType?,
                 delegate: SearchRideDelegate,
                 searchMapDelegate: SearchMapDelegate,
+                favDelegate: FavouriteDelegate? = nil,
                 mode: DisplayMode = .driver,
                 conf: ATAConfiguration,
                 vehicleTypes: [VehicleType],
@@ -78,13 +80,24 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
                 groups: [Group] = [],
                 passenger: BasePassenger? = nil,
                 configurationOptions: OptionConfiguration = OptionConfiguration.default) {
+        
+        if favDelegate == nil, mode == .passenger {
+            fatalError("You must provide a favDelegate when using SearchMap with a passenger mode")
+        }
+        
         var moduleRouter = router
         if moduleRouter == nil {
             standAloneMode = true
             moduleRouter = Router(navigationController: UINavigationController(rootViewController: searchMapController))
         }
         super.init(router: moduleRouter!)
-        favCoordinator = FavouriteCoordinator(router: Router(navigationController: self.searchNavigationController), conf: conf)
+        self.mode = mode
+        favCoordinator = FavouriteCoordinator(router: Router(navigationController: self.searchNavigationController),
+                                              favDelegate: favDelegate ?? self,
+                                              mode: mode,
+                                              conf: conf)
+        self.favDelegate = favDelegate ?? self
+//        handleFavourites = mode == .passenger
         reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self, conf: conf)
         searchMapController.coordinatorDelegate = self
         searchMapController.mode = mode
@@ -96,14 +109,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.configurationOptions = configurationOptions
         searchMapController.delegate = delegate
         SearchMapController.configuration = conf
-        IQKeyboardManager.shared.enable = true
         router?.navigationController.setNavigationBarHidden(true, animated: false)
-//        if mode == .driver {
-//            self.router.navigationController.navigationBar.barTintColor = .clear
-//            self.router.navigationController.navigationBar.isTranslucent = true
-//            self.router.navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        }
-//        self.router.navigationController.navigationBar.shadowImage = UIImage()
         searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
@@ -118,9 +124,24 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     }
 }
 
+extension SearchMapCoordinator: FavouriteDelegate {
+    public func loadFavourites(completion: @escaping (([PlacemarkSection : [Placemark]]) -> Void)) {
+    }
+    
+    public func didAddFavourite(_: Placemark) -> Promise<Bool> {
+        fatalError()
+    }
+    
+    public func didDeleteFavourite(_: Placemark) -> Promise<Bool> {
+        fatalError()
+    }
+}
+
 extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
     func showSearch(_ booking: inout CreateRide, animated: Bool) {
         let ctrl = SearchViewController.create(booking: &booking, searchDelegate: self)
+        ctrl.mode = mode
+        ctrl.favDelegate = favDelegate
         ctrl.viewModel.favourtiteViewModel.coordinatorDelegate = favCoordinator
         ctrl.viewModel.handleFavourites = handleFavourites
         if CLLocationCoordinate2DIsValid(searchMapController.map.userLocation.coordinate) {

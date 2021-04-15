@@ -33,6 +33,14 @@ enum PlacemarkCellType: Hashable, Equatable {
         return lhs.hashValue == rhs.hashValue
     }
     case specificFavourite(_: FavouriteType, _: Placemark?), favourite(_: Placemark), history(_: Placemark), search(_: Placemark)
+    var placemark: Placemark? {
+        switch self {
+        case .specificFavourite(_, let placemark): return placemark
+        case .favourite(let placemark): return placemark
+        case .history(let placemark): return placemark
+        case .search(let placemark): return placemark
+        }
+    }
     
     func hash(into hasher: inout Hasher) {
         switch self {
@@ -58,6 +66,17 @@ enum PlacemarkCellType: Hashable, Equatable {
 
 public class Placemark: Address {
     public var specialFavourite: FavouriteType?
+    public override var hash: Int {
+        var hasher = Hasher()
+        hasher.combine(coordinates)
+        hasher.combine(name)
+        hasher.combine(address)
+        return hasher.finalize()
+    }
+    open override func isEqual(_ object: Any?) -> Bool {
+        guard let adress = object as? Address else { return false}
+        return self == adress
+    }
 }
 
 extension CLPlacemark {

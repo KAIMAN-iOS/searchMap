@@ -8,6 +8,8 @@
 import UIKit
 
 class FavouriteListViewModel {
+    var displayMode: DisplayMode = .driver
+    weak var favDelegate: FavouriteDelegate!
     var sortedSections: [PlacemarkSection] {
         get {
             items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })
@@ -47,7 +49,7 @@ class FavouriteListViewModel {
         }
     }
     
-    func applySnapshot(in dataSource: PlacemarkDatasource, animatingDifferences: Bool = true) {
+    func applySnapshot(in dataSource: PlacemarkDatasource, animatingDifferences: Bool = false) {
         items[.search] = nil
         currentSnapShot = dataSource.snapshot()
         currentSnapShot.deleteSections(currentSnapShot.sectionIdentifiers)
@@ -86,11 +88,13 @@ class FavouriteListViewModel {
     }
     
     func dataSource(for tableView: UITableView) -> PlacemarkDatasource {
-        let datasource = PlacemarkDatasource(tableView: tableView)  { (tableView, indexPath, model) -> UITableViewCell? in
+        let datasource = PlacemarkDatasource(tableView: tableView)  { [weak self] (tableView, indexPath, model) -> UITableViewCell? in
+            guard let self = self else { return nil }
             guard let cell: PlacemarkCell = tableView.automaticallyDequeueReusableCell(forIndexPath: indexPath) else {
                 return nil
             }
-            cell.configure(model)
+            cell.configure(model, displayMode: self.displayMode)
+            cell.favDelegate = self.favDelegate
             return cell
         }
         datasource.editableDelegate = self

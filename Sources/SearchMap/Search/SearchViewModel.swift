@@ -21,12 +21,13 @@ class PlacemarkDatasource: UITableViewDiffableDataSource<PlacemarkSection, Place
 }
 
 public protocol RefreshFavouritesDelegate: class {
-    func refresh()
+    func refresh(force: Bool)
 }
 
 public class SearchViewModel {
     var favourtiteViewModel: FavouriteViewModel = FavouriteViewModel.shared
     weak var refreshDelegate: RefreshFavouritesDelegate?
+    weak var favDelegate: FavouriteDelegate?
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
     var handleFavourites: Bool = false
     var sortedSections: [PlacemarkSection] {
@@ -34,23 +35,28 @@ public class SearchViewModel {
             items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })
         }
     }
+    var displayMode: DisplayMode = .driver
     
     init() {
         if handleFavourites {
             items[.specificFavourite] = [.specificFavourite(.home, nil), .specificFavourite(.work, nil)]
         }
-        loadFavorites()
-        updateHistory()
+        reload()
     }
     
-    func updateHistory() {
+    func reload() {
+        updateHistory()
+        loadFavorites()
+    }
+    
+    private func updateHistory() {
         let history = RecentPlacemarkManager.fetchHistory()
         if history.count > 0 {
             items[.history] = history.compactMap({ .history($0) })
         }
     }
     
-    func loadFavorites() {
+    private func loadFavorites() {
         favourtiteViewModel.loadFavourites(completion: { [weak self] favs in
             favs.forEach { key, value in
                 switch key {
@@ -63,8 +69,21 @@ public class SearchViewModel {
                 case .search: self?.items[key] = value.compactMap({ .search($0) })
                 }
             }
-            self?.refreshDelegate?.refresh()
+            self?.removeFavsFromHistory()
+            self?.refreshDelegate?.refresh(force: false)
         })
+    }
+    
+    private func removeFavsFromHistory() {
+        guard let history = items.filter({ $0.key == .history }).first?.value else { return }
+        var favs: [Placemark] = []
+        items.filter({ $0.key != .history && $0.key != .search }).forEach { section, placemarks in
+            favs.append(contentsOf: placemarks.compactMap({ $0.placemark }))
+        }
+        let favsSet = Set<Placemark>(favs)
+        var histSet = Set<Placemark>(history.compactMap({ $0.placemark }))
+        histSet.subtract(favsSet)
+        items[.history] = Array(histSet).compactMap({ PlacemarkCellType.history($0) })
     }
 
     typealias SnapShot = NSDiffableDataSourceSnapshot<PlacemarkSection, PlacemarkCellType>
@@ -129,11 +148,14 @@ public class SearchViewModel {
     }
     
     func dataSource(for tableView: UITableView) -> PlacemarkDatasource {
-        let datasource = PlacemarkDatasource(tableView: tableView)  { (tableView, indexPath, model) -> UITableViewCell? in
+        let datasource = PlacemarkDatasource(tableView: tableView)  { [weak self] (tableView, indexPath, model) -> UITableViewCell? in
+            guard let self = self else { return nil }
             guard let cell: PlacemarkCell = tableView.automaticallyDequeueReusableCell(forIndexPath: indexPath) else {
                 return nil
             }
-            cell.configure(model)
+            cell.configure(model, displayMode: self.displayMode)
+            cell.favDelegate = self.favDelegate
+            cell.refreshDelegate = self.refreshDelegate
             return cell
         }
         datasource.editableDelegate = self
