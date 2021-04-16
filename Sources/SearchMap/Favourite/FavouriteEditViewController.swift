@@ -17,12 +17,17 @@ import ATAViews
 import UIViewExtension
 
 class FavouriteEditViewController: UIViewController {
-    static func create(placeMark: Placemark? = nil) -> FavouriteEditViewController {
+    static func create(placeMark: Placemark? = nil,
+                       favType: FavouriteType?,
+                       delegate: FavouriteDelegate) -> FavouriteEditViewController {
         let ctrl: FavouriteEditViewController = UIStoryboard(name: "Favourite", bundle: .module).instantiateViewController(identifier: "FavouriteEditViewController") as! FavouriteEditViewController
         ctrl.placeMark = placeMark ?? Placemark(name: nil, address: nil, coordinates: kCLLocationCoordinate2DInvalid)
+        ctrl.delegate = delegate
+        ctrl.favType = favType
         return ctrl
     }
-    
+    weak var delegate: FavouriteDelegate!
+    var favType: FavouriteType?
     var placeMark: Placemark!
     let viewModel = FavouriteEditSearchViewModel()
     @IBOutlet weak var name: ATATextField!  {
@@ -43,16 +48,7 @@ class FavouriteEditViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var typeStackView: UIStackView!  {
-        didSet {
-            [FavouriteType.home, FavouriteType.work, nil].forEach { fav in
-                guard let view: FavouriteTypeView = Bundle.module.loadNibNamed("FavouriteTypeView", owner: nil, options: nil)?.first as? FavouriteTypeView else { return }
-                view.configure(fav)
-                typeStackView.addArrangedSubview(view)
-            }
-        }
-    }
-    
+    @IBOutlet weak var typeStackView: UIStackView!
     @IBOutlet weak var saveButton: ActionButton!  {
         didSet {
             saveButton.actionButtonType = .confirmation
@@ -77,6 +73,7 @@ class FavouriteEditViewController: UIViewController {
     }
     
     @IBAction func save() {
+        delegate.didAddFavourite(placeMark)
     }
     
     lazy var searchDisplayTableview: UITableViewController = {
@@ -129,8 +126,19 @@ class FavouriteEditViewController: UIViewController {
         }
     }
     
+    func loadStackView() {
+        [FavouriteType.home, FavouriteType.work, nil].forEach { fav in
+            guard let view: FavouriteTypeView = Bundle.module.loadNibNamed("FavouriteTypeView", owner: nil, options: nil)?.first as? FavouriteTypeView else { return }
+            view.configure(fav)
+            view.isSelected = fav == self.favType
+            view.isUserInteractionEnabled = false
+            typeStackView.addArrangedSubview(view)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadStackView()
         let newPlacemark = !CLLocationCoordinate2DIsValid(placeMark.coordinates.asCoord2D)
         saveButton.isEnabled = !newPlacemark
         title = newPlacemark ? "New Favourite".bundleLocale() : "Edit Favourite".bundleLocale()

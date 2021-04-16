@@ -189,11 +189,11 @@ public class SearchViewModel {
         switch action {
         case .edit:
             guard let place = placemark(at: indexPath) else { return }
-            FavouriteViewModel.shared.coordinatorDelegate?.editFavourite(place)
+            FavouriteViewModel.shared.coordinatorDelegate?.editFavourite(place, type: FavouriteViewModel.shared.type(of: place))
             
         case .delete:
             guard let place = placemark(at: indexPath) else { return }
-            FavouriteViewModel.shared.coordinatorDelegate?.deleteFavourite(place)
+            FavouriteViewModel.shared.coordinatorDelegate?.deleteFavourite(place, type: FavouriteViewModel.shared.type(of: place))
             
         case .add:
             FavouriteViewModel.shared.coordinatorDelegate?.addNewFavourite()

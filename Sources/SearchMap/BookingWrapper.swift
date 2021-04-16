@@ -77,6 +77,7 @@ public class Placemark: Address {
         guard let adress = object as? Address else { return false}
         return self == adress
     }
+    static var `default`: Placemark = Placemark(coordinates: kCLLocationCoordinate2DInvalid)
 }
 
 extension CLPlacemark {

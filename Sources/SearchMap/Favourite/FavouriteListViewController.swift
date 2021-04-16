@@ -16,10 +16,11 @@ class FavouriteListViewController: UIViewController {
         }
     }
     static var configuration: ATAConfiguration!
-    static func create(conf: ATAConfiguration, favDelegate: FavouriteDelegate) -> FavouriteListViewController {
+    static func create(conf: ATAConfiguration, favDelegate: FavouriteDelegate, favCoordinatorDelegate: FavouriteCoordinatorDelegate) -> FavouriteListViewController {
         FavouriteListViewController.configuration = conf
         let ctrl: FavouriteListViewController =  UIStoryboard(name: "Favourite", bundle: .module).instantiateViewController(identifier: "FavouriteListViewController") as! FavouriteListViewController
         ctrl.favDelegate = favDelegate
+        ctrl.favCoordinatorDelegate = favCoordinatorDelegate
         return ctrl
     }
     @IBOutlet weak var tableView: UITableView!  {
@@ -29,6 +30,7 @@ class FavouriteListViewController: UIViewController {
             tableView.register(UINib(nibName: "PlacemarkCell", bundle: .module), forCellReuseIdentifier: "PlacemarkCell")
         }
     }
+    weak var favCoordinatorDelegate: FavouriteCoordinatorDelegate!
     let viewModel = FavouriteListViewModel()
     
     @IBAction func addNewFavourite() {
@@ -56,6 +58,12 @@ class FavouriteListViewController: UIViewController {
         tableView.delegate = self
         FavouriteViewModel.shared.refreshDelegate = self
         viewModel.applySnapshot(in: datasource, animatingDifferences: false)
+    }
+    
+    func reload() {
+        FavouriteViewModel.shared.loadFavourites { _ in  }
+        viewModel.loadFavs()
+        refresh(force: true)
     }
 }
 
@@ -85,5 +93,8 @@ extension FavouriteListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let place = viewModel.placemark(at: indexPath) ?? Placemark.default
+        let favType: FavouriteType? = indexPath.section == 1 ? nil : (indexPath.row == 0 ? .home : .work)
+        favCoordinatorDelegate.editFavourite(place, type: favType)
     }
 }

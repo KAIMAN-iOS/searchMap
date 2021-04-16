@@ -113,15 +113,25 @@ public class FavouriteViewModel {
         return true
     }
     
+    public func type(of placmark: Placemark) -> FavouriteType? {
+        if placmark == home {
+            return .home
+        }
+        if placmark == work {
+            return .work
+        }
+        return nil
+    }
+    
     func perform(action: FavouriteEditAction, for place: Placemark?) {
         switch action {
         case .edit:
             guard let place = place else { return }
-            coordinatorDelegate?.editFavourite(place)
+            coordinatorDelegate?.editFavourite(place, type: FavouriteViewModel.shared.type(of: place))
             
         case .delete:
             guard let place = place else { return }
-            coordinatorDelegate?.deleteFavourite(place)
+            coordinatorDelegate?.deleteFavourite(place, type: FavouriteViewModel.shared.type(of: place))
             
         case .add:
             coordinatorDelegate?.addNewFavourite()

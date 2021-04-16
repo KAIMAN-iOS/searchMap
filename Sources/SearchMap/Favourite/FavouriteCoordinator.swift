@@ -18,22 +18,22 @@ public protocol FavouriteDelegate: class {
 
 public protocol FavouriteCoordinatorDelegate: class {
     func addNewFavourite()
-    func editFavourite(_: Placemark)
-    func deleteFavourite(_: Placemark)
+    func editFavourite(_: Placemark, type: FavouriteType?)
+    func deleteFavourite(_: Placemark, type: FavouriteType?)
     func showFavourites()
 }
 
 public class FavouriteCoordinator<DeepLink>: Coordinator<DeepLink> {
     var favouriteViewModel: FavouriteViewModel = FavouriteViewModel.shared
-    var favListController: FavouriteListViewController
+    var favListController: FavouriteListViewController!
     public init(router: RouterType,
                 favDelegate: FavouriteDelegate,
                 mode: DisplayMode = .driver,
                 coordinatorDelegate: FavouriteCoordinatorDelegate? = nil,
                 conf: ATAConfiguration) {
-        favListController = FavouriteListViewController.create(conf: conf, favDelegate: favDelegate)
-        favListController.mode = mode
         super.init(router: router)
+        favListController = FavouriteListViewController.create(conf: conf, favDelegate: favDelegate, favCoordinatorDelegate: self)
+        favListController.mode = mode
         favouriteViewModel.favDelegate = favDelegate
         favouriteViewModel.coordinatorDelegate = coordinatorDelegate ?? self
     }
@@ -43,18 +43,46 @@ public class FavouriteCoordinator<DeepLink>: Coordinator<DeepLink> {
     }
 }
 
+extension FavouriteCoordinator: FavouriteDelegate {
+    public func loadFavourites(completion: @escaping (([PlacemarkSection : [Placemark]]) -> Void)) { }
+    
+    public func didAddFavourite(_ placemark: Placemark) -> Promise<Bool> {
+        favouriteViewModel
+            .favDelegate
+            .didAddFavourite(placemark)
+            .get { [weak self] success in
+                if success {
+                    self?.router.popModule(animated: true)
+                    self?.favListController.reload()
+                }
+            }
+    }
+    
+    public func didDeleteFavourite(_ placemark: Placemark) -> Promise<Bool> {
+        favouriteViewModel
+            .favDelegate
+            .didDeleteFavourite(placemark)
+            .get { [weak self] success in
+                if success {
+                    self?.router.popModule(animated: true)
+                    self?.favListController.reload()
+                }
+            }
+    }
+}
+
 extension FavouriteCoordinator: FavouriteCoordinatorDelegate {
     public func addNewFavourite() {
-        let edit = FavouriteEditViewController.create()
+        let edit = FavouriteEditViewController.create(favType: nil, delegate: self)
         router.push(edit, animated: true, completion: nil)
     }
     
-    public func editFavourite(_ place: Placemark) {
-        let edit = FavouriteEditViewController.create(placeMark: place)
+    public func editFavourite(_ place: Placemark, type: FavouriteType?) {
+        let edit = FavouriteEditViewController.create(placeMark: place, favType: type, delegate: self)
         router.push(edit, animated: true, completion: nil)
     }
     
-    public func deleteFavourite(_: Placemark) {
+    public func deleteFavourite(_: Placemark, type: FavouriteType?) {
         
     }
     
