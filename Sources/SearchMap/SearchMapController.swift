@@ -81,7 +81,7 @@ public final class SearchMapController: UIViewController {
     }
     @IBOutlet weak var backOptionsButton: UIButton!  {
         didSet {
-            backOptionsButton.roundedCorners = true
+            backOptionsButton.addShadow()
             backOptionsButton.isHidden = true
         }
     }
@@ -110,7 +110,7 @@ public final class SearchMapController: UIViewController {
     }
     @IBOutlet weak var locatioButton: UIButton!  {
         didSet {
-            locatioButton.layer.cornerRadius = 5.0
+            locatioButton.addShadow()
         }
     }
     @IBOutlet weak var userButton: UIButton!  {
@@ -129,6 +129,7 @@ public final class SearchMapController: UIViewController {
             bookingTopView.backgroundColor = SearchMapController.configuration.palette.background
         }
     }
+    @IBOutlet weak var cardBottomConstraint: NSLayoutConstraint!
     
     var originObserver: NSKeyValueObservation?
     var destinationObserver: NSKeyValueObservation?
@@ -153,6 +154,36 @@ public final class SearchMapController: UIViewController {
         if mode == .driver {
             search(animated: true)
         }
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    var handleKeyboard: Bool = true
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard handleKeyboard else { return }
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            print("⌨ OFFSET ZERO")
+            cardContainer.updateConstraints(animated: true, duration: 0.3, useSpringWithDamping: 0.8, initialVelocity: 0.2) { [weak self] in
+                self?.cardBottomConstraint.constant = 8
+            }
+            showTopElements(true)
+        } else {
+            print("⌨ OFFSET \(keyboardScreenEndFrame.height - view.safeAreaInsets.bottom)")
+            showTopElements(false)
+            cardContainer.setNeedsLayout()
+            cardContainer.updateConstraints(animated: true, duration: 0.3, useSpringWithDamping: 0.8, initialVelocity: 0.2) { [weak self] in
+                guard let self = self else { return }
+                self.cardBottomConstraint.constant = 8 + keyboardScreenEndFrame.height - self.view.safeAreaInsets.bottom
+            }
+        }
+    }
+    
+    func showTopElements(_ show: Bool) {
+        bookingTopView.isHidden = !show
+        userButton.isHidden = mode == .passenger ? !show : true
     }
     
     @objc func navigationBack() {
@@ -161,7 +192,13 @@ public final class SearchMapController: UIViewController {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        handleKeyboard = true
         navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    public override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        handleKeyboard = false
     }
     
     func updateUserBackButton() {

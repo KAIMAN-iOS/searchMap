@@ -11,6 +11,7 @@ import MapKit
 import CoreLocation
 import ActionButton
 import ATACommonObjects
+import TextFieldExtension
 
 protocol SearchViewControllerDelegate: class {
     func showMapPicker(for location: BookingPlaceType, coordinates: CLLocationCoordinate2D?)
@@ -62,6 +63,7 @@ class SearchViewController: UIViewController {
             originTextField.placeholder = "Enter origin".bundleLocale()
             originTextField.delegate = self
             originTextField.tintColor = SearchMapController.configuration.palette.primary
+            originTextField.addKeyboardControlView(target: originTextField, buttonStyle: .footnote)
         }
     }
     @IBOutlet weak var originIndicator: UIView!  {
@@ -76,6 +78,7 @@ class SearchViewController: UIViewController {
             destinationTextField.placeholder = "Enter destination".bundleLocale()
             destinationTextField.delegate = self
             destinationTextField.tintColor = SearchMapController.configuration.palette.primary
+            destinationTextField.addKeyboardControlView(target: destinationTextField, buttonStyle: .footnote)
         }
     }
     @IBOutlet weak var destinationIndicator: UIView! {

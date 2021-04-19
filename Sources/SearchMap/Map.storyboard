@@ -23,11 +23,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="738"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i6M-hL-gD3">
-                                <rect key="frame" x="350" y="658" width="42" height="42"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="347" y="658" width="45" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="i6M-hL-gD3" secondAttribute="height" multiplier="1:1" id="UI7-vg-LTS"/>
-                                    <constraint firstAttribute="width" constant="42" id="tQh-Eb-uF1"/>
                                 </constraints>
                                 <color key="tintColor" name="Color"/>
                                 <state key="normal" image="location"/>
@@ -226,6 +225,7 @@
                         <constraints>
                             <constraint firstItem="xwS-rR-flv" firstAttribute="leading" secondItem="u7v-U3-NnQ" secondAttribute="leading" constant="20" id="0MH-6y-0wK"/>
                             <constraint firstItem="V7z-5d-fgy" firstAttribute="top" secondItem="sdv-UU-n9S" secondAttribute="top" id="2CF-9R-Y77"/>
+                            <constraint firstItem="i6M-hL-gD3" firstAttribute="width" secondItem="eH8-UW-R54" secondAttribute="width" id="3De-Td-uhN"/>
                             <constraint firstItem="xwS-rR-flv" firstAttribute="top" secondItem="u7v-U3-NnQ" secondAttribute="top" id="7kd-Ti-eTG"/>
                             <constraint firstItem="vNi-aT-hJu" firstAttribute="leading" secondItem="xwS-rR-flv" secondAttribute="trailing" constant="14" id="9QR-we-eNp"/>
                             <constraint firstItem="cvT-GS-Ss6" firstAttribute="trailing" secondItem="u7v-U3-NnQ" secondAttribute="trailing" id="EoJ-fd-8pN"/>
@@ -235,11 +235,10 @@
                             <constraint firstItem="eH8-UW-R54" firstAttribute="leading" secondItem="u7v-U3-NnQ" secondAttribute="leading" constant="20" id="Ssd-JK-1TM"/>
                             <constraint firstItem="u7v-U3-NnQ" firstAttribute="trailing" secondItem="vNi-aT-hJu" secondAttribute="trailing" constant="20" id="T07-dY-ixy"/>
                             <constraint firstItem="u7v-U3-NnQ" firstAttribute="trailing" secondItem="i6M-hL-gD3" secondAttribute="trailing" constant="22" id="Tf3-c7-lx4"/>
-                            <constraint firstItem="eH8-UW-R54" firstAttribute="width" secondItem="eH8-UW-R54" secondAttribute="height" multiplier="1:1" id="dpH-sN-1qA"/>
                             <constraint firstItem="vNi-aT-hJu" firstAttribute="top" secondItem="xwS-rR-flv" secondAttribute="top" id="f5k-1B-T55"/>
+                            <constraint firstItem="eH8-UW-R54" firstAttribute="centerY" secondItem="i6M-hL-gD3" secondAttribute="centerY" id="frQ-CW-etr"/>
                             <constraint firstAttribute="bottom" secondItem="cvT-GS-Ss6" secondAttribute="bottom" id="iRm-AK-Ouf"/>
                             <constraint firstItem="cvT-GS-Ss6" firstAttribute="top" secondItem="V7z-5d-fgy" secondAttribute="bottom" constant="-20" id="kuy-e9-4jY"/>
-                            <constraint firstItem="cvT-GS-Ss6" firstAttribute="top" secondItem="eH8-UW-R54" secondAttribute="bottom" constant="15" id="l6B-OO-gDJ"/>
                             <constraint firstItem="i6M-hL-gD3" firstAttribute="top" secondItem="V7z-5d-fgy" secondAttribute="bottom" constant="-80" id="syU-gj-HKO"/>
                         </constraints>
                     </view>
@@ -247,6 +246,7 @@
                         <outlet property="backOptionsButton" destination="eH8-UW-R54" id="b9P-ye-3fV"/>
                         <outlet property="bookingTopView" destination="vNi-aT-hJu" id="9vR-zI-rvd"/>
                         <outlet property="card" destination="cvT-GS-Ss6" id="ETa-5M-TNj"/>
+                        <outlet property="cardBottomConstraint" destination="CXK-pb-d5N" id="zKK-Sd-Xo9"/>
                         <outlet property="cardContainer" destination="LBd-bu-cAm" id="DAF-wk-Gcl"/>
                         <outlet property="dashView" destination="aW5-aB-dpY" id="mBS-El-aGh"/>
                         <outlet property="destinationContainer" destination="ty1-TI-UP9" id="VJg-tD-ZfG"/>
@@ -440,14 +440,8 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="VCI-1s-ujZ">
-            <size key="intrinsicContentSize" width="187.5" height="16"/>
-        </designable>
         <designable name="VYy-xG-uZA">
             <size key="intrinsicContentSize" width="66" height="48"/>
-        </designable>
-        <designable name="j9W-ZN-31F">
-            <size key="intrinsicContentSize" width="246" height="20.5"/>
         </designable>
     </designables>
     <resources>
@@ -461,7 +455,7 @@
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="backgroundColor">
-            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightGrayColor">
             <color red="0.96899998188018799" green="0.97600001096725464" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -479,7 +473,7 @@
             <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="textColor">
-            <color red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.11800000071525574" green="0.1289999932050705" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -17,6 +17,7 @@ import SwiftDate
 import ATAGroup
 import PromiseKit
 import ATACommonObjects
+import TextFieldExtension
 
 class ChoosePassengerOptionsView: UIView {
     public weak var searchMapDelegate: SearchRideDelegate?
@@ -53,6 +54,7 @@ class ChoosePassengerOptionsView: UIView {
             nameTextfield.textfield.textColor = SearchMapController.configuration.palette.secondaryTexts
             nameTextfield.configure(FieldType.name)
             nameTextfield.textfield.delegate = self
+            nameTextfield.textfield.addKeyboardControlView(target: nameTextfield, buttonStyle: .footnote)
         }
     }
     @IBOutlet weak var phoneTextfield: BorderedTextField!  {
@@ -62,6 +64,7 @@ class ChoosePassengerOptionsView: UIView {
             phoneTextfield.textfield.textColor = SearchMapController.configuration.palette.secondaryTexts
             phoneTextfield.configure(FieldType.phone)
             phoneTextfield.textfield.delegate = self
+            phoneTextfield.textfield.addKeyboardControlView(target: phoneTextfield, buttonStyle: .footnote)
         }
     }
     @IBOutlet weak var textView: GrowingTextView!  {
@@ -77,6 +80,7 @@ class ChoosePassengerOptionsView: UIView {
             textView.backgroundColor = .clear
             textView.minHeight = 100
             textView.maxHeight = 100
+            textView.addKeyboardControlView(target: textView, buttonStyle: .footnote)
         }
     }
     
@@ -113,6 +117,7 @@ class ChoosePassengerOptionsView: UIView {
         if let passenger = passenger {
             nameTextfield.textfield.set(text: passenger.fullname, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
             phoneTextfield.textfield.set(text: passenger.phoneNumber, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+            phoneTextfield.isUserInteractionEnabled = false
         }
     }
     
