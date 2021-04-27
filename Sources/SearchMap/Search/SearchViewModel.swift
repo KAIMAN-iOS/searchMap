@@ -41,12 +41,14 @@ public class SearchViewModel {
         if handleFavourites {
             items[.specificFavourite] = [.specificFavourite(.home, nil), .specificFavourite(.work, nil)]
         }
-        reload()
+        reload(withFavourites: true)
     }
     
-    func reload() {
+    func reload(withFavourites: Bool = false) {
         updateHistory()
-        loadFavorites()
+        if withFavourites {
+            loadFavorites()
+        }
     }
     
     private func updateHistory() {

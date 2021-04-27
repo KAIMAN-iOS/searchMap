@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ib7-P8-GYj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ib7-P8-GYj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -35,23 +35,23 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" verticalHuggingPriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="vNi-aT-hJu">
-                                <rect key="frame" x="79" y="44" width="315" height="80"/>
+                                <rect key="frame" x="79" y="44" width="315" height="78.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="2uI-Be-b9N">
-                                        <rect key="frame" x="0.0" y="4" width="315" height="72"/>
+                                        <rect key="frame" x="0.0" y="4" width="315" height="70.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aW5-aB-dpY" customClass="DottedView" customModule="UIViewExtension">
-                                                <rect key="frame" x="14.5" y="8" width="2" height="55.5"/>
+                                                <rect key="frame" x="14.5" y="8" width="2" height="55"/>
                                                 <color key="backgroundColor" name="secondaryTexts"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="2" id="fZ3-6b-XHI"/>
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vY5-Ju-RJj">
-                                                <rect key="frame" x="8" y="0.0" width="299" height="64"/>
+                                                <rect key="frame" x="8" y="0.0" width="299" height="62.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="588-SO-sAE">
-                                                        <rect key="frame" x="0.0" y="0.0" width="299" height="64"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="299" height="62.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="geT-oD-C5q">
                                                                 <rect key="frame" x="0.0" y="0.0" width="299" height="31"/>
@@ -107,13 +107,13 @@
                                                                 </constraints>
                                                             </view>
                                                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ty1-TI-UP9">
-                                                                <rect key="frame" x="0.0" y="48" width="299" height="16"/>
+                                                                <rect key="frame" x="0.0" y="48" width="299" height="14.5"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jc3-Z3-7XW">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="16"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="15" height="14.5"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mHh-5i-fV5">
-                                                                                <rect key="frame" x="0.0" y="0.5" width="15" height="15"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="15" height="15"/>
                                                                                 <color key="backgroundColor" name="selectedTitleColor"/>
                                                                             </view>
                                                                         </subviews>
@@ -126,10 +126,10 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BmS-fn-VWo">
-                                                                        <rect key="frame" x="23" y="0.0" width="276" height="16"/>
+                                                                        <rect key="frame" x="23" y="0.0" width="276" height="14.5"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="900" text="29 rue paradis 13009 Marseille" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VCI-1s-ujZ" customClass="TappableLabel" customModule="LabelExtension">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="276" height="16"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="276" height="14.5"/>
                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                                 <color key="textColor" name="textColor"/>
                                                                                 <nil key="highlightedColor"/>
@@ -160,7 +160,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkG-ZF-42i">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="78.5"/>
                                         <connections>
                                             <action selector="showSearchController" destination="ib7-P8-GYj" eventType="touchUpInside" id="FGC-SU-vNk"/>
                                         </connections>
@@ -293,7 +293,7 @@
                                                     <color key="titleColor" name="selectedButtonColor"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="close" destination="dho-b3-vIE" eventType="touchUpInside" id="gcZ-uY-vPX"/>
+                                                    <action selector="validate" destination="dho-b3-vIE" eventType="touchUpInside" id="4ix-VZ-1d7"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -440,13 +440,19 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="VCI-1s-ujZ">
+            <size key="intrinsicContentSize" width="175.5" height="14.5"/>
+        </designable>
         <designable name="VYy-xG-uZA">
             <size key="intrinsicContentSize" width="66" height="48"/>
         </designable>
+        <designable name="j9W-ZN-31F">
+            <size key="intrinsicContentSize" width="208.5" height="17"/>
+        </designable>
     </designables>
     <resources>
-        <image name="backArrow" width="11.5" height="21.5"/>
-        <image name="close" width="42" height="42"/>
+        <image name="backArrow" width="13.5" height="24"/>
+        <image name="close" width="33.5" height="33.5"/>
         <image name="location" width="119" height="119"/>
         <namedColor name="Color">
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
@@ -464,16 +470,16 @@
             <color red="0.62400001287460327" green="0.65100002288818359" blue="0.70599997043609619" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondaryTexts">
-            <color red="0.32800000905990601" green="0.32800000905990601" blue="0.32800000905990601" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.51399999856948853" green="0.54500001668930054" blue="0.6119999885559082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="selectedButtonColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="selectedTitleColor">
-            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="textColor">
-            <color red="0.11800000071525574" green="0.1289999932050705" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

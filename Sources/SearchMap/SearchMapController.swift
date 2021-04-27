@@ -127,6 +127,7 @@ public final class SearchMapController: UIViewController {
             bookingTopView.layer.cornerRadius = 25
             bookingTopView.addShadow(roundCorners: false, useMotionEffect: false)
             bookingTopView.backgroundColor = SearchMapController.configuration.palette.background
+            bookingTopView.isHidden = true
         }
     }
     @IBOutlet weak var cardBottomConstraint: NSLayoutConstraint!

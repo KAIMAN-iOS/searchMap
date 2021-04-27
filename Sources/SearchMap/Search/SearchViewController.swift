@@ -144,6 +144,21 @@ class SearchViewController: UIViewController {
         searchDelegate?.close()
     }
     
+    @IBAction func validate() {
+        guard booking?.ride.fromAddress != booking?.ride.toAddress else {
+            alertSameAddress()
+            return
+        }
+        searchDelegate?.close()
+    }
+    
+    private func alertSameAddress() {
+        let alertController = UIAlertController(title: "Attention".local(), message: "Addresses can't be the same".bundleLocale(), preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK".local(), style: .cancel, handler: { _ in }))
+        alertController.view.tintColor = SearchMapController.configuration.palette.primary
+        present(alertController, animated: true, completion: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
@@ -294,12 +309,12 @@ extension SearchViewController: RefreshFavouritesDelegate {
     func refresh(force: Bool) {
         // reload only if there are no search
         if (viewModel.items[.search] == nil && textFieldHasFocus) || force {
-            reload()
+            reload(force: force)
         }
     }
     
-    func reload() {
-        viewModel.reload()
+    func reload(force: Bool = false) {
+        viewModel.reload(withFavourites: force)
         viewModel.applyPendingSnapshot(in: datasource)
     }
 }

@@ -36,3 +36,4 @@
 "Edit Favourite" = "Modifier le favori";
 "New Favourite" = "Nouveau favori";
 "Type something here to search" = "Rechercher une adresse...";
+"Addresses can't be the same" = "Vous ne pouvez pas choisir la même adresse comme départ et arrivée";
