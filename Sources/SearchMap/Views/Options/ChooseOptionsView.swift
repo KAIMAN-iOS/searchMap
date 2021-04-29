@@ -47,7 +47,7 @@ class ChooseOptionsView: UIView {
     
     @IBOutlet weak var title: UILabel!  {
         didSet {
-            title.set(text: "Choose your options".bundleLocale().uppercased(), for: .title3, textColor: SearchMapController.configuration.palette.mainTexts)
+            title.set(text: "Choose your options".bundleLocale().capitalizingFirstLetter(), for: .title1, textColor: SearchMapController.configuration.palette.mainTexts)
         }
     }
     @IBOutlet weak var passengerLabel: UILabel!  {
@@ -62,8 +62,8 @@ class ChooseOptionsView: UIView {
             passengerStepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
             passengerStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
             passengerStepper.cornerRadius = 10.0
-            passengerStepper.stepperColor = SearchMapController.configuration.palette.secondary
-            passengerStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
+//            passengerStepper.stepperColor = SearchMapController.configuration.palette.secondary
+//            passengerStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
         }
     }
     @IBOutlet weak var luggagesLabel: UILabel!  {
@@ -78,8 +78,8 @@ class ChooseOptionsView: UIView {
             luggagesStepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
             luggagesStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
             luggagesStepper.cornerRadius = 10.0
-            luggagesStepper.stepperColor = SearchMapController.configuration.palette.secondary
-            luggagesStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
+//            luggagesStepper.stepperColor = SearchMapController.configuration.palette.secondary
+//            luggagesStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
         }
     }
     @IBOutlet weak var mainButton: ActionButton!  {
@@ -97,8 +97,8 @@ class ChooseOptionsView: UIView {
     @IBOutlet weak var nowButton: SelectableButton!  {
         didSet {
             nowButton.titleLabel?.font = .applicationFont(forTextStyle: .footnote)
-            nowButton.selectedColor = SearchMapController.configuration.palette.secondary
-            nowButton.unselectedColor = SearchMapController.configuration.palette.textOnDark
+//            nowButton.selectedColor = SearchMapController.configuration.palette.secondary
+//            nowButton.unselectedColor = SearchMapController.configuration.palette.textOnDark
             nowButton.setTitle("now".bundleLocale(), for: .normal)
             nowButton.isSelected = true
 //            nowButton.buttonCornerRadius = 5.0
@@ -111,8 +111,8 @@ class ChooseOptionsView: UIView {
         didSet {
             laterButton.titleLabel?.font = .applicationFont(forTextStyle: .footnote)
             laterButton.setTitle("later".bundleLocale(), for: .normal)
-            laterButton.selectedColor = SearchMapController.configuration.palette.secondary
-            laterButton.unselectedColor = SearchMapController.configuration.palette.textOnDark
+//            laterButton.selectedColor = SearchMapController.configuration.palette.secondary
+//            laterButton.unselectedColor = SearchMapController.configuration.palette.textOnDark
 //            laterButton.buttonCornerRadius = 5.0
             laterButton.addTarget(self, action: #selector(chooseDate(sender:)), for: .touchUpInside)
             laterButton.titleLabel?.numberOfLines = 2
@@ -146,8 +146,6 @@ class ChooseOptionsView: UIView {
         super.awakeFromNib()
         StepperView.stepperColor = SearchMapController.configuration.palette.secondary
         StepperView.stepperTextColor = SearchMapController.configuration.palette.textOnPrimary
-        SelectableButton.selectedColor = SearchMapController.configuration.palette.secondary
-        SelectableButton.unselectedColor = SearchMapController.configuration.palette.textOnPrimary
     }
     
     var booking: CreateRide!

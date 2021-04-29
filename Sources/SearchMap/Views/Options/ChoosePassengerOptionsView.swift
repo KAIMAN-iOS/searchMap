@@ -26,7 +26,7 @@ class ChoosePassengerOptionsView: UIView {
     
     @IBOutlet weak var title: UILabel!  {
         didSet {
-            title.set(text: "Choose your options".bundleLocale().uppercased(), for: .title3, textColor: SearchMapController.configuration.palette.mainTexts)
+            title.set(text: "message".bundleLocale().capitalizingFirstLetter(), for: .title1, textColor: SearchMapController.configuration.palette.mainTexts)
         }
     }
     @IBOutlet weak var passengerContainer: UIStackView!
@@ -116,7 +116,7 @@ class ChoosePassengerOptionsView: UIView {
         mainButton.setTitle((mode == .driver ? "save for me" : "book").bundleLocale(), for: .normal)
         if let passenger = passenger {
             nameTextfield.textfield.set(text: passenger.fullname, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
-            phoneTextfield.textfield.set(text: passenger.phoneNumber, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
+            phoneTextfield.textfield.set(text: passenger.phoneNumber, for: .body, textColor: SearchMapController.configuration.palette.inactive)
             phoneTextfield.isUserInteractionEnabled = false
         }
     }

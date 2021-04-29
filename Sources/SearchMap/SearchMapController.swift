@@ -13,7 +13,7 @@ import UIViewExtension
 import LocationExtension
 import ATAConfiguration
 import SwiftLocation
-import AlertsAndPickers
+//import AlertsAndPickers
 import UIViewControllerExtension
 import SwiftDate
 import PromiseKit
@@ -115,13 +115,17 @@ public final class SearchMapController: UIViewController {
     }
     @IBOutlet weak var userButton: UIButton!  {
         didSet {
-            userButton.layer.cornerRadius = userButton.bounds.midX
-            userButton.layer.borderColor = UIColor.white.cgColor
-            userButton.layer.borderWidth = 2.0
+            userButton.addShadow()
+            userButton.backgroundColor = SearchMapController.configuration.palette.secondary
+            userButton.tintColor = SearchMapController.configuration.palette.background
         }
     }
     @IBOutlet public weak var card: UIView!
-    @IBOutlet public weak var cardContainer: UIView!
+    @IBOutlet public weak var cardContainer: UIView!  {
+        didSet {
+            cardContainer.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var bookingTopView: UIView!  {
         didSet {
             bookingTopView.layer.cornerRadius = 25
@@ -155,6 +159,8 @@ public final class SearchMapController: UIViewController {
         if mode == .driver {
             search(animated: true)
         }
+        card.cornerRadius = 20.0
+        cardContainer.cornerRadius = 20.0
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -200,6 +206,13 @@ public final class SearchMapController: UIViewController {
     public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         handleKeyboard = false
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        card.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
+        bookingTopView.layer.cornerRadius = 10.0
+        bookingTopView.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
     }
     
     func updateUserBackButton() {
@@ -361,10 +374,10 @@ public final class SearchMapController: UIViewController {
     
     func configureTopView() {
         guard bookingWrapper.ride.fromAddress != nil else { return }
-        originLabel.set(text: bookingWrapper.ride.fromAddress?.name, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
-        let noDestination = bookingWrapper.ride.toAddress?.name?.isEmpty ?? true == true
-        destinationLabel.set(text: bookingWrapper.ride.toAddress?.name ?? "no destination".bundleLocale(),
-                             for: .body,
+        originLabel.set(text: bookingWrapper.ride.fromAddress?.address, for: .footnote, textColor: SearchMapController.configuration.palette.mainTexts)
+        let noDestination = bookingWrapper.ride.toAddress?.address?.isEmpty ?? true == true
+        destinationLabel.set(text: bookingWrapper.ride.toAddress?.address ?? "no destination".bundleLocale(),
+                             for: .footnote,
                              textColor: noDestination ? SearchMapController.configuration.palette.inactive : SearchMapController.configuration.palette.mainTexts)
     }
     
@@ -410,14 +423,6 @@ public final class SearchMapController: UIViewController {
         }
     }
     
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        card.round(corners: [.topLeft, .topRight], radius: 25.0)
-        card.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
-        bookingTopView.layer.cornerRadius = 10.0
-        bookingTopView.addShadow(roundCorners: false, shadowOffset: CGSize(width: -5, height: 0))
-    }
-    
     @IBAction func changeUserLocationType() {
         switch map.userTrackingMode {
         case .none: map.userTrackingMode = .follow
@@ -432,6 +437,14 @@ public final class SearchMapController: UIViewController {
     
     @IBAction func showMenu() {
         delegate.showMenu()
+    }
+    
+    internal func zoomOnUser(location: CLLocationCoordinate2D? = nil) {
+        guard CLLocationManager.authorizationStatus() == .authorizedWhenInUse else { return }
+        let coordinates = location ?? map.userLocation.coordinate
+        if CLLocationCoordinate2DIsValid(coordinates) {
+            map.setRegion(MKCoordinateRegion(center: coordinates, span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)), animated: true)
+        }
     }
 }
 

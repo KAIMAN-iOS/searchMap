@@ -14,6 +14,7 @@ import ATAGroup
 import PromiseKit
 import MapExtension
 import ATACommonObjects
+import ATAViews
 
 protocol SearchMapCoordinatorDelegate: class {
     func showSearch(_ booking: inout CreateRide, animated: Bool)
@@ -96,6 +97,8 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
                                               favDelegate: favDelegate ?? self,
                                               mode: mode,
                                               conf: conf)
+        SearchMapController.configuration = conf
+        customize()
         self.favDelegate = favDelegate ?? self
 //        handleFavourites = mode == .passenger
         reverseGeocodingMap = ReverseGeocodingMap.create(delegate: self, conf: conf)
@@ -108,9 +111,18 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.groups = groups
         searchMapController.configurationOptions = configurationOptions
         searchMapController.delegate = delegate
-        SearchMapController.configuration = conf
         router?.navigationController.setNavigationBarHidden(true, animated: false)
         searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    }
+    
+    private func customize() {
+        SelectableButton.selectedBackgroundColor = SearchMapController.configuration.palette.secondary
+        SelectableButton.selectedBorderColor = SearchMapController.configuration.palette.secondary
+        SelectableButton.selectedTextColor = SearchMapController.configuration.palette.textOnDark
+        SelectableButton.unselectedBackgroundColor = SearchMapController.configuration.palette.background
+        SelectableButton.unselectedTextColor = SearchMapController.configuration.palette.inactive
+        SelectableButton.unselectedBorderColor = SearchMapController.configuration.palette.inactive
+
     }
     
     deinit {
@@ -151,11 +163,6 @@ extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
         searchNavigationController.modalPresentationStyle = .fullScreen
         searchNavigationController.modalTransitionStyle = .crossDissolve
         searchNavigationController.navigationBar.shadowImage = UIImage()
-//        searchNavigationController.navigationBar.isTranslucent = true
-//        searchNavigationController.navigationBar.tintColor = SearchMapController.configuration.palette.mainTexts
-//        if searchMapController.mode == .driver {
-//            searchNavigationController.navigationBar.barTintColor = .clear
-//        }
         (router.navigationController.topViewController ?? searchMapController).present(searchNavigationController, animated: animated)
     }
 }

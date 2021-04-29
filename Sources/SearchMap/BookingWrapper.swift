@@ -83,7 +83,7 @@ public class Placemark: Address {
 extension CLPlacemark {
     var asPlacemark: Placemark {
         return Placemark(name: name,
-                         address: formattedAddress,
+                         address: name != nil ? name! + ", " + (formattedAddress ?? "") : formattedAddress,
                          coordinates: Coordinates(location: location?.coordinate ?? kCLLocationCoordinate2DInvalid))
     }
 }

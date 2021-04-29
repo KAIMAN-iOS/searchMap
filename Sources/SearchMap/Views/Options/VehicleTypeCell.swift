@@ -24,8 +24,6 @@ class VehicleTypeCell: UICollectionViewCell {
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        button.selectedColor = SearchMapController.configuration.palette.secondary
-        button.unselectedColor = SearchMapController.configuration.palette.background
         button.isUserInteractionEnabled = false
         button.titleLabel?.font = .applicationFont(forTextStyle: .caption1)
         button.titleLabel?.minimumScaleFactor = 0.5
@@ -45,6 +43,16 @@ class VehicleTypeCell: UICollectionViewCell {
             addButton()
         }
         button.setTitle(option.displayText.capitalized, for: .normal)
+        button.titleLabel?.numberOfLines = 2
+        button.titleLabel?.textAlignment = .center
+        button.isSelected = isSelected
+    }
+    
+    func configureForAllOptions(isSelected: Bool) {
+        if button.superview == nil {
+            addButton()
+        }
+        button.setTitle("all".bundleLocale().capitalized, for: .normal)
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.textAlignment = .center
         button.isSelected = isSelected

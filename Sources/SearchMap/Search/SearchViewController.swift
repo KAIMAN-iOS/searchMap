@@ -47,6 +47,7 @@ class SearchViewController: UIViewController {
         let btn = UIButton()
         btn.setImage(UIImage(named: "map", in: .module, compatibleWith: nil), for: .normal)
         btn.addTarget(self, action: #selector(showMap), for: .touchUpInside)
+        btn.tintColor = SearchMapController.configuration.palette.mainTexts
         return btn
     } ()
     @IBOutlet weak var validateButton: ActionButton!  {
@@ -84,7 +85,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var destinationIndicator: UIView! {
         didSet {
             destinationIndicator.roundedCorners = true
-            destinationIndicator.backgroundColor = SearchMapController.configuration.palette.primary
+            destinationIndicator.backgroundColor = SearchMapController.configuration.palette.map.destination
         }
     }
 
@@ -118,6 +119,7 @@ class SearchViewController: UIViewController {
                 
             case (false, true):
                 navigationItem.rightBarButtonItem = UIBarButtonItem(customView: mapButton)
+                navigationItem.rightBarButtonItem?.tintColor = SearchMapController.configuration.palette.mainTexts
             }
         }
     }
@@ -211,6 +213,12 @@ class SearchViewController: UIViewController {
         handleObservers()
         handleKeyboard()
         handleTableView()
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithTransparentBackground()
+        navBarAppearance.backgroundColor = SearchMapController.configuration.palette.background
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
     
     func handleTableView() {

@@ -10,18 +10,23 @@ import ATACommonObjects
 
 class ChooseVehicleTypeViewModel {
     enum Section: Int, Hashable {
-        case main
+        case list
     }
     enum CellType: Hashable {
         static func == (lhs: CellType, rhs: CellType) -> Bool {
             return lhs.hashValue == rhs.hashValue
         }
         case vehicle(_: VehicleType, isSelected: Bool)
+        case all(isSelected: Bool)
         
         func hash(into hasher: inout Hasher) {
             switch self {
             case .vehicle(let vehicle, let selected):
                 hasher.combine(vehicle.rawValue)
+                hasher.combine(selected)
+                
+            case .all(let selected):
+                hasher.combine("all")
                 hasher.combine(selected)
             }
         }
@@ -36,7 +41,7 @@ class ChooseVehicleTypeViewModel {
     typealias SnapShot = NSDiffableDataSourceSnapshot<Section, CellType>
     private var dataSource: DataSource!
     private var sections: [Section] = []
-    var selectedIndex: Int = -1
+    var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
     
     func dataSource(for collectionView: UICollectionView) -> DataSource {
         // Handle cells
@@ -44,6 +49,7 @@ class ChooseVehicleTypeViewModel {
             guard let cell: VehicleTypeCell = collectionView.automaticallyDequeueReusableCell(forIndexPath: indexPath) else { return nil }
             switch model {
             case .vehicle(let vehicle, let selected): cell.configure(vehicle, isSelected: selected)
+            case .all(let isSelected): cell.configureForAllOptions(isSelected: isSelected)
             }
             return cell
         }
@@ -54,8 +60,9 @@ class ChooseVehicleTypeViewModel {
         var snap = SnapShot()
         snap.deleteAllItems()
         sections.removeAll()
-        snap.appendSections([.main])
-        snap.appendItems(vehicles.compactMap({ CellType.vehicle($0, isSelected: $0.rawValue == self.selectedIndex + 1) }), toSection: .main)
+        snap.appendSections([.list])
+        snap.appendItems([.all(isSelected: selectedIndexPath.row == 0)], toSection: .list)
+        snap.appendItems(vehicles.compactMap({ CellType.vehicle($0, isSelected: self.selectedIndexPath.row > 0 && $0.rawValue == self.selectedIndexPath.row) }), toSection: .list)
         // add items here
         dataSource.apply(snap, animatingDifferences: animatingDifferences, completion: completion)
     }
@@ -69,13 +76,13 @@ class ChooseVehicleTypeViewModel {
     }
     
     func select(at indexPath: IndexPath) {
-        selectedIndex = selectedIndex == indexPath.row ? -1 : indexPath.row
+        selectedIndexPath = indexPath
         applySnapshot(in: dataSource)
     }
     
     func selectedType() -> VehicleType? {
-        guard selectedIndex >= 0 else { return nil }
-        return vehicles[selectedIndex]
+        guard selectedIndexPath.row > 0 else { return nil }
+        return vehicles[selectedIndexPath.row - 1]
     }
     
     private func generateLayout(for section: Int, environnement: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? {
@@ -83,7 +90,7 @@ class ChooseVehicleTypeViewModel {
                                                                                  heightDimension: .absolute(40)))
         fullItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0)
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(vehicles.count > 4 ? 0.95 : 1),
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(vehicles.count > 3 ? 0.95 : 1),
                                                                                         heightDimension: .absolute(40)),
                                                      subitem: fullItem,
                                                      count: 4)

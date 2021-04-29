@@ -76,7 +76,7 @@
                                                                             <constraint firstItem="Hw5-YQ-jnZ" firstAttribute="leading" secondItem="FDL-rE-NR3" secondAttribute="leading" id="lcC-YM-9TV"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="900" text="29 rue paradis 13009 Marseille" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="j9W-ZN-31F" customClass="TappableLabel" customModule="LabelExtension">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="900" text="29 rue paradis 13009 Marseille" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9W-ZN-31F" customClass="TappableLabel" customModule="LabelExtension">
                                                                         <rect key="frame" x="23" y="0.0" width="276" height="31"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                         <color key="textColor" name="textColor"/>
@@ -128,7 +128,7 @@
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BmS-fn-VWo">
                                                                         <rect key="frame" x="23" y="0.0" width="276" height="14.5"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="900" text="29 rue paradis 13009 Marseille" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VCI-1s-ujZ" customClass="TappableLabel" customModule="LabelExtension">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="900" text="29 rue paradis 13009 Marseille" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCI-1s-ujZ" customClass="TappableLabel" customModule="LabelExtension">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="276" height="14.5"/>
                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                                 <color key="textColor" name="textColor"/>
@@ -178,14 +178,15 @@
                                     <constraint firstItem="2uI-Be-b9N" firstAttribute="leading" secondItem="vNi-aT-hJu" secondAttribute="leading" id="sd4-yc-fKv"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwS-rR-flv">
+                            <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwS-rR-flv">
                                 <rect key="frame" x="20" y="44" width="45" height="45"/>
-                                <color key="backgroundColor" name="placeholderColor"/>
+                                <color key="backgroundColor" name="lightGray"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xwS-rR-flv" secondAttribute="height" multiplier="1:1" id="E65-Zh-Gti"/>
                                     <constraint firstAttribute="width" constant="45" id="Xjr-nx-8tA"/>
                                 </constraints>
-                                <color key="tintColor" name="Color"/>
+                                <color key="tintColor" name="mainTexts"/>
+                                <state key="normal" image="passenger"/>
                                 <connections>
                                     <action selector="showMenu" destination="ib7-P8-GYj" eventType="touchUpInside" id="m5m-9Y-4As"/>
                                 </connections>
@@ -451,9 +452,10 @@
         </designable>
     </designables>
     <resources>
-        <image name="backArrow" width="13.5" height="24"/>
-        <image name="close" width="33.5" height="33.5"/>
+        <image name="backArrow" width="11.5" height="21.5"/>
+        <image name="close" width="42" height="42"/>
         <image name="location" width="119" height="119"/>
+        <image name="passenger" width="346.5" height="345.5"/>
         <namedColor name="Color">
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -463,11 +465,14 @@
         <namedColor name="backgroundColor">
             <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <namedColor name="lightGray">
+            <color red="0.95599997043609619" green="0.9570000171661377" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <namedColor name="lightGrayColor">
             <color red="0.96899998188018799" green="0.97600001096725464" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <namedColor name="placeholderColor">
-            <color red="0.62400001287460327" green="0.65100002288818359" blue="0.70599997043609619" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <namedColor name="mainTexts">
+            <color red="0.16099999845027924" green="0.17599999904632568" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondaryTexts">
             <color red="0.51399999856948853" green="0.54500001668930054" blue="0.6119999885559082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -476,10 +481,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="selectedTitleColor">
-            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="textColor">
-            <color red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.11800000071525574" green="0.1289999932050705" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -26,7 +26,7 @@ class ChooseVehicleOptionsView: UIView {
     
     @IBOutlet weak var title: UILabel!  {
         didSet {
-            title.set(text: "Choose your options".bundleLocale().uppercased(), for: .title3, textColor: SearchMapController.configuration.palette.mainTexts)
+            title.set(text: "options".bundleLocale().capitalizingFirstLetter(), for: .title1, textColor: SearchMapController.configuration.palette.mainTexts)
         }
     }
 
@@ -85,10 +85,7 @@ class ChooseVehicleOptionsView: UIView {
     weak var delegate: BookDelegate!
     
     override func awakeFromNib() {
-        super.awakeFromNib()
-        SelectableButton.selectedColor = SearchMapController.configuration.palette.secondary
-        SelectableButton.unselectedColor = SearchMapController.configuration.palette.textOnPrimary
-    }
+        super.awakeFromNib()    }
     
     var groups: [Group] = []
     var booking: CreateRide!

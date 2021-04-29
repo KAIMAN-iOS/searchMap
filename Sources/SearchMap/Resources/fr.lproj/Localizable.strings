@@ -2,7 +2,7 @@
 "validate" = "suivant";
 "Enter destination" = "Choisissez votre destination";
 "All set" = "Nouvelle course";
-"Launch search" = "Rechercher un taxi";
+"Launch search" = "Trouvrer mon taxi";
 "no destination" = "Aucune destination saisie";
 "Welcome search message" = "Réservez des courses immédiates ou programmées";
 "Welcome search title" = "Où allez vous ?";
@@ -12,6 +12,7 @@
 "nb passenger" = "Passagers";
 "max available" = "Maximum autorisés";
 "Choose your options" = "Nouvelle course";
+"options" = "options";
 "departure date" = "Date de départ";
 "choose departure date" = "Date de départ";
 "vehicle type" = "Type de taxi";
@@ -26,6 +27,7 @@
 "Share with groups" = "Partagez cette course";
 "medical" = "Médical";
 "enter your message here" = "MESSAGE PARTICULIER";
+"message" = "Message";
 "vehicle options" = "Options disponibles";
 "confirm" = "confirmer";
 "My Favourites" = "Mes favoris";
@@ -37,3 +39,4 @@
 "New Favourite" = "Nouveau favori";
 "Type something here to search" = "Rechercher une adresse...";
 "Addresses can't be the same" = "Vous ne pouvez pas choisir la même adresse comme départ et arrivée";
+"all" = "tous";
