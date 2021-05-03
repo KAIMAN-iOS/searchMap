@@ -351,6 +351,22 @@ public final class SearchMapController: UIViewController {
         view.configure(options: configurationOptions, booking: &bookingWrapper)
     }
     
+    func loadPaymentOptionsCard() {
+        // no need to reload the view if it is already the right one
+        guard cardContainer.subviews.first as? ChoosePaymentView == nil else { return }
+        
+        delegate
+            .willShowCards()
+            .done({ [weak self] cardAdded in
+            guard let self = self, cardAdded == true else { return }
+            let view: ChoosePaymentView = ChoosePaymentView.create(booking: &self.bookingWrapper, searchDelegate: self.delegate, delegate: self)
+            self.optionState = .payment
+    //        view.delegate = self
+            self.addViewToCard(view)
+            })
+            .catch { _ in }
+    }
+    
     func loadPassengerOptionsCard() {
         // no need to reload the view if it is already the right one
         guard cardContainer.subviews.first as? ChoosePassengerOptionsView == nil else { return }
@@ -368,6 +384,7 @@ public final class SearchMapController: UIViewController {
         switch state {
         case .default: loadOptionsCard()
         case .vehicleOptions: loadVehicleOptionsCard()
+        case .payment: loadPaymentOptionsCard()
         case .passenger: loadPassengerOptionsCard()
         }
     }

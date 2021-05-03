@@ -16,7 +16,7 @@ import MapExtension
 import ATACommonObjects
 import ATAViews
 
-protocol SearchMapCoordinatorDelegate: class {
+protocol SearchMapCoordinatorDelegate: NSObjectProtocol {
     func showSearch(_ booking: inout CreateRide, animated: Bool)
 }
 
@@ -38,6 +38,8 @@ public protocol SearchRideDelegate: NSObjectProtocol {
     func share(_ booking: CreateRide, to groups: [Group])-> Promise<Bool>
     func showMenu()
     func back()
+    func cards() -> [CreditCard]
+    func willShowCards() -> Promise<Bool>
 }
 
 public protocol SearchMapDelegate: NSObjectProtocol {

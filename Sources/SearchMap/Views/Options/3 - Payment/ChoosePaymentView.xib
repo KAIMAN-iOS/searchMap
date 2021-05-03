@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iA7-gd-VWi" customClass="ChoosePaymentView" customModule="SearchMap">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="417"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="UoS-h0-PZu">
+                    <rect key="frame" x="22" y="14" width="370" height="403"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aZp-bl-vmj">
+                            <rect key="frame" x="0.0" y="0.0" width="370" height="30"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" text="Choose your options" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lXX-FV-lt6">
+                                    <rect key="frame" x="0.0" y="0.0" width="370" height="30"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="370" placeholderIntrinsicHeight="270" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="pWN-fs-lE7" customClass="DynamicHeightCollectionView" customModule="SearchMap">
+                            <rect key="frame" x="0.0" y="39" width="370" height="307"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="270" id="TSC-LI-VgV"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XsH-yP-y7I">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oub-zI-fc0" customClass="ActionButton" customModule="ActionButton">
+                            <rect key="frame" x="0.0" y="355" width="370" height="48"/>
+                            <color key="backgroundColor" name="backgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="1YA-Rc-gbY"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="10" minY="15" maxX="10" maxY="15"/>
+                            <state key="normal" title="Button">
+                                <color key="titleColor" name="selectedButtonColor"/>
+                            </state>
+                            <connections>
+                                <action selector="next" destination="iA7-gd-VWi" eventType="touchUpInside" id="5AY-Tk-bjl"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="sa1-Ic-veC"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="UoS-h0-PZu" firstAttribute="trailing" secondItem="sa1-Ic-veC" secondAttribute="trailing" constant="-22" id="ad0-6m-gZK"/>
+                <constraint firstItem="UoS-h0-PZu" firstAttribute="top" secondItem="iA7-gd-VWi" secondAttribute="top" constant="14" id="af6-fN-Yzh"/>
+                <constraint firstItem="UoS-h0-PZu" firstAttribute="leading" secondItem="sa1-Ic-veC" secondAttribute="leading" constant="22" id="ck3-P0-xJf"/>
+                <constraint firstItem="sa1-Ic-veC" firstAttribute="bottom" secondItem="UoS-h0-PZu" secondAttribute="bottom" id="ezb-yd-OmT"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="collectionView" destination="pWN-fs-lE7" id="V02-af-beB"/>
+                <outlet property="shareRideButton" destination="Oub-zI-fc0" id="zGC-n2-FqT"/>
+                <outlet property="title" destination="lXX-FV-lt6" id="oet-Dg-ZcC"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="-26.450892857142858"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="Oub-zI-fc0">
+            <size key="intrinsicContentSize" width="66" height="48"/>
+        </designable>
+    </designables>
+    <resources>
+        <namedColor name="backgroundColor">
+            <color red="0.7839999794960022" green="0.31400001049041748" blue="0.28200000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="selectedButtonColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </namedColor>
+    </resources>
+</document>

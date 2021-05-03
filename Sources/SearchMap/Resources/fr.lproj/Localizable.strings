@@ -40,3 +40,10 @@
 "Type something here to search" = "Rechercher une adresse...";
 "Addresses can't be the same" = "Vous ne pouvez pas choisir la même adresse comme départ et arrivée";
 "all" = "tous";
+"creditCard typeTitle" = "Paiement physique";
+"change typeTitle" = "Paiement physique";
+"inApp typeTitle" = "Via l'application";
+"creditCard title" = "Payez directement votre chauffeur par carte bancaire";
+"change title" = "Payez directement votre chauffeur en espèces";
+"inApp subtitle" = "(arrive bientôt)";
+"Choose payment method" = "Mode de paiement";

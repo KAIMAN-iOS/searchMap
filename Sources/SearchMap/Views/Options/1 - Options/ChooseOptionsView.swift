@@ -18,7 +18,7 @@ import ATAGroup
 import PromiseKit
 import ATACommonObjects
 
-protocol BookDelegate: class {
+protocol BookDelegate: NSObjectProtocol {
     func book(_ booking: CreateRide) -> Promise<Bool>
     func save(_ booking: CreateRide) -> Promise<Bool>
     func share(_ booking: CreateRide)
@@ -33,7 +33,7 @@ protocol OptionViewDelegate: NSObjectProtocol {
 }
 
 internal enum OptionState: Int {
-    case `default` = 0, vehicleOptions, passenger
+    case `default` = 0, vehicleOptions, payment, passenger
     var next: OptionState? { OptionState(rawValue: rawValue + 1) }
     var previous: OptionState? { OptionState(rawValue: rawValue - 1) }
 }
