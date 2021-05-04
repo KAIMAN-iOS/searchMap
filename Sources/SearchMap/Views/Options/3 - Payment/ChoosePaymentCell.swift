@@ -53,6 +53,7 @@ class ChoosePaymentCell: UICollectionViewCell {
         self.isSelected = isSelected
         updateCheck()
         icon.image = paymentType.image
+        icon.alpha = type.isActive ? 1 : 0.2
         paymentTypeContainer.backgroundColor = paymentType.color
         self.paymentType.set(text: paymentType.typeTitle, for: .caption2, textColor: .white)
         title.set(text: paymentType.title, for: .footnote, textColor: SearchMapController.configuration.palette.secondaryTexts)
