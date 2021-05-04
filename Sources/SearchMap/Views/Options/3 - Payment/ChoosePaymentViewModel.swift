@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ImageExtension
 
 public struct CreditCard {
     let number: String
@@ -51,7 +52,9 @@ class ChoosePaymentViewModel {
             switch self {
             case .creditCard: return UIImage(named: "creditCard", in: .module, compatibleWith: nil)
             case .change:  return UIImage(named: "change", in: .module, compatibleWith: nil)
-            case .inApp(let card): return card.icon ??  UIImage(named: "creditCard", in: .module, compatibleWith: nil)
+            case .inApp(let card):
+                let image = card.icon ??  UIImage(named: "creditCard", in: .module, compatibleWith: nil)
+                return isActive ? image : image?.grayscale
             }
         }
         

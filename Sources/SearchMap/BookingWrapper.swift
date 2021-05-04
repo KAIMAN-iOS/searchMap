@@ -82,8 +82,12 @@ public class Placemark: Address {
 
 extension CLPlacemark {
     var asPlacemark: Placemark {
+        var address = formattedAddress ?? ""
+        if let name = self.name, address.contains(name) == false {
+            address.insert(contentsOf: "\(name), ", at: String.Index(utf16Offset: 0, in: address))
+        }
         return Placemark(name: name,
-                         address: name != nil ? name! + ", " + (formattedAddress ?? "") : formattedAddress,
+                         address: address,
                          coordinates: Coordinates(location: location?.coordinate ?? kCLLocationCoordinate2DInvalid))
     }
 }

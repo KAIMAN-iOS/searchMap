@@ -34,10 +34,10 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="U2m-p5-tcJ">
-                                        <rect key="frame" x="58" y="0.0" width="297" height="77"/>
+                                        <rect key="frame" x="58" y="0.0" width="305" height="77"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" verticalHuggingPriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="5Fv-s3-Cpr">
-                                                <rect key="frame" x="0.0" y="0.0" width="297" height="21"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="305" height="21"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" verticalHuggingPriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="Ign-Q5-5YU">
                                                         <rect key="frame" x="0.0" y="0.0" width="105" height="21"/>
@@ -68,13 +68,13 @@
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="751" text="Payez via l'application" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yut-D6-U23">
-                                                <rect key="frame" x="0.0" y="25" width="297" height="24"/>
+                                                <rect key="frame" x="0.0" y="25" width="305" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(arrive bientôt)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NlR-tF-HcZ">
-                                                <rect key="frame" x="0.0" y="53" width="297" height="24"/>
+                                                <rect key="frame" x="0.0" y="53" width="305" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -82,18 +82,15 @@
                                         </subviews>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ok" translatesAutoresizingMaskIntoConstraints="NO" id="wLk-eC-TVa">
-                                        <rect key="frame" x="363" y="23.5" width="30" height="30"/>
+                                        <rect key="frame" x="371" y="27.5" width="22" height="22"/>
                                         <color key="backgroundColor" name="secondary"/>
                                         <color key="tintColor" name="textOnPrimary"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="30" id="34n-Uw-L6b"/>
+                                            <constraint firstAttribute="width" constant="22" id="34n-Uw-L6b"/>
                                             <constraint firstAttribute="width" secondItem="wLk-eC-TVa" secondAttribute="height" multiplier="1:1" id="H4w-ND-NS9"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="wLk-eC-TVa" firstAttribute="width" secondItem="wLk-eC-TVa" secondAttribute="height" multiplier="1:1" id="ar8-gg-mdV"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

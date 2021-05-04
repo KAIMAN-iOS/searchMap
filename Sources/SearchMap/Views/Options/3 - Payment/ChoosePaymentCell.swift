@@ -40,7 +40,7 @@ class ChoosePaymentCell: UICollectionViewCell {
     @IBOutlet weak var subtitle: UILabel!
     
     func updateCheck() {
-        check.layer.borderWidth = isSelected ? 0 : 2
+        check.layer.borderWidth = isSelected ? 0 : 1
         check.layer.borderColor = type.isActive ? SearchMapController.configuration.palette.secondary.cgColor : SearchMapController.configuration.palette.inactive.cgColor
         check.backgroundColor = !isSelected ? SearchMapController.configuration.palette.textOnPrimary : SearchMapController.configuration.palette.secondary
         check.tintColor = !isSelected ? SearchMapController.configuration.palette.secondary : SearchMapController.configuration.palette.textOnPrimary

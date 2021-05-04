@@ -203,7 +203,12 @@ extension FavouriteEditViewController: ReverseGeocodingMapDelegate {
     
     func didChoose(_ placemark: Placemark) {
         self.placeMark = placemark
-        name.textField.text = placeMark.name
+        self.placeMark.specialFavourite = favType
+        if name.textField.text?.isEmpty ?? true {
+            name.textField.text = placeMark.name
+        } else {
+            self.placeMark.name = name.textField.text
+        }
         address.textField.text = placeMark.address
         saveButton.isEnabled = true
         navigationItem.searchController = nil

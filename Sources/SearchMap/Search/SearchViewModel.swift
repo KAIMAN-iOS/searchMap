@@ -71,7 +71,6 @@ public class SearchViewModel {
                 case .search: self?.items[key] = value.compactMap({ .search($0) })
                 }
             }
-            self?.removeFavsFromHistory()
             self?.refreshDelegate?.refresh(force: false)
         })
     }
@@ -133,7 +132,10 @@ public class SearchViewModel {
                 }
                 items[.specificFavourite] = Array(allFavs)
                 currentSnapShot.appendItems(Array(allFavs), toSection: section)
-            case .history: currentSnapShot.appendItems(value, toSection: section)
+            case .history:
+                removeFavsFromHistory()
+                currentSnapShot.appendItems(value, toSection: section)
+                
             case .search: currentSnapShot.appendItems(value, toSection: section)
             }
         }

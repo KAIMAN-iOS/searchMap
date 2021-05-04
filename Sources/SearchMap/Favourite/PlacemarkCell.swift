@@ -69,7 +69,7 @@ class PlacemarkCell: UITableViewCell {
     }
     
     func configure(_ favType: FavouriteType, place placemark: Placemark?) {
-        favButton.isSelected = true
+        favButton.isSelected = placemark != nil
         icon.backgroundColor = #colorLiteral(red: 0.889537096, green: 0.9146017432, blue: 0.9526402354, alpha: 1)
         address.isHidden = true
         name.set(text: placemark?.name ?? favType.name, for: .body, textColor: placemark == nil ? FavouriteListViewController.configuration.palette.inactive : FavouriteListViewController.configuration.palette.mainTexts)
