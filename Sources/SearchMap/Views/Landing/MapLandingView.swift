@@ -10,6 +10,7 @@ import FontExtension
 import LabelExtension
 import ActionButton
 import CoreLocation.CLPlacemark
+import ATACommonObjects
 
 protocol MapLandingViewDelegate: NSObjectProtocol {
     func search(animated: Bool)
@@ -58,6 +59,9 @@ class MapLandingView: UIView {
     
     func updateAddress(with placemark: CLPlacemark) {
         selectDestinationLabel.set(text: placemark.formattedAddress, for: .body, textColor: SearchMapController.configuration.palette.secondaryTexts)
+    }
+    func updateAddress(with address: Address) {
+        selectDestinationLabel.set(text: address.address, for: .body, textColor: SearchMapController.configuration.palette.secondaryTexts)
     }
     
     @IBAction func search() {

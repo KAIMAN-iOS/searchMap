@@ -29,8 +29,12 @@ public final class SearchMapController: UIViewController {
         return UIStoryboard(name: "Map", bundle: .module).instantiateInitialViewController() as! SearchMapController
     }
     
-    public enum State {
-        case search
+    public enum State: Int, Comparable {
+        public static func < (lhs: SearchMapController.State, rhs: SearchMapController.State) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
+        
+        case search = 0
         case bookingReady
         case shareWithGroup
         case lookingForDriver
@@ -246,9 +250,8 @@ public final class SearchMapController: UIViewController {
                     self.geocoder.cancelGeocode()
                     self.geocoder.reverseGeocodeLocation(newData.coordinate.asLocation) { [weak self] (placemarks, error) in
                         guard let self = self,
-                              let placemark = placemarks?.first,
-                              let landing = self.cardContainer.subViews(type: MapLandingView.self).first else { return }
-                        landing.updateAddress(with: placemark)
+                              let placemark = placemarks?.first else { return }
+                        self.cardContainer.subViews(type: MapLandingView.self).first?.updateAddress(with: placemark)
                         if let coord = placemark.location?.coordinate {
                             self.userAddress = Address(name: placemark.name, address: placemark.formattedAddress, coordinates: coord)
                         }
@@ -404,9 +407,15 @@ public final class SearchMapController: UIViewController {
         guard let view: MapLandingView = Bundle.module.loadNibNamed("MapLandingView", owner: nil)?.first as? MapLandingView else { return }
         view.delegate = self
         view.confirmButton.isHidden = mode == .driver
+        map.removeOverlays(map.overlays)
+        map.removeAnnotations(map.annotations)
+        zoomOnUser()
         backOptionsButton.isHidden = true
         addViewToCard(view)
         bookingTopView.isHidden = true
+        if let adr = userAddress {
+            view.updateAddress(with: adr)
+        }
     }
     
     func addViewToCard(_ view: UIView) {
