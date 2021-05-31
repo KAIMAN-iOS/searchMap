@@ -172,7 +172,7 @@ public final class SearchMapController: UIViewController {
     
     var handleKeyboard: Bool = true
     @objc func adjustForKeyboard(notification: Notification) {
-        guard handleKeyboard else { return }
+        guard handleKeyboard, state > .search else { return }
         guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardScreenEndFrame = keyboardValue.cgRectValue
         if notification.name == UIResponder.keyboardWillHideNotification {
@@ -194,7 +194,7 @@ public final class SearchMapController: UIViewController {
     
     func showTopElements(_ show: Bool) {
         bookingTopView.isHidden = !show
-        userButton.isHidden = mode == .passenger ? !show : true
+        userButton.isHidden = !show
     }
     
     @objc func navigationBack() {
@@ -576,7 +576,7 @@ extension SearchMapController: MKMapViewDelegate {
 
 extension SearchMapController: OptionViewDelegate {
     func next() {
-        guard let state = optionState.next else {
+        guard let state = optionState.next(for: mode) else {
             return
         }
         loadCard(for: state)
@@ -585,7 +585,7 @@ extension SearchMapController: OptionViewDelegate {
 
 extension SearchMapController: ChooseGroupNavigationDelegate {
     @IBAction func back() {
-        guard let state = optionState.previous else {
+        guard let state = optionState.previous(for: mode) else {
             if mode == .passenger {
                 loadSearchCard()
             }

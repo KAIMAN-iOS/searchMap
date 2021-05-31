@@ -34,8 +34,19 @@ protocol OptionViewDelegate: NSObjectProtocol {
 
 internal enum OptionState: Int {
     case `default` = 0, vehicleOptions, payment, passenger
-    var next: OptionState? { OptionState(rawValue: rawValue + 1) }
-    var previous: OptionState? { OptionState(rawValue: rawValue - 1) }
+    func next(for mode: DisplayMode) -> OptionState? {
+        switch (mode, self) {
+        case (.driver, .vehicleOptions): return .passenger
+        default: return OptionState(rawValue: rawValue + 1)
+        }
+    }
+    
+    func previous(for mode: DisplayMode) -> OptionState? {
+        switch (mode, self) {
+        case (.driver, .passenger): return .vehicleOptions
+        default: return OptionState(rawValue: rawValue + 1)
+        }
+    }
 }
 
 class ChooseOptionsView: UIView {

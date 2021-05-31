@@ -35,7 +35,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" verticalHuggingPriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="vNi-aT-hJu">
-                                <rect key="frame" x="79" y="44" width="315" height="78.5"/>
+                                <rect key="frame" x="79" y="52" width="315" height="78.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="900" translatesAutoresizingMaskIntoConstraints="NO" id="2uI-Be-b9N">
                                         <rect key="frame" x="0.0" y="4" width="315" height="70.5"/>
@@ -179,7 +179,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwS-rR-flv">
-                                <rect key="frame" x="20" y="44" width="45" height="45"/>
+                                <rect key="frame" x="20" y="52" width="45" height="45"/>
                                 <color key="backgroundColor" name="lightGray"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="xwS-rR-flv" secondAttribute="height" multiplier="1:1" id="E65-Zh-Gti"/>
@@ -227,7 +227,7 @@
                             <constraint firstItem="xwS-rR-flv" firstAttribute="leading" secondItem="u7v-U3-NnQ" secondAttribute="leading" constant="20" id="0MH-6y-0wK"/>
                             <constraint firstItem="V7z-5d-fgy" firstAttribute="top" secondItem="sdv-UU-n9S" secondAttribute="top" id="2CF-9R-Y77"/>
                             <constraint firstItem="i6M-hL-gD3" firstAttribute="width" secondItem="eH8-UW-R54" secondAttribute="width" id="3De-Td-uhN"/>
-                            <constraint firstItem="xwS-rR-flv" firstAttribute="top" secondItem="u7v-U3-NnQ" secondAttribute="top" id="7kd-Ti-eTG"/>
+                            <constraint firstItem="xwS-rR-flv" firstAttribute="top" secondItem="u7v-U3-NnQ" secondAttribute="top" constant="8" id="7kd-Ti-eTG"/>
                             <constraint firstItem="vNi-aT-hJu" firstAttribute="leading" secondItem="xwS-rR-flv" secondAttribute="trailing" constant="14" id="9QR-we-eNp"/>
                             <constraint firstItem="cvT-GS-Ss6" firstAttribute="trailing" secondItem="u7v-U3-NnQ" secondAttribute="trailing" id="EoJ-fd-8pN"/>
                             <constraint firstItem="V7z-5d-fgy" firstAttribute="trailing" secondItem="u7v-U3-NnQ" secondAttribute="trailing" id="LU3-cr-Gd1"/>
@@ -453,7 +453,7 @@
     </designables>
     <resources>
         <image name="backArrow" width="11.5" height="21.5"/>
-        <image name="close" width="42" height="42"/>
+        <image name="close" width="33.5" height="33.5"/>
         <image name="location" width="119" height="119"/>
         <image name="passenger" width="346.5" height="345.5"/>
         <namedColor name="Color">
@@ -466,13 +466,13 @@
             <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightGray">
-            <color red="0.95599997043609619" green="0.9570000171661377" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.95300000905990601" green="0.9570000171661377" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightGrayColor">
             <color red="0.96899998188018799" green="0.97600001096725464" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="mainTexts">
-            <color red="0.16099999845027924" green="0.17599999904632568" blue="0.2199999988079071" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.097999997437000275" green="0.097999997437000275" blue="0.097999997437000275" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="secondaryTexts">
             <color red="0.51399999856948853" green="0.54500001668930054" blue="0.6119999885559082" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -481,10 +481,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </namedColor>
         <namedColor name="selectedTitleColor">
-            <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.84700000286102295" green="0.27099999785423279" blue="0.25900000333786011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="textColor">
-            <color red="0.11800000071525574" green="0.1289999932050705" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
