@@ -40,8 +40,8 @@ class UserAnnotationView: MKAnnotationView {
     }
 }
 
-extension CLPlacemark {
-    var formattedAddress: String? {
+public extension CLPlacemark {
+    public var formattedAddress: String? {
         guard let postalAddress = postalAddress else {
             return nil
         }
