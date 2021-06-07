@@ -542,6 +542,7 @@ extension SearchMapController: BookDelegate, ChooseDateDelegate {
     }
     
     func share(_ booking: CreateRide) {
+        state = .shareWithGroup
         let choose = ChooseGroupsView.create(booking: booking, groups: groups, delegate: delegate)
         choose.navDelegate = self
         addViewToCard(choose)
@@ -585,6 +586,11 @@ extension SearchMapController: OptionViewDelegate {
 
 extension SearchMapController: ChooseGroupNavigationDelegate {
     @IBAction func back() {
+        guard self.state != .shareWithGroup else {
+            state = .bookingReady
+            loadCard(for: .passenger)
+            return
+        }
         guard let state = optionState.previous(for: mode) else {
             if mode == .passenger {
                 loadSearchCard()

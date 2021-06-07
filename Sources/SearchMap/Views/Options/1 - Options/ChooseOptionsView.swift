@@ -44,7 +44,7 @@ internal enum OptionState: Int {
     func previous(for mode: DisplayMode) -> OptionState? {
         switch (mode, self) {
         case (.driver, .passenger): return .vehicleOptions
-        default: return OptionState(rawValue: rawValue + 1)
+        default: return OptionState(rawValue: rawValue - 1)
         }
     }
 }
