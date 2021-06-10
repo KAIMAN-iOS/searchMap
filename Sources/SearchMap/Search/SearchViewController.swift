@@ -143,7 +143,7 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func close() {
-        searchDelegate?.close()
+        validate()
     }
     
     @IBAction func validate() {
@@ -330,6 +330,8 @@ extension SearchViewController: RefreshFavouritesDelegate {
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        // nothing if no textfield is selected
+        guard destinationTextField.isFirstResponder || originTextField.isFirstResponder else { return }
         guard let place = viewModel.placemark(at: indexPath) else { return }
         updateBooking(place)
         

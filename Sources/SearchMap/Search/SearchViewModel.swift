@@ -84,7 +84,10 @@ public class SearchViewModel {
         let favsSet = Set<Placemark>(favs)
         var histSet = Set<Placemark>(history.compactMap({ $0.placemark }))
         histSet.subtract(favsSet)
-        items[.history] = Array(histSet).compactMap({ PlacemarkCellType.history($0) })
+        items[.history] = RecentPlacemarkManager
+            .fetchHistory()
+            .filter({ histSet.contains($0) })
+            .compactMap({ PlacemarkCellType.history($0) })
     }
 
     typealias SnapShot = NSDiffableDataSourceSnapshot<PlacemarkSection, PlacemarkCellType>
@@ -151,6 +154,7 @@ public class SearchViewModel {
         dataSource.apply(currentSnapShot, animatingDifferences: false) { }
     }
     
+    var datasource: PlacemarkDatasource!
     func dataSource(for tableView: UITableView) -> PlacemarkDatasource {
         let datasource = PlacemarkDatasource(tableView: tableView)  { [weak self] (tableView, indexPath, model) -> UITableViewCell? in
             guard let self = self else { return nil }
@@ -163,12 +167,13 @@ public class SearchViewModel {
             return cell
         }
         datasource.editableDelegate = self
+        self.datasource = datasource
         return datasource
     }
     
     func returnAndSave(_ placemark: Placemark) -> Placemark {
         RecentPlacemarkManager.add(placemark)
-        updateHistory()
+//        updateHistory()
         return placemark
     }
     
