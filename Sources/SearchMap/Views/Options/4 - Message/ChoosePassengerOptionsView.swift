@@ -192,4 +192,11 @@ extension ChoosePassengerOptionsView: UITextFieldDelegate {
         }
         booking.passenger = passenger
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            self?.enableNextButton()
+        }
+        return true
+    }
 }
