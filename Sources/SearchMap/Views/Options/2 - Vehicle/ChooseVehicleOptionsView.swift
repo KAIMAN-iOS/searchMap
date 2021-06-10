@@ -93,6 +93,7 @@ class ChooseVehicleOptionsView: UIView {
         let datasource = vehicleTypeViewModel.dataSource(for: vehicleTypeCollectionView)
         vehicleTypeCollectionView.dataSource = datasource
         vehicleTypeCollectionView.collectionViewLayout = vehicleTypeViewModel.layout()
+        vehicleTypeViewModel.select(booking.options.vehicleType)
         vehicleTypeViewModel.applySnapshot(in: datasource)
     }
     fileprivate func handleVehicleOptions() {

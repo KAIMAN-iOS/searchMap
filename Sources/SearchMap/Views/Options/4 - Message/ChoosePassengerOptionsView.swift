@@ -114,11 +114,18 @@ class ChoosePassengerOptionsView: UIView {
         secondaryButton.isHidden = mode == .passenger
         enableNextButton()
         mainButton.setTitle((mode == .driver ? "save for me" : "book").bundleLocale(), for: .normal)
-        if let passenger = passenger {
-            nameTextfield.textfield.set(text: passenger.fullname, for: .body, textColor: SearchMapController.configuration.palette.mainTexts)
-            phoneTextfield.textfield.set(text: passenger.phoneNumber, for: .body, textColor: SearchMapController.configuration.palette.inactive)
-            phoneTextfield.isUserInteractionEnabled = false
+        if let pass = passenger ?? booking.passenger {
+            nameTextfield.textfield.set(text: pass.fullname.trimmingCharacters(in: .whitespaces).isEmpty == false ? pass.fullname : nil,
+                                        for: .body,
+                                        textColor: SearchMapController.configuration.palette.mainTexts)
+            
+            phoneTextfield.textfield.set(text: pass.phoneNumber.isEmpty == false ? pass.phoneNumber : nil,
+                                         for: .body,
+                                         textColor: passenger == nil ? SearchMapController.configuration.palette.mainTexts : SearchMapController.configuration.palette.inactive)
+            phoneTextfield.isUserInteractionEnabled = passenger == nil
         }
+        textView.text = booking.options.memo
+        enableNextButton()
     }
     
     func enableNextButton() {
@@ -132,6 +139,7 @@ class ChoosePassengerOptionsView: UIView {
     }
     
     @IBAction func mainAction() {
+        booking.options.memo = textView.text
         // booking
         mainButton.isLoading = true
         switch mode {
@@ -163,6 +171,7 @@ class ChoosePassengerOptionsView: UIView {
     }
     
     @IBAction func secondaryAction() {
+        booking.options.memo = textView.text
         secondaryButton.isLoading = true
         delegate?.share(booking)
     }

@@ -13,9 +13,9 @@ import ATACommonObjects
 class VehicleTypeCell: UICollectionViewCell {
     lazy var button: SelectableButton = SelectableButton()
 
-    override var isSelected: Bool  {
+    var _isSelected: Bool = false  {
         didSet {
-            button.isSelected = isSelected
+            button.isSelected = _isSelected
         }
     }
     
@@ -35,7 +35,7 @@ class VehicleTypeCell: UICollectionViewCell {
             addButton()
         }
         button.setTitle(vehicleType.displayText.capitalized, for: .normal)
-        button.isSelected = isSelected
+        _isSelected = isSelected
     }
     
     func configure(_ option: VehicleOption, isSelected: Bool) {
@@ -45,7 +45,7 @@ class VehicleTypeCell: UICollectionViewCell {
         button.setTitle(option.displayText.capitalized, for: .normal)
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.textAlignment = .center
-        button.isSelected = isSelected
+        _isSelected = isSelected
     }
     
     func configureForAllOptions(isSelected: Bool) {
@@ -55,6 +55,6 @@ class VehicleTypeCell: UICollectionViewCell {
         button.setTitle("all".bundleLocale().capitalized, for: .normal)
         button.titleLabel?.numberOfLines = 2
         button.titleLabel?.textAlignment = .center
-        button.isSelected = isSelected
+        _isSelected = isSelected
     }
 }

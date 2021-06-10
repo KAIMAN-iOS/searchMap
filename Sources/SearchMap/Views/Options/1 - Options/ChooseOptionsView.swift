@@ -163,6 +163,13 @@ class ChooseOptionsView: UIView {
     func configure(options configurationOptions: OptionConfiguration,
                    booking: inout CreateRide) {
         self.booking = booking
+        passengerStepper.value = Double(booking.ride.numberOfPassengers)
+        luggagesStepper.value = Double(booking.ride.numberOfLuggages)
+        if let start = booking.ride.startDate?.value {
+            dateWrapper = start.timeIntervalSinceNow < 60 ? .now : .date(start)
+        } else {
+            dateWrapper = .now
+        }
         passengerStepper.minimumValue = Double(configurationOptions.passengerConfiguration.minValue)
         passengerStepper.maximumValue = Double(configurationOptions.passengerConfiguration.maxValue)
         luggagesStepper.minimumValue = Double(configurationOptions.luggagesConfiguration.minValue)
@@ -181,6 +188,10 @@ class ChooseOptionsView: UIView {
     }
     
     @IBAction func mainAction() {
+        switch dateWrapper {
+        case .now: booking.ride.startDate = CustomDate<GMTISODateFormatterDecodable>(date: Date())
+        case .date(let date): booking.ride.startDate = CustomDate<GMTISODateFormatterDecodable>(date: date)
+        }
         nextDelegate?.next()
     }
     

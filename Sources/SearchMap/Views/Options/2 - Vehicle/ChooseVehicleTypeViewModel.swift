@@ -80,6 +80,14 @@ class ChooseVehicleTypeViewModel {
         applySnapshot(in: dataSource)
     }
     
+    func select(_ type: VehicleType?) {
+        guard let vehicleType = type,
+              let index = vehicles.firstIndex(of: vehicleType) else {
+            return
+        }
+        select(at: IndexPath(row: index + 1, section: 0))
+    }
+    
     func selectedType() -> VehicleType? {
         guard selectedIndexPath.row > 0 else { return nil }
         return vehicles[selectedIndexPath.row - 1]
