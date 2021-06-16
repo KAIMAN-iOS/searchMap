@@ -147,7 +147,12 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func validate() {
-        guard booking?.ride.fromAddress != booking?.ride.toAddress else {
+        guard let start = booking?.ride.fromAddress,
+              let end = booking?.ride.toAddress else {
+            searchDelegate?.close()
+            return
+        }
+        guard start != end else {
             alertSameAddress()
             return
         }
