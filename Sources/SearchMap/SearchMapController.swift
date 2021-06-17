@@ -117,6 +117,8 @@ public final class SearchMapController: UIViewController {
             locatioButton.addShadow()
         }
     }
+    @IBOutlet weak var leadingUserButtonConstraint: NSLayoutConstraint!
+    @IBOutlet weak var trailingUserButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var userButton: UIButton!  {
         didSet {
             userButton.addShadow()
@@ -228,6 +230,8 @@ public final class SearchMapController: UIViewController {
             userButton.removeTarget(nil, action: nil, for: .allTouchEvents)
             userButton.tintColor = SearchMapController.configuration.palette.mainTexts
             userButton.addTarget(self, action: #selector(navigationBack), for: .touchUpInside)
+            leadingUserButtonConstraint.constant = 0
+            trailingUserButtonConstraint.constant = 4
             
         default: ()
         }
