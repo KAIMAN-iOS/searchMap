@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "ActionButton",
-        "repositoryURL": "https://github.com/jerometonnelier/ActionButton",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/ActionButton",
         "state": {
           "branch": "master",
-          "revision": "54fa3a54c2935e6562a2467d245ab65d7518bccc",
+          "revision": "5a8f4d4969719e1f32758af9f61777562ba262e7",
           "version": null
         }
       },
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire",
         "state": {
           "branch": null,
-          "revision": "4d19ad82f80cc71ff829b941ded114c56f4f604c",
-          "version": "5.4.2"
+          "revision": "f96b619bcb2383b43d898402283924b80e2c4bae",
+          "version": "5.4.3"
         }
       },
       {
@@ -39,37 +39,37 @@
       },
       {
         "package": "ATACommonObjects",
-        "repositoryURL": "https://github.com/jerometonnelier/ATACommonObjects",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/ATACommonObjects",
         "state": {
           "branch": "master",
-          "revision": "62fde7dd94e6e6f5f57bdae8d35beba801a7a098",
+          "revision": "50daafb4efb12454ddd24700f02f5a31da83cedf",
           "version": null
         }
       },
       {
         "package": "ATAConfiguration",
-        "repositoryURL": "https://github.com/jerometonnelier/ATAConfiguration",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/ATAConfiguration",
         "state": {
           "branch": "master",
-          "revision": "d4b2dbcc96550102fd5222bbfeebf62a6d72e60d",
+          "revision": "bee5d53f06f15f9a7c036bc7ed29e504eb230c35",
           "version": null
         }
       },
       {
         "package": "ATAGroup",
-        "repositoryURL": "https://github.com/jerometonnelier/ATAGroup",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/ATAGroup",
         "state": {
           "branch": "master",
-          "revision": "22d8ff594070584d106582a9487a859d23c2d4fa",
+          "revision": "6d25fdddd863ad9ef67aa1aba4c68b54e719565b",
           "version": null
         }
       },
       {
         "package": "ATAViews",
-        "repositoryURL": "https://github.com/jerometonnelier/ATAViews",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/ATAViews",
         "state": {
           "branch": "master",
-          "revision": "a3302b99c456b3e01d1d1fed22c6537936160d67",
+          "revision": "a14b81dfb42117b0cfaabb2730cf32f898176570",
           "version": null
         }
       },
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/gordontucker/FittedSheets",
         "state": {
           "branch": null,
-          "revision": "0502be20c95d5bae93a155081a1f1d7ca69924d3",
-          "version": "2.4.0"
+          "revision": "65f9c93718f96c6de234d38c9976e67a0d9e2b28",
+          "version": "2.4.2"
         }
       },
       {
@@ -110,17 +110,8 @@
         }
       },
       {
-        "package": "IQKeyboardManagerSwift",
-        "repositoryURL": "https://github.com/hackiftekhar/IQKeyboardManager.git",
-        "state": {
-          "branch": null,
-          "revision": "4dc6bc7d1c9747bd0c261c8c055903f9fdef91f7",
-          "version": "6.5.6"
-        }
-      },
-      {
         "package": "KCoordinatorKit",
-        "repositoryURL": "https://github.com/jerometonnelier/KCoordinatorKit",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/KCoordinatorKit",
         "state": {
           "branch": "master",
           "revision": "20bb96f4f55c366fbeba61e97287bd6ee4a14d03",
@@ -129,19 +120,19 @@
       },
       {
         "package": "KExtensions",
-        "repositoryURL": "https://github.com/jerometonnelier/KExtensions",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/KExtensions",
         "state": {
           "branch": "master",
-          "revision": "da55b7dc677e69f9decf078a682b0f2a002e4464",
+          "revision": "629b5a7cc44c0d37e0b96db01371cc87965f57c2",
           "version": null
         }
       },
       {
         "package": "KStorage",
-        "repositoryURL": "https://github.com/jerometonnelier/KStorage",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/KStorage",
         "state": {
           "branch": "master",
-          "revision": "330de84d7b9601468a842c099c7627069ab92016",
+          "revision": "92390107f52b6215f15254cd3ad765c820c29cbc",
           "version": null
         }
       },
@@ -150,8 +141,8 @@
         "repositoryURL": "https://github.com/ethanhuang13/NSAttributedStringBuilder",
         "state": {
           "branch": null,
-          "revision": "4a3b02b8b4baf531490e1ddae8ed4a667bdb12b5",
-          "version": "0.3.3"
+          "revision": "18662b33975c9ec8c80a1bd9b4e30d09612ee7ee",
+          "version": "0.4.1"
         }
       },
       {
@@ -159,8 +150,8 @@
         "repositoryURL": "https://github.com/kean/Nuke",
         "state": {
           "branch": null,
-          "revision": "200016df418ed8dc70ba918d52c29634f434541c",
-          "version": "9.5.0"
+          "revision": "7f73ceaeacd5df75a7994cd82e165ad9ff1815db",
+          "version": "9.6.1"
         }
       },
       {
@@ -174,7 +165,7 @@
       },
       {
         "package": "PhoneNumberKit",
-        "repositoryURL": "https://github.com/jerometonnelier/PhoneNumberKit",
+        "repositoryURL": "https://github.com/KAIMAN-iOS/PhoneNumberKit",
         "state": {
           "branch": null,
           "revision": "d73665b4ae26aa57245bd4fdc5b6bab7a18033f3",
@@ -186,16 +177,16 @@
         "repositoryURL": "https://github.com/mxcl/PromiseKit",
         "state": {
           "branch": null,
-          "revision": "aea48ea1855f5d82e2dffa6027afce3aab8f3dd7",
-          "version": "6.13.3"
+          "revision": "d2f7ba14bcdc45e18f4f60ad9df883fb9055f081",
+          "version": "6.15.3"
         }
       },
       {
         "package": "ReverseGeocodingMap",
-        "repositoryURL": "https://github.com/jerometonnelier/ReverseGeocodingMap",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/ReverseGeocodingMap",
         "state": {
           "branch": "master",
-          "revision": "07e1d7a13af175106f0e8a240747d39fbb06d200",
+          "revision": "c2763ec1b91d89e737675e65222fdf524a0b7deb",
           "version": null
         }
       },
@@ -228,10 +219,10 @@
       },
       {
         "package": "TextFieldEffects",
-        "repositoryURL": "https://github.com/jerometonnelier/TextFieldEffects",
+        "repositoryURL": "https://github.com/KAIMAN-IOS/TextFieldEffects",
         "state": {
           "branch": "master",
-          "revision": "34c87d76b1675f2001bec6e16462f8cc0b8dbbd2",
+          "revision": "1d35118960037a8b777a11f388b7ff976835fec7",
           "version": null
         }
       }
