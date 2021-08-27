@@ -73,6 +73,7 @@ class FavouriteEditViewController: UIViewController {
     }
     
     @IBAction func save() {
+        placeMark.name = name.textField.text
         delegate.didAddFavourite(placeMark)
     }
     

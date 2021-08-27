@@ -59,6 +59,8 @@ public class SearchViewModel {
     }
     
     private func loadFavorites() {
+        items[.specificFavourite] = nil
+        items[.favourite] = nil
         favourtiteViewModel.loadFavourites(completion: { [weak self] favs in
             favs.forEach { key, value in
                 switch key {
@@ -112,23 +114,21 @@ public class SearchViewModel {
         currentSnapShot.deleteSections(currentSnapShot.sectionIdentifiers)
         currentSnapShot.deleteAllItems()
         sortedSections.forEach { section in
-            guard let value = items[section] else { return }
+            guard let value = items[section], value.isEmpty == false else { return }
             currentSnapShot.appendSections([section])
             switch section {
             case .favourite: currentSnapShot.appendItems(value, toSection: section)
             case .specificFavourite:
-                var allFavs: [PlacemarkCellType] = [.specificFavourite(.home, nil), .specificFavourite(.work, nil)]
+                var allFavs: [PlacemarkCellType] = []
                 value.forEach { cellType in
                     switch cellType {
                     case .specificFavourite(let favType, _):
                         switch favType {
                         case .home:
-                            allFavs.remove(at: 0)
                             allFavs.insert(cellType, at: 0)
                             
                         case .work:
-                            allFavs.remove(at: 1)
-                            allFavs.insert(cellType, at: 1)
+                            allFavs.append(cellType)
                         }
                     default: ()
                     }
