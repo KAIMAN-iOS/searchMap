@@ -143,17 +143,22 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func close() {
-        validate()
+        validate(eraseWhenClose: true)
     }
     
-    @IBAction func validate() {
+    @IBAction func validate(eraseWhenClose: Bool = false) {
         guard let start = booking?.ride.fromAddress,
               let end = booking?.ride.toAddress else {
             searchDelegate?.close()
             return
         }
         guard start != end else {
-            alertSameAddress()
+            if eraseWhenClose {
+                booking?.ride.toAddress = nil
+                searchDelegate?.close()
+            } else {
+                alertSameAddress()
+            }
             return
         }
         searchDelegate?.close()
