@@ -139,10 +139,14 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
 }
 
 extension SearchMapCoordinator: FavouriteDelegate {
-    public func loadFavourites(completion: @escaping (([PlacemarkSection : [Placemark]]) -> Void)) {
+    public func loadFavourites() -> [PlacemarkSection : [Placemark]] { [:] }
+    public func reloadFavourites(completion: @escaping (([PlacemarkSection : [Placemark]]) -> Void)) {}
+    
+    public func didAddFavourite(_: Placemark) -> Promise<Placemark> {
+        fatalError()
     }
     
-    public func didAddFavourite(_: Placemark) -> Promise<Bool> {
+    public func didUpdateFavourite(_: Placemark) -> Promise<Bool> {
         fatalError()
     }
     

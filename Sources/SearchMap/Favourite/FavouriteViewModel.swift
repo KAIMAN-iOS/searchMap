@@ -101,12 +101,22 @@ public class FavouriteViewModel {
     
     private init() { }
     
-    func loadFavourites(completion: @escaping (([PlacemarkSection: [Placemark]]) -> Void)) {
-        favDelegate?.loadFavourites(completion: { [weak self] favs in
-            self?.favourites = favs
-            self?.refreshDelegate?.refresh(force: true)
-            completion(favs)
+    func reloadFavourites(completion: @escaping (([PlacemarkSection: [Placemark]]) -> Void)) {
+        favDelegate?.reloadFavourites(completion: { [weak self] favourites in
+            guard let self = self else { return }
+            self.favourites = favourites
+            self.refreshDelegate?.refresh(force: true)
+            completion(favourites)
         })
+    }
+    
+    @discardableResult
+    func loadFavourites(refresh: Bool = true) -> [PlacemarkSection: [Placemark]] {
+        favourites = favDelegate?.loadFavourites() ?? [:]
+        if refresh {
+            refreshDelegate?.refresh(force: true)
+        }
+        return favourites
     }
     
     func canEdit(_ placemark: Placemark) -> Bool {

@@ -15,17 +15,21 @@ import ActionButton
 import Ampersand
 import ATAViews
 import UIViewExtension
+import ATACommonObjects
 
 class FavouriteEditViewController: UIViewController {
     static func create(placeMark: Placemark? = nil,
                        favType: FavouriteType?,
-                       delegate: FavouriteDelegate) -> FavouriteEditViewController {
+                       delegate: FavouriteDelegate,
+                       editMode: Bool) -> FavouriteEditViewController {
         let ctrl: FavouriteEditViewController = UIStoryboard(name: "Favourite", bundle: .module).instantiateViewController(identifier: "FavouriteEditViewController") as! FavouriteEditViewController
-        ctrl.placeMark = placeMark ?? Placemark(name: nil, address: nil, coordinates: kCLLocationCoordinate2DInvalid)
+        ctrl.placeMark = placeMark ?? Placemark(name: nil, address: nil, coordinates: Coordinates(location: kCLLocationCoordinate2DInvalid))
         ctrl.delegate = delegate
         ctrl.favType = favType
+        ctrl.editMode = editMode && placeMark?.id != Address.newId
         return ctrl
     }
+    private var editMode: Bool = false
     weak var delegate: FavouriteDelegate!
     var favType: FavouriteType?
     var placeMark: Placemark!
@@ -74,7 +78,11 @@ class FavouriteEditViewController: UIViewController {
     
     @IBAction func save() {
         placeMark.name = name.textField.text
-        delegate.didAddFavourite(placeMark)
+        if editMode {
+            delegate.didUpdateFavourite(placeMark)
+        } else {
+            delegate.didAddFavourite(placeMark)
+        }
     }
     
     lazy var searchDisplayTableview: UITableViewController = {

@@ -10,6 +10,7 @@ import UIKit
 class FavouriteListViewModel {
     var displayMode: DisplayMode = .driver
     weak var favDelegate: FavouriteDelegate!
+    weak var refreshDelegate: RefreshFavouritesDelegate?
     var sortedSections: [PlacemarkSection] {
         get {
             items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })
@@ -20,7 +21,8 @@ class FavouriteListViewModel {
         loadFavs()
     }
     
-    func loadFavs() {
+    func loadFavs(refresh: Bool = true) {
+        FavouriteViewModel.shared.loadFavourites(refresh: refresh)
         var specificTypes: [PlacemarkCellType] = []
         specificTypes.append(.specificFavourite(.home, FavouriteViewModel.shared.home))
         specificTypes.append(.specificFavourite(.work, FavouriteViewModel.shared.work))
@@ -95,6 +97,7 @@ class FavouriteListViewModel {
             }
             cell.configure(model, displayMode: self.displayMode)
             cell.favDelegate = self.favDelegate
+            cell.refreshDelegate = self.refreshDelegate
             return cell
         }
         datasource.editableDelegate = self

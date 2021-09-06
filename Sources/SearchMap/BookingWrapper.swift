@@ -77,7 +77,35 @@ public class Placemark: Address {
         guard let adress = object as? Address else { return false}
         return self == adress
     }
-    static var `default`: Placemark = Placemark(coordinates: kCLLocationCoordinate2DInvalid)
+    static var `default`: Placemark = Placemark(coordinates: Coordinates(location: kCLLocationCoordinate2DInvalid))
+    
+    enum CodingKeys: String, CodingKey {
+        case specialFavourite
+    }
+    
+    public override init(name: String? = nil,
+                address: String? = nil,
+                coordinates: Coordinates) {
+        super.init(name: name, address: address, coordinates: coordinates)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        //mandatory
+        specialFavourite = try container.decodeIfPresent(FavouriteType.self, forKey: .specialFavourite)
+        try super.init(from: decoder)
+    }
+    
+    public override func encode(to encoder: Encoder) throws {
+        do {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encodeIfPresent(specialFavourite, forKey: .specialFavourite)
+            try super.encode(to: encoder)
+        } catch {
+            throw error
+        }
+    }
+
 }
 
 extension CLPlacemark {

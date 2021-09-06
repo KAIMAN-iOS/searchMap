@@ -20,7 +20,7 @@ class PlacemarkDatasource: UITableViewDiffableDataSource<PlacemarkSection, Place
     }
 }
 
-public protocol RefreshFavouritesDelegate: class {
+public protocol RefreshFavouritesDelegate: NSObjectProtocol {
     func refresh(force: Bool)
 }
 
@@ -61,20 +61,18 @@ public class SearchViewModel {
     private func loadFavorites() {
         items[.specificFavourite] = nil
         items[.favourite] = nil
-        favourtiteViewModel.loadFavourites(completion: { [weak self] favs in
-            favs.forEach { key, value in
-                switch key {
-                case .favourite: self?.items[key] = value.compactMap({ .favourite($0) })
-                case .specificFavourite: self?.items[key] = value.compactMap({ place -> PlacemarkCellType? in
-                    guard let type = place.specialFavourite else { return nil }
-                    return type == .home ? PlacemarkCellType.specificFavourite(.home, place) : PlacemarkCellType.specificFavourite(.work, place)
-                })
-                case .history: self?.items[key] = value.compactMap({ .history($0) })
-                case .search: self?.items[key] = value.compactMap({ .search($0) })
-                }
+        favourtiteViewModel.loadFavourites().forEach { key, value in
+            switch key {
+            case .favourite: items[key] = value.compactMap({ .favourite($0) })
+            case .specificFavourite: items[key] = value.compactMap({ place -> PlacemarkCellType? in
+                guard let type = place.specialFavourite else { return nil }
+                return type == .home ? PlacemarkCellType.specificFavourite(.home, place) : PlacemarkCellType.specificFavourite(.work, place)
+            })
+            case .history: items[key] = value.compactMap({ .history($0) })
+            case .search: items[key] = value.compactMap({ .search($0) })
             }
-            self?.refreshDelegate?.refresh(force: false)
-        })
+        }
+        refreshDelegate?.refresh(force: false)
     }
     
     private func removeFavsFromHistory() {

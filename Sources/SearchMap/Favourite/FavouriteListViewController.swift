@@ -32,6 +32,12 @@ class FavouriteListViewController: UIViewController {
     }
     weak var favCoordinatorDelegate: FavouriteCoordinatorDelegate!
     let viewModel = FavouriteListViewModel()
+    lazy var addItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewFavourite))
+    private var activityIndicator = UIActivityIndicatorView(style: .medium)
+    lazy var loader: UIBarButtonItem = {
+        activityIndicator.color = FavouriteListViewController.configuration.palette.primary
+        return UIBarButtonItem(customView: activityIndicator)
+    } ()
     
     @IBAction func addNewFavourite() {
         FavouriteViewModel.shared.coordinatorDelegate?.addNewFavourite()
@@ -44,7 +50,13 @@ class FavouriteListViewController: UIViewController {
     override func viewDidLoad() {
         hideBackButtonText = true
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewFavourite))
+        navigationItem.rightBarButtonItem = loader
+        activityIndicator.startAnimating()
+        FavouriteViewModel.shared.reloadFavourites { [weak self] _ in
+            self?.navigationItem.rightBarButtonItem = self?.addItem
+            self?.activityIndicator.stopAnimating()
+            self?.reload()
+        }
 //        navigationController?.navigationBar.prefersLargeTitles = true
         viewModel.displayMode = mode
 //        view.backgroundColor = .white
@@ -57,11 +69,11 @@ class FavouriteListViewController: UIViewController {
         tableView.dataSource = datasource
         tableView.delegate = self
         FavouriteViewModel.shared.refreshDelegate = self
+        viewModel.refreshDelegate = self
         viewModel.applySnapshot(in: datasource, animatingDifferences: false)
     }
     
     func reload() {
-        FavouriteViewModel.shared.loadFavourites { _ in  }
         viewModel.loadFavs()
         refresh(force: true)
     }
@@ -69,6 +81,9 @@ class FavouriteListViewController: UIViewController {
 
 extension FavouriteListViewController: RefreshFavouritesDelegate {
     func refresh(force: Bool) {
+        if force {
+            viewModel.loadFavs(refresh: false)
+        }
         viewModel.applySnapshot(in: datasource)
     }
 }
