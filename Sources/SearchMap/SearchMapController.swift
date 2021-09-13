@@ -90,7 +90,7 @@ public final class SearchMapController: UIViewController {
         }
     }
 
-    var bookingWrapper = CreateRide()
+    lazy var bookingWrapper = CreateRide(passenger: self.passenger)
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
     weak var searchMapDelegate: SearchMapDelegate!
     public weak var delegate: SearchRideDelegate!
@@ -288,7 +288,7 @@ public final class SearchMapController: UIViewController {
             if bookingWrapper.ride.fromAddress != nil && bookingWrapper.ride.toAddress != nil {
                 RideDirectionManager
                     .shared
-                    .loadDirections(for: bookingWrapper.ride) { [weak self] ride, routes in
+                    .loadDirections(for: bookingWrapper.ride, sortCriteria: .shortestDistance) { [weak self] ride, routes in
                         guard let self = self else { return }
                         let anno = self.searchMapDelegate.annotations(for: self.bookingWrapper)
                         if anno.count > 0 {
@@ -296,7 +296,8 @@ public final class SearchMapController: UIViewController {
                             self.map.addAnnotations(anno)
                         }
                         // routes
-                        if let route = routes.first?.route {
+                        if let route = routes.first(where: { $0.routeType == .ride })?.route {
+                            self.searchMapDelegate.routeReady(route)
                             let overlays = self.searchMapDelegate.overlays(for: route)
                             if let overlay = overlays.first {
                                 self.map.removeOverlays(self.map.overlays)
