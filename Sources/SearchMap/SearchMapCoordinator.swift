@@ -118,6 +118,10 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
     
+    public func updateUserpicture(with image: UIImage?) {
+        searchMapController.updateUserpicture(with: image)
+    }
+    
     private func customize() {
         SelectableButton.selectedBackgroundColor = SearchMapController.configuration.palette.secondary
         SelectableButton.selectedBorderColor = SearchMapController.configuration.palette.secondary
@@ -125,7 +129,6 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         SelectableButton.unselectedBackgroundColor = SearchMapController.configuration.palette.background
         SelectableButton.unselectedTextColor = SearchMapController.configuration.palette.inactive
         SelectableButton.unselectedBorderColor = SearchMapController.configuration.palette.inactive
-
     }
     
     deinit {

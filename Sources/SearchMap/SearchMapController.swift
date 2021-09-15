@@ -121,10 +121,19 @@ public final class SearchMapController: UIViewController {
     @IBOutlet weak var trailingUserButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var userButton: UIButton!  {
         didSet {
+            userButton.roundedCorners = true
             userButton.addShadow()
             userButton.backgroundColor = SearchMapController.configuration.palette.secondary
             userButton.tintColor = SearchMapController.configuration.palette.background
         }
+    }
+    
+    func updateUserpicture(with image: UIImage?) {
+        guard userButton != nil else { return }
+        userButton.contentMode = .scaleAspectFill
+        userButton.setImage(image ?? UIImage(named: "passenger", in: .module, compatibleWith: nil), for: .normal)
+        userButton.layer.borderWidth = 1.0
+        userButton.layer.borderColor = SearchMapController.configuration.palette.secondary.cgColor
     }
     @IBOutlet public weak var card: UIView!
     @IBOutlet public weak var cardContainer: UIView!  {

@@ -32,7 +32,9 @@ public class SearchViewModel {
     var handleFavourites: Bool = false
     var sortedSections: [PlacemarkSection] {
         get {
-            items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })
+            let sections = items.keys.sorted(by: { $0.sortedIndex < $1.sortedIndex })
+            print("sortedSections \(sections)")
+            return sections
         }
     }
     var displayMode: DisplayMode = .driver
@@ -177,18 +179,12 @@ public class SearchViewModel {
     
     func placemark(at indexPath: IndexPath) -> Placemark? {
         // fav or history
-        guard indexPath.row < items[.search]?.count ?? 0 else {
-            switch items[sortedSections[indexPath.section]]?[indexPath.row] {
-            case .favourite(let place): return returnAndSave(place)
-            case .history(let place): return returnAndSave(place)
-            case .search(let place): return returnAndSave(place)
-            case .specificFavourite(_, let place): return place == nil ? nil : returnAndSave(place!)
-            default: return nil
-            }
-        }
-        switch items[.search]?[indexPath.row] {
+        guard let item = datasource.itemIdentifier(for: indexPath) else { return nil }
+        switch item {
+        case .favourite(let place): return returnAndSave(place)
+        case .history(let place): return returnAndSave(place)
         case .search(let place): return returnAndSave(place)
-        default: return nil
+        case .specificFavourite(_, let place): return place == nil ? nil : returnAndSave(place!)
         }
     }
     
