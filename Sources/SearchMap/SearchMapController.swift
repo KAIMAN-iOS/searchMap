@@ -252,6 +252,7 @@ public final class SearchMapController: UIViewController {
     
     var userAddress: Address?
     func startLocationUpdates() {
+        guard mode == .passenger else { return }
         let serviceOptions = GPSLocationOptions()
         serviceOptions.subscription = .continous // continous updated until you stop it
         serviceOptions.accuracy = .house
