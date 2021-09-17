@@ -203,6 +203,10 @@ public final class SearchMapController: UIViewController {
         }
     }
     
+    public func showAddresses(_ show: Bool) {
+        bookingTopView.isHidden = !show
+    }
+    
     func showTopElements(_ show: Bool) {
         bookingTopView.isHidden = !show
         userButton.isHidden = !show
@@ -264,7 +268,7 @@ public final class SearchMapController: UIViewController {
                     self.geocoder.reverseGeocodeLocation(newData.coordinate.asLocation) { [weak self] (placemarks, error) in
                         guard let self = self,
                               let placemark = placemarks?.first else { return }
-                        self.cardContainer.subViews(type: MapLandingView.self).first?.updateAddress(with: placemark)
+//                        self.cardContainer.subViews(type: MapLandingView.self).first?.updateAddress(with: placemark)
                         if let coord = placemark.location?.coordinate {
                             self.userAddress = Address(name: placemark.name, address: placemark.formattedAddress, coordinates: coord)
                         }
@@ -427,9 +431,9 @@ public final class SearchMapController: UIViewController {
         backOptionsButton.isHidden = true
         addViewToCard(view)
         bookingTopView.isHidden = true
-        if let adr = userAddress {
-            view.updateAddress(with: adr)
-        }
+//        if let adr = userAddress {
+//            view.updateAddress(with: adr)
+//        }
     }
     
     func addViewToCard(_ view: UIView) {
