@@ -143,29 +143,17 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func close() {
-        validate(eraseWhenClose: true)
-    }
-    
-    func validate(eraseWhenClose: Bool) {
-        guard let start = booking?.ride.fromAddress,
-              let end = booking?.ride.toAddress else {
-            searchDelegate?.close()
-            return
-        }
-        guard start != end else {
-            if eraseWhenClose {
-                booking?.ride.toAddress = nil
-                searchDelegate?.close()
-            } else {
-                alertSameAddress()
-            }
-            return
-        }
         searchDelegate?.close()
     }
     
     @IBAction func validate() {
-        validate(eraseWhenClose: false)
+        guard startAddress != endAddress else {
+            alertSameAddress()
+            return
+        }
+        booking.ride.fromAddress = startAddress
+        booking.ride.toAddress = endAddress
+        searchDelegate?.close()
     }
     
     private func alertSameAddress() {
@@ -205,14 +193,16 @@ class SearchViewController: UIViewController {
     @IBAction func showMap() {
         guard let searchType = searchType else { return }
         searchDelegate?.showMapPicker(for: searchType,
-                                      coordinates: searchType == .origin ? booking.ride.fromAddress?.asCoordinates2D : booking.ride.toAddress?.asCoordinates2D)
+                                      coordinates: searchType == .origin ? startAddress?.asCoordinates2D : endAddress?.asCoordinates2D)
     }
     
+    @objc dynamic var startAddress: Placemark?
+    @objc dynamic var endAddress: Placemark?
     func didChoose(_ placemark: CLPlacemark) {
         guard let searchType = searchType else { return }
         switch searchType {
-        case .origin: booking.ride.fromAddress = placemark.asPlacemark
-        case .destination: booking.ride.toAddress = placemark.asPlacemark
+        case .origin: startAddress = placemark.asPlacemark
+        case .destination: endAddress = placemark.asPlacemark
         }
     }
     
@@ -246,15 +236,15 @@ class SearchViewController: UIViewController {
         destinationTextField.text = booking.ride.toAddress?.address
         
         originObserver?.invalidate()
-        originObserver = booking.ride.observe(\.fromAddress, changeHandler: { [weak self] (booking, change) in
+        originObserver = self.observe(\.startAddress, changeHandler: { [weak self] (booking, change) in
             self?.handleValidateButton()
-            guard let origin = booking.fromAddress else { return }
+            guard let origin = self?.startAddress else { return }
             self?.originTextField.text = origin.address
         })
         destinationObserver?.invalidate()
-        destinationObserver = booking.ride.observe(\.toAddress, changeHandler: { [weak self] (booking, change) in
+        destinationObserver = self.observe(\.endAddress, changeHandler: { [weak self] (booking, change) in
             self?.handleValidateButton()
-            guard let destination = booking.toAddress else { return }
+            guard let destination = self?.endAddress else { return }
             self?.destinationTextField.text = destination.address
         })
     }
@@ -272,7 +262,7 @@ class SearchViewController: UIViewController {
     }
     
     func handleValidateButton() {
-        validateContainer.isHidden = booking.ride.fromAddress == nil
+        validateContainer.isHidden = startAddress == nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -313,16 +303,16 @@ class SearchViewController: UIViewController {
     func clearBooking() {
         guard let searchType = searchType else { return }
         switch searchType {
-        case .origin: booking.ride.fromAddress = nil
-        case .destination: booking.ride.toAddress = nil
+        case .origin: startAddress = nil
+        case .destination: endAddress = nil
         }
     }
     
     func updateBooking(_ place: Placemark) {
         guard let searchType = searchType else { return }
         switch searchType {
-        case .origin: booking.ride.fromAddress = place
-        case .destination: booking.ride.toAddress = place
+        case .origin: startAddress = place
+        case .destination: endAddress = place
         }
     }
 }
@@ -349,7 +339,7 @@ extension SearchViewController: UITableViewDelegate {
         guard let place = viewModel.placemark(at: indexPath) else { return }
         updateBooking(place)
         
-        if searchType == .origin && booking.ride.toAddress == nil {
+        if searchType == .origin && endAddress == nil {
             destinationTextField.becomeFirstResponder()
             searchType = .destination
             refresh(force: false)
