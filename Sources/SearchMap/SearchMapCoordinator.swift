@@ -17,7 +17,7 @@ import ATACommonObjects
 import ATAViews
 
 protocol SearchMapCoordinatorDelegate: NSObjectProtocol {
-    func showSearch(_ booking: inout CreateRide, animated: Bool)
+    func showSearch(_ booking: inout CreateRide, userAddress: Address?, animated: Bool)
 }
 
 public enum DisplayMode {
@@ -160,8 +160,8 @@ extension SearchMapCoordinator: FavouriteDelegate {
 }
 
 extension SearchMapCoordinator: SearchMapCoordinatorDelegate {
-    func showSearch(_ booking: inout CreateRide, animated: Bool) {
-        let ctrl = SearchViewController.create(booking: &booking, searchDelegate: self)
+    func showSearch(_ booking: inout CreateRide, userAddress: Address?, animated: Bool) {
+        let ctrl = SearchViewController.create(booking: &booking, userAddress: userAddress, searchDelegate: self)
         ctrl.mode = mode
         ctrl.favDelegate = favDelegate
         ctrl.viewModel.favourtiteViewModel.coordinatorDelegate = favCoordinator

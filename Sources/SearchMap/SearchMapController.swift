@@ -477,7 +477,7 @@ public final class SearchMapController: UIViewController {
     }
     
     @IBAction func showSearchController() {
-        coordinatorDelegate?.showSearch(&bookingWrapper, animated: true)
+        coordinatorDelegate?.showSearch(&bookingWrapper, userAddress: userAddress, animated: true)
     }
     
     @IBAction func showMenu() {
@@ -520,10 +520,7 @@ class UserAnnotation: NSObject, MKAnnotation {
 
 extension SearchMapController: MapLandingViewDelegate {
     func search(animated: Bool ) {
-        if let adr = userAddress {
-            bookingWrapper.ride.fromAddress = adr
-        }
-        coordinatorDelegate?.showSearch(&bookingWrapper, animated: animated)
+        coordinatorDelegate?.showSearch(&bookingWrapper, userAddress: userAddress, animated: animated)
     }
 }
 

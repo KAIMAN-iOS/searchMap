@@ -18,6 +18,10 @@ protocol SearchViewControllerDelegate: class {
     func close()
 }
 
+extension Address {
+    var asPlacemark: Placemark { Placemark(name: name, address: address, coordinates: coordinates) }
+}
+
 class SearchViewController: UIViewController {
     var mode: DisplayMode = .driver
     weak var favDelegate: FavouriteDelegate?  {
@@ -27,9 +31,11 @@ class SearchViewController: UIViewController {
     }
 
     static func create(booking: inout CreateRide,
+                       userAddress: Address? = nil,
                        searchDelegate: SearchViewControllerDelegate) -> SearchViewController {
         let ctrl: SearchViewController =  UIStoryboard(name: "Map", bundle: .module).instantiateViewController(identifier: "SearchViewController") as! SearchViewController
         ctrl.booking = booking
+        ctrl.startAddress = userAddress?.asPlacemark
         ctrl.searchDelegate = searchDelegate
         return ctrl
     }
@@ -232,7 +238,11 @@ class SearchViewController: UIViewController {
     }
     
     func handleObservers() {
-        originTextField.text = booking.ride.fromAddress?.address
+        if let adr = startAddress {
+            originTextField.text = adr.address
+        } else if let adr = booking.ride.fromAddress?.address {
+            originTextField.text = adr
+        }
         destinationTextField.text = booking.ride.toAddress?.address
         
         originObserver?.invalidate()
