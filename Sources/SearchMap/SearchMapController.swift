@@ -299,7 +299,7 @@ public final class SearchMapController: UIViewController {
     
     func handleBookingCard() {
         defer {
-            if bookingWrapper.ride.fromAddress != nil && bookingWrapper.ride.toAddress != nil {
+            if bookingWrapper.ride.fromAddress != nil {
                 RideDirectionManager
                     .shared
                     .loadDirections(for: bookingWrapper.ride, sortCriteria: .shortestDistance) { [weak self] ride, routes in
@@ -323,14 +323,27 @@ public final class SearchMapController: UIViewController {
                                                                                      right: 50),
                                                            animated: true)
                             }
+                        } else {
+                            var coordinates = anno.compactMap({ $0.coordinate })
+                            if let userCoord = SwiftLocation.lastKnownGPSLocation?.coordinate {
+                                coordinates.append(userCoord)
+                            }
+                            self.map.setVisibleMapRect(MKMapRect(coordinates: coordinates),
+                                                       edgePadding: UIEdgeInsets(top: self.bookingTopView.frame.maxY,
+                                                                                 left: self.locatioButton.frame.width + 20,
+                                                                                 bottom: self.locatioButton.frame.height + 30,
+                                                                                 right: 50),
+                                                       animated: true)
                         }
                     }
             }
         }
+        
         guard bookingWrapper.ride.fromAddress != nil else {
             state = .search
             return
         }
+        
         DispatchQueue.main.async { [weak self]  in
             self?.loadOptionsCard()
         }
@@ -614,5 +627,17 @@ extension SearchMapController: ChooseGroupNavigationDelegate {
             return
         }
         loadCard(for: state)
+    }
+}
+
+extension MKMapRect {
+    init(coordinates: [CLLocationCoordinate2D]) {
+        self = coordinates
+            .map({ MKMapPoint($0) })
+            .map({ MKMapRect(origin: $0, size: MKMapSize(width: 0, height: 0)) })
+//            .reduce(MKMapRect.null, .union)
+            .reduce(MKMapRect.null, { partialResult, rect in
+                partialResult.union(rect)
+            })
     }
 }
