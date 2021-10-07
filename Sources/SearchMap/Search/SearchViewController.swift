@@ -13,13 +13,13 @@ import ActionButton
 import ATACommonObjects
 import TextFieldExtension
 
-protocol SearchViewControllerDelegate: class {
+protocol SearchViewControllerDelegate: NSObjectProtocol {
     func showMapPicker(for location: BookingPlaceType, coordinates: CLLocationCoordinate2D?)
     func close()
 }
 
 extension Address {
-    var asPlacemark: Placemark { Placemark(name: name, address: address, coordinates: coordinates) }
+    var asPlacemark: Placemark { Placemark(name: name, address: address, coordinates: coordinates, countryCode: countryCode, cp: cp) }
 }
 
 class SearchViewController: UIViewController {

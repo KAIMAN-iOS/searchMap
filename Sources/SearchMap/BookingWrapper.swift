@@ -84,9 +84,11 @@ public class Placemark: Address {
     }
     
     public override init(name: String? = nil,
-                address: String? = nil,
-                coordinates: Coordinates) {
-        super.init(name: name, address: address, coordinates: coordinates)
+                         address: String? = nil,
+                         coordinates: Coordinates,
+                         countryCode: String? = nil,
+                         cp: String? = nil) {
+        super.init(name: name, address: address, coordinates: coordinates, countryCode: countryCode, cp: cp)
     }
     
     required init(from decoder: Decoder) throws {
@@ -116,7 +118,9 @@ extension CLPlacemark {
         }
         return Placemark(name: name,
                          address: address,
-                         coordinates: Coordinates(location: location?.coordinate ?? kCLLocationCoordinate2DInvalid))
+                         coordinates: Coordinates(location: location?.coordinate ?? kCLLocationCoordinate2DInvalid),
+                         countryCode: isoCountryCode,
+                         cp: postalCode)
     }
 }
 

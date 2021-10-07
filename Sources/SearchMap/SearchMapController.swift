@@ -271,7 +271,12 @@ public final class SearchMapController: UIViewController {
                               let placemark = placemarks?.first else { return }
 //                        self.cardContainer.subViews(type: MapLandingView.self).first?.updateAddress(with: placemark)
                         if let coord = placemark.location?.coordinate {
-                            self.userAddress = Address(name: placemark.name, address: placemark.formattedAddress, coordinates: coord)
+                            self.userAddress = Address(name: placemark.name,
+                                                       address: placemark.formattedAddress,
+                                                       coordinates: Coordinates(location: coord),
+                                                       countryCode: placemark.isoCountryCode,
+                                                       cp: placemark.postalCode)
+                            print(self.userAddress)
                         }
                     }
                     
