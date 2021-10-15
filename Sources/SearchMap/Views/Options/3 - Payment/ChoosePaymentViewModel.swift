@@ -124,7 +124,7 @@ class ChoosePaymentViewModel {
         snap.deleteAllItems()
         sections.removeAll()
         snap.appendSections([.main])
-        snap.appendItems([.creditCard, .change], toSection: .main)
+        snap.appendItems([.change, .creditCard], toSection: .main)
         snap.appendItems(cards.compactMap({ CellType.inApp($0) }), toSection: .main)
         dataSource.apply(snap, animatingDifferences: animatingDifferences, completion: completion)
     }
