@@ -13,7 +13,7 @@ import UIViewExtension
 import LocationExtension
 import ATAConfiguration
 import SwiftLocation
-//import AlertsAndPickers
+import ImageExtension
 import UIViewControllerExtension
 import SwiftDate
 import PromiseKit
@@ -121,6 +121,7 @@ public final class SearchMapController: UIViewController {
     @IBOutlet weak var trailingUserButtonConstraint: NSLayoutConstraint!
     @IBOutlet weak var userButton: UIButton!  {
         didSet {
+            userButton.clipsToBounds = true
             userButton.roundedCorners = true
             userButton.addShadow()
             userButton.backgroundColor = SearchMapController.configuration.palette.secondary
@@ -131,7 +132,9 @@ public final class SearchMapController: UIViewController {
     func updateUserpicture(with image: UIImage?) {
         guard userButton != nil else { return }
         userButton.contentMode = .scaleAspectFill
-        userButton.setImage(image ?? UIImage(named: "passenger", in: .module, compatibleWith: nil), for: .normal)
+        let image = image ?? UIImage(named: "passenger", in: .module, compatibleWith: nil)!
+        userButton.setImage(image, for: .normal)
+        let _ = try? ImageManager.save(image, imagePath: "passenger")
         userButton.layer.borderWidth = 1.0
         userButton.layer.borderColor = SearchMapController.configuration.palette.secondary.cgColor
     }
@@ -173,6 +176,8 @@ public final class SearchMapController: UIViewController {
         map.tintColor = SearchMapController.configuration.palette.primary
         if mode == .driver {
             search(animated: true)
+        } else {
+            updateUserpicture(with: ImageManager.fetchImage(with: "passenger"))
         }
         card.cornerRadius = 20.0
         cardContainer.cornerRadius = 20.0
@@ -276,7 +281,7 @@ public final class SearchMapController: UIViewController {
                                                        coordinates: Coordinates(location: coord),
                                                        countryCode: placemark.isoCountryCode,
                                                        cp: placemark.postalCode)
-                            print(self.userAddress)
+//                            print(self.userAddress)
                         }
                     }
                     

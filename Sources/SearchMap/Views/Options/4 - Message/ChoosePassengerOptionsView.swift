@@ -183,7 +183,6 @@ class ChoosePassengerOptionsView: UIView {
 
 extension ChoosePassengerOptionsView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        enableNextButton()
         let passenger: BasePassenger = booking.passenger ?? BasePassenger.default
         if textField === nameTextfield.textfield {
             passenger.lastname = textField.text ?? ""
@@ -191,12 +190,6 @@ extension ChoosePassengerOptionsView: UITextFieldDelegate {
             passenger.phoneNumber = textField.text ?? ""
         }
         booking.passenger = passenger
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            self?.enableNextButton()
-        }
-        return true
+        enableNextButton()
     }
 }
