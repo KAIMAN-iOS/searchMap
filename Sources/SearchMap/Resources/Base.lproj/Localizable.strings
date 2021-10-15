@@ -43,9 +43,9 @@
 "creditCard typeTitle" = "Paiement physique";
 "change typeTitle" = "Paiement physique";
 "inApp typeTitle" = "Via l'application";
-"creditCard title" = "Payez directement votre chauffeur par carte bancaire";
-"change title" = "Payez directement votre chauffeur en espèces";
-"inApp subtitle" = "(arrive bientôt)";
+"creditCard title" = "CB au chauffeur";
+"change title" = "Espèces";
+"inApp subtitle" = "";
 "Choose payment method" = "Mode de paiement";
 "Home" = "Home";
 "Work" = "Work";
