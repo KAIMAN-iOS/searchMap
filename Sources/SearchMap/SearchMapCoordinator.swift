@@ -71,7 +71,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     public var handleFavourites: Bool = false
     public weak var delegate: SearchRideDelegate?
     var mode: DisplayMode = .driver
-    var favDelegate: FavouriteDelegate!
+    weak var favDelegate: FavouriteDelegate!
     
     public init(router: RouterType?,
                 delegate: SearchRideDelegate,
