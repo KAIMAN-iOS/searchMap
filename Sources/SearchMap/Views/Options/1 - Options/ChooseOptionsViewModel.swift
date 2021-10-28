@@ -14,7 +14,7 @@ class ChooseOptionsViewModel {
     }
     struct CellType: Hashable {
         static func == (lhs: CellType, rhs: CellType) -> Bool {
-            return lhs.option.rawValue == rhs.option.rawValue
+            return lhs.hashValue == rhs.hashValue
         }
         var option: VehicleOption
         var isSelected: Bool
