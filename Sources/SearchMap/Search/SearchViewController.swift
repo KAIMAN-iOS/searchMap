@@ -278,7 +278,7 @@ class SearchViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         card.layer.cornerRadius = 20.0
-        card.addShadow(roundCorners: false, shadowColor: SearchMapController.configuration.palette.mainTexts.cgColor, shadowOffset: CGSize(width: 5, height: 5), shadowRadius: 5, shadowOpacity: 0.2, useMotionEffect: true)
+        card.addShadow(roundCorners: false, shadowColor: SearchMapController.configuration.palette.mainTexts.cgColor, shadowOffset: CGSize(width: 5, height: 5), shadowRadius: 5, shadowOpacity: 0.2, useMotionEffect: false)
     }
     
     var search: MKLocalSearch!
