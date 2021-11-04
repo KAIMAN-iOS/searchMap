@@ -36,6 +36,7 @@ class SearchViewController: UIViewController {
         let ctrl: SearchViewController =  UIStoryboard(name: "Map", bundle: .module).instantiateViewController(identifier: "SearchViewController") as! SearchViewController
         ctrl.booking = booking
         ctrl.startAddress = userAddress?.asPlacemark
+        ctrl.booking.ride.fromAddress = userAddress?.asPlacemark
         ctrl.searchDelegate = searchDelegate
         return ctrl
     }
@@ -67,6 +68,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var validateContainer: UIView!
     @IBOutlet weak var originTextField: UITextField!  {
         didSet {
+            originTextField.text = ""
             originTextField.placeholder = "Enter origin".bundleLocale()
             originTextField.delegate = self
             originTextField.tintColor = SearchMapController.configuration.palette.primary
@@ -82,6 +84,7 @@ class SearchViewController: UIViewController {
 
     @IBOutlet weak var destinationTextField: UITextField!  {
         didSet {
+            destinationTextField.text = ""
             destinationTextField.placeholder = "Enter destination".bundleLocale()
             destinationTextField.delegate = self
             destinationTextField.tintColor = SearchMapController.configuration.palette.primary
@@ -146,6 +149,10 @@ class SearchViewController: UIViewController {
         print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
         originObserver?.invalidate()
         destinationObserver?.invalidate()
+        startAddress = nil
+        endAddress = nil
+        booking.ride.toAddress = nil
+        booking.ride.fromAddress = nil
     }
     
     @IBAction func close() {
@@ -157,9 +164,21 @@ class SearchViewController: UIViewController {
             alertSameAddress()
             return
         }
-        booking.ride.fromAddress = startAddress
-        booking.ride.toAddress = endAddress
-        searchDelegate?.close()
+        guard let list = CityCode.citycodesForCountry(country: "FR") else {
+            return
+        }
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: startAddress?.coordinates.latitude ?? 0.0, longitude: startAddress?.coordinates.longitude ?? 0.0)) { [weak self] items, error in
+            guard let self = self else {return}
+            guard error == nil, let locality = items?.first?.locality else {
+                self.alertBadAddress()
+                return
+            }
+            let filteredList: [CityCode] = list.filter({ $0.name.range(of: locality, options: [.caseInsensitive, .diacriticInsensitive]) != nil })
+            self.startAddress?.code = filteredList.first?.code
+            self.booking.ride.fromAddress = self.startAddress
+            self.booking.ride.toAddress = self.endAddress
+            self.searchDelegate?.close()
+        }
     }
     
     private func alertSameAddress() {
@@ -169,11 +188,18 @@ class SearchViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    private func alertBadAddress() {
+        let alertController = UIAlertController(title: "Attention".local(), message: "Erreur code INSEE", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK".local(), style: .cancel, handler: { _ in }))
+        alertController.view.tintColor = SearchMapController.configuration.palette.primary
+        present(alertController, animated: true, completion: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         DispatchQueue.main.async { [weak self] in
-            if self?.booking.ride.fromAddress != nil {
+            if self?.startAddress != nil {
                 self?.destinationTextField.becomeFirstResponder()
             } else {
                 self?.originTextField.becomeFirstResponder()
@@ -240,10 +266,19 @@ class SearchViewController: UIViewController {
     func handleObservers() {
         if let adr = startAddress {
             originTextField.text = adr.address
-        } else if let adr = booking.ride.fromAddress?.address {
-            originTextField.text = adr
+        } else if let adr = booking.ride.fromAddress?.asPlacemark {
+            originTextField.text = adr.address
+            startAddress = adr
+            handleValidateButton()
         }
-        destinationTextField.text = booking.ride.toAddress?.address
+        if let adr = endAddress {
+            destinationTextField.text = adr.address
+        } else if let adr = booking.ride.toAddress?.asPlacemark {
+            destinationTextField.text = adr.address
+            endAddress = adr
+            handleValidateButton()
+        }
+        //destinationTextField.text = booking.ride.toAddress?.address
         
         originObserver?.invalidate()
         originObserver = self.observe(\.startAddress, changeHandler: { [weak self] (booking, change) in
@@ -272,7 +307,7 @@ class SearchViewController: UIViewController {
     }
     
     func handleValidateButton() {
-        validateContainer.isHidden = startAddress == nil
+        validateContainer.isHidden = startAddress == nil || endAddress == nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -295,7 +330,8 @@ class SearchViewController: UIViewController {
             request.region = MKCoordinateRegion(center: coord, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
         }
         search = MKLocalSearch(request: request)
-        search.start { response, _ in
+        search.start { [weak self] response, _ in
+            guard let self = self else { return }
             var items: [Placemark] = []
             defer {
                 self.viewModel.applySearchSnapshot(in: self.datasource, results: items, animatingDifferences: true)
@@ -311,10 +347,11 @@ class SearchViewController: UIViewController {
     }
     
     func clearBooking() {
-        guard let searchType = searchType else { return }
+//        guard let searchType = searchType else { return }
         switch searchType {
         case .origin: startAddress = nil
         case .destination: endAddress = nil
+        default : ()
         }
     }
     
@@ -389,6 +426,7 @@ extension SearchViewController: UITextFieldDelegate {
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        self.searchType = textField == originTextField ? .origin : .destination
         clearBooking()
         search?.cancel()
         reload()
