@@ -147,6 +147,9 @@ class ChoosePassengerOptionsView: UIView {
             delegate?
                 .save(booking)
                 .ensure { [weak self] in
+                    self?.nameTextfield.textfield.text = ""
+                    self?.phoneTextfield.textfield.text = ""
+                    self?.textView.text = ""
                     self?.mainButton.isLoading = false
                 }
                 .done({ _ in })

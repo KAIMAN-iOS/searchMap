@@ -153,6 +153,7 @@ class SearchViewController: UIViewController {
         endAddress = nil
         booking.ride.toAddress = nil
         booking.ride.fromAddress = nil
+        booking.passenger = nil
     }
     
     @IBAction func close() {

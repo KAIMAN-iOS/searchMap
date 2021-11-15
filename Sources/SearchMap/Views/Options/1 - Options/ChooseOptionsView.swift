@@ -189,8 +189,14 @@ class ChooseOptionsView: UIView {
     
     @IBAction func mainAction() {
         switch dateWrapper {
-        case .now: booking.ride.startDate = CustomDate<GMTISODateFormatterDecodable>(date: Date())
-        case .date(let date): booking.ride.startDate = CustomDate<GMTISODateFormatterDecodable>(date: date)
+        case .now:
+            booking.ride.startDate = CustomDate<GMTISODateFormatterDecodable>(date: Date())
+            booking.ride.isImmediate = true
+            booking.ride.state = .pending
+        case .date(let date):
+            booking.ride.startDate = CustomDate<GMTISODateFormatterDecodable>(date: date)
+            booking.ride.isImmediate = false
+            booking.ride.state = .booked
         }
         nextDelegate?.next()
     }

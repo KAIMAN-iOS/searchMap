@@ -159,6 +159,8 @@ public final class SearchMapController: UIViewController {
     
     deinit {
         print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
+        bookingWrapper.passenger = nil
+        passenger = nil
         originObserver?.invalidate()
         destinationObserver?.invalidate()
         stopLocationUpdate()
