@@ -161,25 +161,43 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func validate() {
+        validateButton.isLoading = true
         guard startAddress != endAddress else {
             alertSameAddress()
+            self.validateButton.isLoading = false
             return
         }
-        guard let list = CityCode.citycodesForCountry(country: "FR") else {
-            return
-        }
-        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: startAddress?.coordinates.latitude ?? 0.0, longitude: startAddress?.coordinates.longitude ?? 0.0)) { [weak self] items, error in
+        
+//        DispatchQueue.main.async { [weak self] in
+//            CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: self?.startAddress?.coordinates.latitude ?? 0.0, longitude: self?.startAddress?.coordinates.longitude ?? 0.0)) { [weak self] items, error in
+//                guard let self = self else {return}
+//                guard error == nil, let locality = items?.first?.locality else {
+//                    self.alertBadAddress()
+//                    return
+//                }
+//                let filteredList: [CityCode] = list.filter({ $0.name.range(of: locality, options: [.caseInsensitive, .diacriticInsensitive]) != nil })
+//                self.startAddress?.code = filteredList.first?.code
+//                self.booking.ride.fromAddress = self.startAddress
+//                self.booking.ride.toAddress = self.endAddress
+//                self.validateButton.isLoading = false
+//                self.searchDelegate?.close()
+//            }
+//        }
+        
+        viewModel.getCityCode(latitude: startAddress?.coordinates.latitude ?? 0.0, longitude: startAddress?.coordinates.longitude ?? 0.0) { [weak self] code in
             guard let self = self else {return}
-            guard error == nil, let locality = items?.first?.locality else {
+            guard let code = code else { return}
+            guard code.isEmpty == false else {
                 self.alertBadAddress()
                 return
             }
-            let filteredList: [CityCode] = list.filter({ $0.name.range(of: locality, options: [.caseInsensitive, .diacriticInsensitive]) != nil })
-            self.startAddress?.code = filteredList.first?.code
+            self.startAddress?.code = code
             self.booking.ride.fromAddress = self.startAddress
             self.booking.ride.toAddress = self.endAddress
+            self.validateButton.isLoading = false
             self.searchDelegate?.close()
         }
+        
     }
     
     private func alertSameAddress() {

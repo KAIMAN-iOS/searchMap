@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import TableViewExtension
+import ATACommonObjects
 
 protocol Editable: class {
     func canEditRow(at indexPath: IndexPath) -> Bool
@@ -263,6 +264,25 @@ public class SearchViewModel {
                 self?.perform(action: action, at: indexPath)
             }
         }
+    }
+    
+    
+    //let list = CityCode.citycodesForCountry(country: "FR")
+    func getCityCode(latitude: Double, longitude: Double, completion: @escaping ((String?) -> Void)) {
+        
+        DispatchQueue.main.async {
+            let list = CityCode.citycodesForCountry(country: "FR")
+            CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: latitude, longitude: longitude)) { items, error in
+                guard error == nil, let locality = items?.first?.locality, let list = list else {
+                    completion("")
+                    return
+                }
+                let filteredList: [CityCode] = list.filter({ $0.name.range(of: locality, options: [.caseInsensitive, .diacriticInsensitive]) != nil })
+                completion(filteredList.first?.code)
+                
+            }
+        }
+        
     }
 }
 
