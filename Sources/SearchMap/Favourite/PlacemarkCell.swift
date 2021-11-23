@@ -10,6 +10,7 @@ import TableViewExtension
 import MapKit
 import LabelExtension
 import FontExtension
+import ATACommonObjects
 
 class PlacemarkCell: UITableViewCell {
     override func awakeFromNib() {

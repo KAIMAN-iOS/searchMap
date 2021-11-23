@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ATACommonObjects
 
 class FavouriteListViewModel {
     var displayMode: DisplayMode = .driver

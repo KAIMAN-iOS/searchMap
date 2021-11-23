@@ -90,7 +90,7 @@ public final class SearchMapController: UIViewController {
         }
     }
 
-    lazy var bookingWrapper = CreateRide(passenger: self.passenger)
+    lazy var bookingWrapper = CreateRide(passenger: self.passenger, mode: mode)
     weak var coordinatorDelegate: SearchMapCoordinatorDelegate?
     weak var searchMapDelegate: SearchMapDelegate!
     public weak var delegate: SearchRideDelegate!

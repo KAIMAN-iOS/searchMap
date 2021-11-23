@@ -9,6 +9,7 @@ import UIKit
 import KCoordinatorKit
 import ATAConfiguration
 import PromiseKit
+import ATACommonObjects
 
 public protocol FavouriteDelegate: NSObjectProtocol {
     func loadFavourites() -> [PlacemarkSection: [Placemark]]

@@ -19,18 +19,18 @@ import ATAViews
 protocol SearchMapCoordinatorDelegate: NSObjectProtocol {
     func showSearch(_ booking: inout CreateRide, userAddress: Address?, animated: Bool)
 }
-
-public enum DisplayMode {
-    case driver, passenger, business
-    
-    var hideUserIcon: Bool {
-        switch self {
-        case .driver: return true
-        case .passenger: return false
-        case .business: return false
-        }
-    }
-}
+//
+//public enum DisplayMode {
+//    case driver, passenger, business
+//    
+//    var hideUserIcon: Bool {
+//        switch self {
+//        case .driver: return true
+//        case .passenger: return false
+//        case .business: return false
+//        }
+//    }
+//}
 
 public protocol SearchRideDelegate: NSObjectProtocol {
     func book(_ booking: CreateRide) -> Promise<Bool>

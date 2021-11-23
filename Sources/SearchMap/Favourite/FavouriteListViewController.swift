@@ -7,6 +7,7 @@
 
 import UIKit
 import ATAConfiguration
+import ATACommonObjects
 
 class FavouriteListViewController: UIViewController {
     var mode: DisplayMode = .driver
