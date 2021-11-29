@@ -114,7 +114,7 @@ public class FavouriteViewModel {
     func loadFavourites(refresh: Bool = true) -> [PlacemarkSection: [Placemark]] {
         favourites = favDelegate?.loadFavourites() ?? [:]
         if refresh {
-            refreshDelegate?.refresh(force: true)
+            refreshDelegate?.refresh(force: false)
         }
         return favourites
     }
