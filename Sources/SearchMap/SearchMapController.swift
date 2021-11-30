@@ -102,6 +102,8 @@ public final class SearchMapController: UIViewController {
         didSet {
             map.delegate = self
             map.layoutMargins.bottom = 15
+            map.mapType = .mutedStandard
+            map.tintColor = SearchMapController.configuration.palette.primary
         }
     }
     @IBOutlet weak var dashView: DottedView!  {
