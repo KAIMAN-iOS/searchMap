@@ -62,6 +62,7 @@ class SearchViewController: UIViewController {
             validateButton.shape = .rounded(value: 10.0)
             validateButton.setTitle("validate".bundleLocale().uppercased(), for: .normal)
             validateButton.actionButtonType = .primary
+            validateButton.backgroundColor = mode == .driver ? UIColor(named: "secondary")! : UIColor(named: "primary")!
         }
     }
 
