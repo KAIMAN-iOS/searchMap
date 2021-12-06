@@ -83,7 +83,7 @@ class FavouriteListViewController: UIViewController {
 extension FavouriteListViewController: RefreshFavouritesDelegate {
     func refresh(force: Bool) {
         if force {
-            viewModel.loadFavs(refresh: false)
+            viewModel.loadFavs(refresh: true)
         }
         viewModel.applySnapshot(in: datasource)
     }
