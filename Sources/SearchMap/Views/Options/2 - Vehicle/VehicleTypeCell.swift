@@ -9,6 +9,7 @@ import UIKit
 import ATAViews
 import SnapKit
 import ATACommonObjects
+import LabelExtension
 
 class VehicleTypeCell: UICollectionViewCell {
     lazy var button: SelectableButton = SelectableButton()
@@ -28,13 +29,19 @@ class VehicleTypeCell: UICollectionViewCell {
         button.titleLabel?.font = .applicationFont(forTextStyle: .caption1)
         button.titleLabel?.minimumScaleFactor = 0.5
         button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.lineBreakMode = .byTruncatingTail
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.numberOfLines = 1
     }
     
     func configure(_ vehicleType: VehicleType, isSelected: Bool) {
         if button.superview == nil {
             addButton()
         }
+        
+        button.titleLabel?.numberOfLines = 1
         button.setTitle(vehicleType.displayText.capitalized, for: .normal)
+        button.titleLabel?.numberOfLines = (button.titleLabel?.isTruncated ?? false) && (button.titleLabel?.isMultipleWords ?? false) ? 2 : 1
         _isSelected = isSelected
     }
     
