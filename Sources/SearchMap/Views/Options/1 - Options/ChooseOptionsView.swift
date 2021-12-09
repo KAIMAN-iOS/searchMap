@@ -196,7 +196,7 @@ class ChooseOptionsView: UIView {
         case .date(let date):
             booking.ride.startDate = CustomDate<GMTISODateFormatterDecodable>(date: date)
             booking.ride.isImmediate = false
-            booking.ride.state = .booked
+            booking.ride.state = .pending //.booked
         }
         nextDelegate?.next()
     }
