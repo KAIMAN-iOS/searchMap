@@ -108,6 +108,16 @@ public class Placemark: Address {
         }
     }
 
+    /// updates every value except the id
+    func update(from placemark: Placemark) {
+        address = placemark.address
+        coordinates = placemark.coordinates
+        name = placemark.name
+        specialFavourite = placemark.specialFavourite
+        code = placemark.code
+        cp = placemark.cp
+        countryCode = placemark.cp
+    }
 }
 
 extension CLPlacemark {

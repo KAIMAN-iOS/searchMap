@@ -54,10 +54,10 @@ class FavouriteListViewModel {
     
     func applySnapshot(in dataSource: PlacemarkDatasource, animatingDifferences: Bool = false) {
         items[.search] = nil
-        currentSnapShot = dataSource.snapshot()
-        currentSnapShot.deleteSections([.search, .favourite, .specificFavourite, .history])
+        currentSnapShot = SnapShot()
+//        currentSnapShot.deleteSections([.search, .favourite, .specificFavourite, .history])
 //        currentSnapShot.deleteSections(currentSnapShot.sectionIdentifiers)
-        currentSnapShot.deleteAllItems()
+//        currentSnapShot.deleteAllItems()
         sortedSections.forEach { section in
             guard let value = items[section] else { return }
             currentSnapShot.appendSections([section])

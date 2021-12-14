@@ -211,7 +211,7 @@ extension FavouriteEditViewController: ReverseGeocodingMapDelegate {
     }
     
     func didChoose(_ placemark: Placemark) {
-        self.placeMark = placemark
+        self.placeMark.update(from: placemark)
         self.placeMark.specialFavourite = favType
         if name.textField.text?.isEmpty ?? true {
             name.textField.text = placeMark.name
