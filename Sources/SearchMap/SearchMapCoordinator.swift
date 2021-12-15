@@ -81,6 +81,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
                 conf: ATAConfiguration,
                 vehicleTypes: [VehicleType],
                 vehicleOptions: [VehicleOption],
+                bookedRideDelay: Int = 2700,
                 groups: [Group] = [],
                 passenger: BasePassenger? = nil,
                 configurationOptions: OptionConfiguration = OptionConfiguration.default) {
@@ -109,6 +110,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
         searchMapController.mode = mode
         searchMapController.passenger = passenger
         searchMapController.availableOptions = vehicleOptions
+        searchMapController.bookedRideDelay = bookedRideDelay
         searchMapController.searchMapDelegate = searchMapDelegate
         searchMapController.vehicles = vehicleTypes
         searchMapController.groups = groups

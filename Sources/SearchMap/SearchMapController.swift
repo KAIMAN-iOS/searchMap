@@ -19,6 +19,7 @@ import SwiftDate
 import PromiseKit
 import ATAGroup
 import ATACommonObjects
+import DateExtension
 
 public final class SearchMapController: UIViewController {
     var passenger: BasePassenger?
@@ -68,6 +69,7 @@ public final class SearchMapController: UIViewController {
     var optionState: OptionState = .default
     var vehicles: [VehicleType] = []
     var groups: [Group] = []
+    var bookedRideDelay: Int = 2700
     @IBOutlet weak var originLabel: UILabel!
     @IBOutlet weak var originIndicator: UIView!  {
         didSet {
@@ -580,8 +582,8 @@ extension SearchMapController: BookDelegate, ChooseDateDelegate {
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void)) {
         let alertController = UIAlertController(title: "departure date".bundleLocale(), message: nil, preferredStyle: .actionSheet)
         alertController.addDatePicker(mode: .dateAndTime,
-                                      date: actualDate,
-                                      minimumDate: Date(),
+                                      date: actualDate.addingTimeInterval(TimeInterval(bookedRideDelay)).toNextFiveMinutes,
+                                      minimumDate: actualDate.addingTimeInterval(TimeInterval(bookedRideDelay)) ,
                                       maximumDate: nil,
                                       minuteInterval: 5) {date in
             completion(date)
