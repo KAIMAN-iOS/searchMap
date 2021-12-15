@@ -479,8 +479,10 @@ public final class SearchMapController: UIViewController {
         backOptionsButton.isHidden = !state.showBackButton
         bookingTopView.isHidden = true
     }
+    
     // when ride is done
     public func resetState() {
+        resetBooking()
         state = .search
         loadSearchCard()
     }
@@ -552,13 +554,18 @@ extension SearchMapController: MapLandingViewDelegate {
 }
 
 extension SearchMapController: BookDelegate, ChooseDateDelegate {
+    public func resetBooking() {
+        bookingWrapper.reset()
+    }
+    
     func book(_ booking: CreateRide) -> Promise<Bool> {
         guard let delegate = delegate else {
             return Promise<Bool>.init { (resolver) in
                 resolver.fulfill(false)
             }
         }
-        return delegate.book(booking)
+        return delegate
+            .book(booking)
     }
     
     func save(_ booking: CreateRide) -> Promise<Bool> {
