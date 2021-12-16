@@ -147,13 +147,18 @@ class ChoosePassengerOptionsView: UIView {
             delegate?
                 .save(booking)
                 .ensure { [weak self] in
-                    self?.nameTextfield.textfield.text = ""
-                    self?.phoneTextfield.textfield.text = ""
-                    self?.textView.text = ""
                     self?.mainButton.isLoading = false
                 }
-                .done({ _ in })
-                .catch({ _ in })
+                .done({ [weak self] success in
+                    if success == true {
+                        self?.nameTextfield.textfield.text = ""
+                        self?.phoneTextfield.textfield.text = ""
+                        self?.textView.text = ""
+                    }
+                })
+                .catch({ success in
+                    print(success)
+                })
             
         case .passenger:
             delegate?.book(booking)
@@ -177,6 +182,9 @@ class ChoosePassengerOptionsView: UIView {
         booking.options.memo = textView.text
         secondaryButton.isLoading = true
         delegate?.share(booking)
+            .ensure { [weak self] in
+                self?.secondaryButton.isLoading = false
+            }
     }
     
     func updateBooking() {

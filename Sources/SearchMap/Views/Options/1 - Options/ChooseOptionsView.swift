@@ -21,7 +21,7 @@ import ATACommonObjects
 protocol BookDelegate: NSObjectProtocol {
     func book(_ booking: CreateRide) -> Promise<Bool>
     func save(_ booking: CreateRide) -> Promise<Bool>
-    func share(_ booking: CreateRide)
+    func share(_ booking: CreateRide) -> Promise<Bool>
 }
 
 protocol ChooseDateDelegate: NSObjectProtocol {
@@ -132,7 +132,7 @@ class ChooseOptionsView: UIView {
         }
     }
 
-    private var bookDate: Date = Date()
+    var bookDate: Date = Date()
     var dateWrapper: DateWrapper = .now  {
         didSet {
             switch dateWrapper {

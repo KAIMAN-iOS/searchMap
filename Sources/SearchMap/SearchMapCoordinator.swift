@@ -35,7 +35,7 @@ protocol SearchMapCoordinatorDelegate: NSObjectProtocol {
 public protocol SearchRideDelegate: NSObjectProtocol {
     func book(_ booking: CreateRide) -> Promise<Bool>
     func save(_ booking: CreateRide)-> Promise<Bool>
-    func share(_ booking: CreateRide, to groups: [Group])-> Promise<Bool>
+    func share(_ booking: CreateRide?, to groups: [Group])-> Promise<Bool>
     func showMenu()
     func back()
     func cards() -> [CreditCard]

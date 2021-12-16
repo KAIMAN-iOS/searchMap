@@ -380,6 +380,7 @@ public final class SearchMapController: UIViewController {
         view.availableOptions = availableOptions
         view.mode = mode
         view.searchMapDelegate = delegate
+        view.bookDate = Date().addingTimeInterval(TimeInterval(bookedRideDelay)).toNextFiveMinutes ?? Date().addingTimeInterval(TimeInterval(bookedRideDelay))
         addViewToCard(view)
         view.configure(options: configurationOptions, booking: &bookingWrapper)
         bookingTopView.isHidden = false
@@ -582,8 +583,8 @@ extension SearchMapController: BookDelegate, ChooseDateDelegate {
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void)) {
         let alertController = UIAlertController(title: "departure date".bundleLocale(), message: nil, preferredStyle: .actionSheet)
         alertController.addDatePicker(mode: .dateAndTime,
-                                      date: actualDate.addingTimeInterval(TimeInterval(bookedRideDelay)).toNextFiveMinutes,
-                                      minimumDate: actualDate.addingTimeInterval(TimeInterval(bookedRideDelay)) ,
+                                      date: actualDate,
+                                      minimumDate: actualDate ,
                                       maximumDate: nil,
                                       minuteInterval: 5) {date in
             completion(date)
@@ -593,11 +594,19 @@ extension SearchMapController: BookDelegate, ChooseDateDelegate {
         present(alertController, animated: true, completion: nil)
     }
     
-    func share(_ booking: CreateRide) {
+    func share(_ booking: CreateRide) -> Promise<Bool> {
+        if groups.isEmpty {
+            guard let delegate = delegate else {
+                return Promise<Bool>.value(false)
+            }
+            delegate.share(nil, to: [])
+            return Promise<Bool>.value(false)
+        }
         state = .shareWithGroup
         let choose = ChooseGroupsView.create(booking: booking, groups: groups, delegate: delegate)
         choose.navDelegate = self
         addViewToCard(choose)
+        return Promise<Bool>.value(true)
     }
 }
 
