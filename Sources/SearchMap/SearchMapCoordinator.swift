@@ -134,6 +134,7 @@ public class SearchMapCoordinator<DeepLink>: Coordinator<DeepLink> {
     }
     
     deinit {
+        searchMapController.resetState()
         print("💀 DEINIT \(URL(fileURLWithPath: #file).lastPathComponent)")
         router.navigationController.navigationBar.barTintColor = SearchMapController.configuration.palette.background
         router.navigationController.navigationBar.isTranslucent = false

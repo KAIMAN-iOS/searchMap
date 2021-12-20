@@ -22,7 +22,7 @@ import ATACommonObjects
 import DateExtension
 
 public final class SearchMapController: UIViewController {
-    var passenger: BasePassenger?
+    var passenger: BasePassenger? = nil
     var mode: DisplayMode = .driver
     var configurationOptions: OptionConfiguration!
     static var configuration: ATAConfiguration!
@@ -559,6 +559,13 @@ extension SearchMapController: MapLandingViewDelegate {
 extension SearchMapController: BookDelegate, ChooseDateDelegate {
     public func resetBooking() {
         bookingWrapper.reset()
+        if mode == .driver {
+            bookingWrapper.reset(resetPassenger: true)
+            bookingWrapper.passenger?.firstname = ""
+            bookingWrapper.passenger?.lastname = ""
+            bookingWrapper.passenger?.phoneNumber = ""
+            passenger = nil
+        }
     }
     
     func book(_ booking: CreateRide) -> Promise<Bool> {
