@@ -34,9 +34,13 @@ class PlacemarkCell: UITableViewCell {
         if case PlacemarkCellType.search(placemark) = self.placemark! {
             forceSearch = false
         }
+        favButton.isUserInteractionEnabled = false
         if favButton.isSelected {
             favDelegate
                 .didDeleteFavourite(placemark)
+            .ensure { [weak self] in
+                self?.favButton.isUserInteractionEnabled = true
+                }
                 .done { [weak self] success in
                     if success {
                         self?.favButton.handleState()
@@ -47,6 +51,9 @@ class PlacemarkCell: UITableViewCell {
         } else {
             favDelegate
                 .didAddFavourite(placemark)
+                .ensure { [weak self] in
+                    self?.favButton.isUserInteractionEnabled = true
+                }
                 .done { [weak self] _ in
                     self?.favButton.handleState()
                     self?.refreshDelegate?.refresh(force: forceSearch)

@@ -9,7 +9,8 @@ import UIKit
 import KStorage
 
 struct RecentPlacemarkManager {
-    static private let numberOfItems = 5
+    static let numberOfDisplayedItems = 5
+    static private let numberOfSavedItems = 30
     static let history: StorageKey = "SearchHistory"
     private var storage = DataStorage()
     private static var shared: RecentPlacemarkManager = RecentPlacemarkManager()
@@ -34,7 +35,8 @@ struct RecentPlacemarkManager {
         // in case it was search before
         shared.items.remove(history)
         shared.items.insert(history)
-        try? shared.storage.save(Array(shared.items.suffix(min(RecentPlacemarkManager.numberOfItems, shared.items.count))),
+        // since history items can have favourite items, we save more items than we display
+        try? shared.storage.save(Array(shared.items.suffix(min(RecentPlacemarkManager.numberOfSavedItems, shared.items.count))),
                                  for: RecentPlacemarkManager.history)
     }
     

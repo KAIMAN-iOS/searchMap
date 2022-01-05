@@ -10,7 +10,7 @@ import MapKit
 import TableViewExtension
 import ATACommonObjects
 
-protocol Editable: class {
+protocol Editable: AnyObject {
     func canEditRow(at indexPath: IndexPath) -> Bool
 }
 
@@ -78,8 +78,8 @@ public class SearchViewModel {
         refreshDelegate?.refresh(force: false)
     }
     
-    private func removeFavsFromHistory() {
-        guard let history = items.filter({ $0.key == .history }).first?.value else { return }
+    private func removeFavsFromHistory() -> [PlacemarkCellType] {
+        guard let history = items.filter({ $0.key == .history }).first?.value else { return [] }
         var favs: [Placemark] = []
         items.filter({ $0.key != .history && $0.key != .search }).forEach { section, placemarks in
             favs.append(contentsOf: placemarks.compactMap({ $0.placemark }))
@@ -87,10 +87,13 @@ public class SearchViewModel {
         let favsSet = Set<Placemark>(favs)
         var histSet = Set<Placemark>(history.compactMap({ $0.placemark }))
         histSet.subtract(favsSet)
-        items[.history] = RecentPlacemarkManager
+        let items = Array(RecentPlacemarkManager
             .fetchHistory()
             .filter({ histSet.contains($0) })
             .compactMap({ PlacemarkCellType.history($0) })
+            .suffix(RecentPlacemarkManager.numberOfDisplayedItems))
+        self.items[.history] = items
+        return items
     }
 
     typealias SnapShot = NSDiffableDataSourceSnapshot<PlacemarkSection, PlacemarkCellType>
@@ -119,6 +122,7 @@ public class SearchViewModel {
             currentSnapShot.appendSections([section])
             switch section {
             case .favourite: currentSnapShot.appendItems(value, toSection: section)
+                
             case .specificFavourite:
                 var allFavs: [PlacemarkCellType] = []
                 value.forEach { cellType in
@@ -136,9 +140,10 @@ public class SearchViewModel {
                 }
                 items[.specificFavourite] = Array(allFavs)
                 currentSnapShot.appendItems(Array(allFavs), toSection: section)
+                
             case .history:
-                removeFavsFromHistory()
-                currentSnapShot.appendItems(value, toSection: section)
+                let items = removeFavsFromHistory()
+                currentSnapShot.appendItems(items, toSection: section)
                 
             case .search: currentSnapShot.appendItems(value, toSection: section)
             }
