@@ -18,11 +18,13 @@ import ATAGroup
 import PromiseKit
 import ATACommonObjects
 import TextFieldExtension
+import Combine
 
 class ChoosePassengerOptionsView: UIView {
     public weak var searchMapDelegate: SearchRideDelegate?
     var mode: DisplayMode = .driver
     var availableOptions: [VehicleOption] = []
+    var subscriptions: [AnyCancellable] = []
     
     @IBOutlet weak var title: UILabel!  {
         didSet {
@@ -181,10 +183,13 @@ class ChoosePassengerOptionsView: UIView {
     @IBAction func secondaryAction() {
         booking.options.memo = textView.text
         secondaryButton.isLoading = true
-        delegate?.share(booking)
+        delegate?
+            .share(booking)
             .ensure { [weak self] in
                 self?.secondaryButton.isLoading = false
             }
+            .done({ _ in })
+            .catch({ _ in  })
     }
     
     func updateBooking() {
@@ -193,6 +198,16 @@ class ChoosePassengerOptionsView: UIView {
 }
 
 extension ChoosePassengerOptionsView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        subscriptions.removeAll()
+        Just("")
+            .delay(for: 0.5, scheduler: DispatchQueue.main)
+            .sink{ _ in
+                self.enableNextButton()
+            }
+            .store(in: &subscriptions)
+        return true
+    }
     func textFieldDidEndEditing(_ textField: UITextField) {
         let passenger: BasePassenger = booking.passenger ?? BasePassenger.default
         if textField === nameTextfield.textfield {
