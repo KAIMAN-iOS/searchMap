@@ -64,7 +64,11 @@ class SearchViewController: UIViewController {
             validateButton.actionButtonType = .primary
         }
     }
-
+    @IBOutlet weak var separator: UIView! {
+        didSet {
+            separator.backgroundColor = SearchMapController.configuration.palette.lightGray
+        }
+    }
     @IBOutlet weak var validateContainer: UIView!
     @IBOutlet weak var originTextField: UITextField!  {
         didSet {
@@ -72,6 +76,7 @@ class SearchViewController: UIViewController {
             originTextField.placeholder = "Enter origin".bundleLocale()
             originTextField.delegate = self
             originTextField.tintColor = SearchMapController.configuration.palette.primary
+            originTextField.textColor = SearchMapController.configuration.palette.mainTexts
             originTextField.addKeyboardControlView(target: originTextField, buttonStyle: .footnote)
         }
     }
@@ -88,6 +93,7 @@ class SearchViewController: UIViewController {
             destinationTextField.placeholder = "Enter destination".bundleLocale()
             destinationTextField.delegate = self
             destinationTextField.tintColor = SearchMapController.configuration.palette.primary
+            destinationTextField.textColor = SearchMapController.configuration.palette.mainTexts
             destinationTextField.addKeyboardControlView(target: destinationTextField, buttonStyle: .footnote)
         }
     }
@@ -113,7 +119,11 @@ class SearchViewController: UIViewController {
             tableView.register(UINib(nibName: "PlacemarkCell", bundle: .module), forCellReuseIdentifier: "PlacemarkCell")
         }
     }
-    @IBOutlet weak var card: UIView!
+    @IBOutlet weak var card: UIView! {
+        didSet {
+            card.backgroundColor = SearchMapController.configuration.palette.background
+        }
+    }
     var isLoading: Bool = false  {
         didSet {
             switch (isLoading, textFieldHasFocus) {
@@ -332,7 +342,12 @@ class SearchViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         card.layer.cornerRadius = 20.0
-        card.addShadow(roundCorners: false, shadowColor: SearchMapController.configuration.palette.mainTexts.cgColor, shadowOffset: CGSize(width: 5, height: 5), shadowRadius: 5, shadowOpacity: 0.2, useMotionEffect: false)
+        card.addShadow(roundCorners: false,
+                       shadowColor: self.traitCollection.userInterfaceStyle == .dark ? UIColor.clear.cgColor : SearchMapController.configuration.palette.mainTexts.cgColor,
+                       shadowOffset: CGSize(width: 5, height: 5),
+                       shadowRadius: 5,
+                       shadowOpacity: 0.2,
+                       useMotionEffect: false)
     }
     
     var search: MKLocalSearch!

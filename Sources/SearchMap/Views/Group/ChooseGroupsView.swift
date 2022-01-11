@@ -59,6 +59,11 @@ class ChooseGroupsView: UIView {
         viewModel.applySnapshot(in: datasource)
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = SearchMapController.configuration.palette.background
+    }
+    
     @IBAction func share() {
         shareRideButton.isLoading = true
         delegate

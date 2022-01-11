@@ -74,7 +74,7 @@ class ChooseOptionsView: UIView {
             passengerStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
             passengerStepper.cornerRadius = 10.0
 //            passengerStepper.stepperColor = SearchMapController.configuration.palette.secondary
-//            passengerStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
+            passengerStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
         }
     }
     @IBOutlet weak var luggagesLabel: UILabel!  {
@@ -90,7 +90,7 @@ class ChooseOptionsView: UIView {
             luggagesStepper.limitHitAnimationColor = SearchMapController.configuration.palette.lightGray
             luggagesStepper.cornerRadius = 10.0
 //            luggagesStepper.stepperColor = SearchMapController.configuration.palette.secondary
-//            luggagesStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
+            luggagesStepper.stepperTextColor = SearchMapController.configuration.palette.textOnDark
         }
     }
     @IBOutlet weak var mainButton: ActionButton!  {
@@ -157,6 +157,7 @@ class ChooseOptionsView: UIView {
         super.awakeFromNib()
         StepperView.stepperColor = SearchMapController.configuration.palette.secondary
         StepperView.stepperTextColor = SearchMapController.configuration.palette.textOnPrimary
+        BorderedTextField.borderColor = SearchMapController.configuration.palette.inactive
     }
     
     var booking: CreateRide!

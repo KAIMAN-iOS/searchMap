@@ -37,6 +37,7 @@ class ChoosePassengerOptionsView: UIView {
             passengerDetailLabel.set(text: "passenger details".bundleLocale().uppercased(), for: .callout, fontScale: 0.7, textColor: SearchMapController.configuration.palette.inactive)
         }
     }
+    
     enum FieldType: FieldTypeConfigurable {
         var configuration: FieldTypeConfiguration {
             switch self {
@@ -105,6 +106,7 @@ class ChoosePassengerOptionsView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         BorderedTextField.borderColor = SearchMapController.configuration.palette.inactive
+        backgroundColor = SearchMapController.configuration.palette.background
     }
     
     var booking: CreateRide!

@@ -29,6 +29,11 @@ class ChooseVehicleOptionsView: UIView {
             title.set(text: "options".bundleLocale().capitalizingFirstLetter(), for: .title1, textColor: SearchMapController.configuration.palette.mainTexts)
         }
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = SearchMapController.configuration.palette.background
+    }
 
     var vehicles: [VehicleType] = []  {
         didSet {
@@ -83,9 +88,6 @@ class ChooseVehicleOptionsView: UIView {
         }
     }
     weak var delegate: BookDelegate!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()    }
     
     var groups: [Group] = []
     var booking: CreateRide!

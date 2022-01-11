@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ib7-P8-GYj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ib7-P8-GYj">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -362,7 +362,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="zz5-IQ-qWI" firstAttribute="leading" secondItem="89w-Fs-I8d" secondAttribute="leading" id="9Cu-uu-oDP"/>
                                             <constraint firstItem="zz5-IQ-qWI" firstAttribute="centerY" secondItem="89w-Fs-I8d" secondAttribute="centerY" id="D04-xT-UrG"/>
@@ -432,6 +432,7 @@
                         <outlet property="destinationTextField" destination="WD8-Ej-eqB" id="Wop-1e-m2f"/>
                         <outlet property="originIndicator" destination="HFL-GI-SEt" id="yLW-dy-I9k"/>
                         <outlet property="originTextField" destination="XAS-Xz-8EO" id="ldq-0x-1wZ"/>
+                        <outlet property="separator" destination="zz5-IQ-qWI" id="c9A-bd-2te"/>
                         <outlet property="tableView" destination="gFg-Gp-EmJ" id="ZhD-gy-w9A"/>
                         <outlet property="validateButton" destination="VYy-xG-uZA" id="u6c-pA-wxN"/>
                         <outlet property="validateContainer" destination="l4l-SI-eBU" id="MtG-cX-G0y"/>
@@ -468,7 +469,7 @@
             <color red="0.84705882352941175" green="0.27058823529411763" blue="0.25882352941176473" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightGray">
-            <color red="0.95599997043609619" green="0.9570000171661377" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.95300000905990601" green="0.9570000171661377" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="lightGrayColor">
             <color red="0.96899998188018799" green="0.97600001096725464" blue="0.98799997568130493" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

@@ -60,6 +60,7 @@ class FavouriteListViewModel {
 //        currentSnapShot.deleteAllItems()
         sortedSections.forEach { section in
             guard let value = items[section] else { return }
+            print("🥳 section \(section) - items [\(value)]")
             currentSnapShot.appendSections([section])
             switch section {
             case .favourite: currentSnapShot.appendItems(value, toSection: section)

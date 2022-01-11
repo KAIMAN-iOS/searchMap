@@ -39,6 +39,7 @@ class FavouriteEditViewController: UIViewController {
             name.textField.placeholder = "Place name".bundleLocale()
             name.textField.font = .applicationFont(forTextStyle: .body)
             name.textField.tintColor = FavouriteListViewController.configuration.palette.primary
+            name.textField.textColor = FavouriteListViewController.configuration.palette.mainTexts
         }
     }
 
@@ -49,6 +50,7 @@ class FavouriteEditViewController: UIViewController {
             address.textField.delegate = self
             address.textField.font = .applicationFont(forTextStyle: .body)
             (address.superview as? UIStackView)?.setCustomSpacing(20, after: address)
+            address.textField.textColor = FavouriteListViewController.configuration.palette.mainTexts
         }
     }
     
@@ -147,6 +149,7 @@ class FavouriteEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = FavouriteListViewController.configuration.palette.background
         loadStackView()
         let newPlacemark = !CLLocationCoordinate2DIsValid(placeMark.coordinates.asCoord2D)
         saveButton.isEnabled = !newPlacemark

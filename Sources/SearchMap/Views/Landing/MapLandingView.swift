@@ -22,6 +22,11 @@ class MapLandingView: UIView {
             title.set(text: "Welcome search title".bundleLocale(), for: .title1, textColor: SearchMapController.configuration.palette.mainTexts)
         }
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = SearchMapController.configuration.palette.background
+    }
 
     @IBOutlet weak var subTitle: UILabel!  {
         didSet {
@@ -34,7 +39,7 @@ class MapLandingView: UIView {
             bottomCard.backgroundColor = .white
             bottomCard.layer.cornerRadius = 5.0
             bottomCard.layer.borderWidth = 1.0
-            bottomCard.layer.borderColor = #colorLiteral(red: 0.889537096, green: 0.9146017432, blue: 0.9526402354, alpha: 1).cgColor
+            bottomCard.layer.borderColor = SearchMapController.configuration.palette.lightGray.cgColor
         }
     }
 

@@ -22,6 +22,12 @@ class ChoosePaymentView: UIView {
         ctrl.loadComponents()
         return ctrl
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundColor = SearchMapController.configuration.palette.background
+    }
+    
     @IBOutlet weak var title: UILabel!  {
         didSet {
             title.set(text: "Choose payment method".bundleLocale(), for: .title1, textColor: SearchMapController.configuration.palette.mainTexts)

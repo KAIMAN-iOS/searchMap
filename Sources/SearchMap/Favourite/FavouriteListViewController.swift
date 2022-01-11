@@ -51,6 +51,8 @@ class FavouriteListViewController: UIViewController {
     override func viewDidLoad() {
         hideBackButtonText = true
         super.viewDidLoad()
+        view.backgroundColor = FavouriteListViewController.configuration.palette.background
+        tableView.backgroundColor = FavouriteListViewController.configuration.palette.background
         navigationItem.rightBarButtonItem = loader
         activityIndicator.startAnimating()
         FavouriteViewModel.shared.reloadFavourites { [weak self] _ in
