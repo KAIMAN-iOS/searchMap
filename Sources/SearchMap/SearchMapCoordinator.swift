@@ -46,8 +46,8 @@ public protocol SearchMapDelegate: NSObjectProtocol {
     func view(for annotation: MKAnnotation) -> MKAnnotationView?
     func renderer(for overlay: MKOverlay) -> MKPolylineRenderer
     func annotations(for ride: CreateRide) -> [MKAnnotation]
-    func overlays(for route: MKRoute) -> [MKOverlay]
-    func routeReady(_ route: MKRoute)
+    func overlays(for route: Route) -> [MKOverlay]
+    func routeReady(_ route: Route)
 }
 
 public struct OptionConfiguration {

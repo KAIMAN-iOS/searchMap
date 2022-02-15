@@ -318,7 +318,8 @@ public final class SearchMapController: UIViewController {
             if bookingWrapper.ride.fromAddress != nil {
                 RideDirectionManager
                     .shared
-                    .loadDirections(for: bookingWrapper.ride, sortCriteria: .shortestDistance) { [weak self] ride, routes in
+                    .loadDirections(for: bookingWrapper.ride,
+                                    searchParameters: SearchParameters(sortCriteria: .shortestDistance)) { [weak self] ride, routes in
                         guard let self = self else { return }
                         let anno = self.searchMapDelegate.annotations(for: self.bookingWrapper)
                         if anno.count > 0 {
@@ -326,13 +327,14 @@ public final class SearchMapController: UIViewController {
                             self.map.addAnnotations(anno)
                         }
                         // routes
-                        if let route = routes.first(where: { $0.routeType == .ride })?.route {
+                        if let route = routes.first(where: { $0.routeType == .ride }),
+                           let polyline = route.polyline {
                             self.searchMapDelegate.routeReady(route)
                             let overlays = self.searchMapDelegate.overlays(for: route)
                             if let overlay = overlays.first {
                                 self.map.removeOverlays(self.map.overlays)
                                 self.map.addOverlay(overlay)
-                                self.map.setVisibleMapRect(route.polyline.boundingMapRect,
+                                self.map.setVisibleMapRect(polyline.boundingMapRect,
                                                            edgePadding: UIEdgeInsets(top: self.bookingTopView.frame.maxY,
                                                                                      left: self.locatioButton.frame.width + 20,
                                                                                      bottom: self.locatioButton.frame.height + 30,
