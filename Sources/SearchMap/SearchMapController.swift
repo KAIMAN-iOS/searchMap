@@ -590,7 +590,7 @@ extension SearchMapController: BookDelegate, ChooseDateDelegate {
     }
     
     func chooseDate(actualDate: Date, completion: @escaping ((Date) -> Void)) {
-        let alertController = UIAlertController(title: "departure date".bundleLocale(), message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "departure date".bundleLocale(), message: nil, preferredStyle: .safeActionSheet)
         alertController.addDatePicker(mode: .dateAndTime,
                                       date: actualDate,
                                       minimumDate: actualDate ,
